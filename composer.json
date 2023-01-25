@@ -1,0 +1,41 @@
+{
+    "name": "resend/client",
+    "description": "Resend PHP library.",
+    "keywords": ["php", "resend", "sdk", "api", "client"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Resend and contributors",
+            "homepage": "https://github.com/jayanratna/resend-php/contributors"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "pestphp/pest": "^1.22"
+    },
+    "autoload": {
+        "psr-4": {
+            "Resend\\": "src/"
+        },
+        "files": [
+            "src/Resend.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
