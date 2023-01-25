@@ -1,1 +1,24 @@
 name: Tests
+
+on:
+  push:
+    branches:
+      - main
+    pull_request:
+    schedule:
+      - cron: '0 0 * * *'
+
+jobs:
+  tests:
+    runs_on: ubuntu-22.04
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: ['8.0', 8.1, 8.2]
+
+    name: PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
