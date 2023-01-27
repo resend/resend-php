@@ -7,7 +7,7 @@
 
 ## Getting started
 
-> **Requires [PHP 8.0+](https://php.net/releases/)**
+> **Requires [PHP 8.1+](https://php.net/releases/)**
 
 First, install Resend via the [Composer](https://getcomposer.org/) package manager:
 

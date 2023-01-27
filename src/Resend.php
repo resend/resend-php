@@ -4,6 +4,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use Resend\Client;
 use Resend\Transporters\HttpTransporter;
 use Resend\ValueObjects\ApiKey;
+use Resend\ValueObjects\Transporter\BaseUri;
 
 final class Resend
 {
@@ -14,7 +15,7 @@ final class Resend
     {
         $apiKey = ApiKey::from($apiKey);
 
-        $baseUri = 'api.resend.com';
+        $baseUri = BaseUri::from('api.resend.com');
 
         $headers = null;
 

@@ -2,10 +2,12 @@
 
 namespace Resend\ValueObjects;
 
-final class ApiKey
+use Resend\Contracts\Stringable;
+
+final class ApiKey implements Stringable
 {
     /**
-     * Create a new API Token value object.
+     * Create a new API Key value object.
      */
     public function __construct(
         public readonly string $apiKey
@@ -13,6 +15,9 @@ final class ApiKey
         //
     }
 
+    /**
+     * Create a new API Key value object from the given API Key.
+     */
     public static function from(string $apiKey): self
     {
         return new self($apiKey);
