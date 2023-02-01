@@ -1,6 +1,7 @@
 # Ignore cache directories and files.
 /.phpunit.cache
 .php-cs-fixer.cache
+.psysh.php
 
 # Mac OS X dumps these all over the place.
 .DS_Store
