@@ -6,6 +6,7 @@ use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Resend\Contracts\Transporter;
+use Resend\Exceptions\ErrorException;
 use Resend\Exceptions\TransporterException;
 use Resend\Exceptions\UnserializableResponse;
 use Resend\ValueObjects\Transporter\BaseUri;
@@ -44,7 +45,7 @@ class HttpTransporter implements Transporter
         }
 
         if (isset($response['error'])) {
-            // TODO: Throw Error Exception
+            throw new ErrorException($response['error']);
         }
 
         return $response;
