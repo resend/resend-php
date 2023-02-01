@@ -27,3 +27,6 @@ $resend->sendEmail([
     'text' => 'it works!',
 ]);
 ```
+
+> **Note**
+> This client is heavily inspired by [OpenAI PHP](https://github.com/openai-php).
