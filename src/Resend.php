@@ -5,6 +5,7 @@ use Resend\Client;
 use Resend\Transporters\HttpTransporter;
 use Resend\ValueObjects\ApiKey;
 use Resend\ValueObjects\Transporter\BaseUri;
+use Resend\ValueObjects\Transporter\Headers;
 
 final class Resend
 {
@@ -14,13 +15,10 @@ final class Resend
     public static function client(string $apiKey): Client
     {
         $apiKey = ApiKey::from($apiKey);
-
         $baseUri = BaseUri::from('api.resend.com');
-
-        $headers = null;
+        $headers = Headers::withAuthorization($apiKey);
 
         $client = new GuzzleClient();
-
         $transporter = new HttpTransporter($client, $baseUri, $headers);
 
         return new Client($transporter);

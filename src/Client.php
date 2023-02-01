@@ -20,6 +20,5 @@ class Client
      */
     public function sendEmail(array $parameters)
     {
-        $this->transporter->request();
     }
 }
