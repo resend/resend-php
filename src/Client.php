@@ -3,6 +3,8 @@
 namespace Resend;
 
 use Resend\Contracts\Transporter;
+use Resend\Responses\Email\EmailSent;
+use Resend\ValueObjects\Transporter\Payload;
 
 class Client
 {
@@ -18,7 +20,12 @@ class Client
     /**
      * Send an email with the given parameters.
      */
-    public function sendEmail(array $parameters)
+    public function sendEmail(array $parameters): EmailSent
     {
+        $payload = Payload::create('email', $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return EmailSent::from($result);
     }
 }
