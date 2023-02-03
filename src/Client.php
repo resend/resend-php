@@ -19,6 +19,8 @@ class Client
 
     /**
      * Send an email with the given parameters.
+     *
+     * @see https://resend.com/docs/api-reference/send-email#body-parameters
      */
     public function sendEmail(array $parameters): EmailSent
     {
