@@ -13,4 +13,28 @@ final class ErrorException extends Exception
     {
         parent::__construct($contents['message']);
     }
+
+    /**
+     * Get the error message.
+     */
+    public function getErrorMessage(): string
+    {
+        return $this->getMessage();
+    }
+
+    /**
+     * Get the error type
+     */
+    public function getErrorType(): string
+    {
+        return $this->contents['type'];
+    }
+
+    /**
+     * Get the error code.
+     */
+    public function getErrorCode(): int
+    {
+        return $this->contents['code'];
+    }
 }
