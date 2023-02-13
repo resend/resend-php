@@ -9,6 +9,9 @@ use Resend\ValueObjects\ResourceUri;
 
 final class Payload
 {
+    /**
+     * Create a new Transporter Payload instance.
+     */
     public function __construct(
         private readonly ContentType $contentType,
         private readonly Method $method,
@@ -18,6 +21,9 @@ final class Payload
         //
     }
 
+    /**
+     * Create a new Transporter Payload instance.
+     */
     public static function create(string $resource, array $parameters): self
     {
         $contentType = ContentType::JSON;

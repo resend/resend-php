@@ -28,6 +28,9 @@ final class Headers
         ]);
     }
 
+    /**
+     * Create a new Headers value object with the given content type and existing headers.
+     */
     public function withContentType(ContentType $contentType, string $suffix = ''): self
     {
         return new self([
@@ -36,6 +39,9 @@ final class Headers
         ]);
     }
 
+    /**
+     * Return the headers as an array.
+     */
     public function toArray(): array
     {
         return $this->headers;

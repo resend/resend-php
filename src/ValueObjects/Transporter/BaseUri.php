@@ -23,6 +23,9 @@ final class BaseUri implements Stringable
         return new self($baseUri);
     }
 
+    /**
+     * Returns the string representation of the object.
+     */
     public function toString(): string
     {
         return "https://{$this->baseUri}/";

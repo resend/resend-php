@@ -9,6 +9,9 @@ final class EmailSent implements Response
 {
     use ArrayAccessible;
 
+    /**
+     * Create a new Email Sent response.
+     */
     public function __construct(
         public readonly string $id,
         public readonly string $from,
@@ -17,6 +20,9 @@ final class EmailSent implements Response
         //
     }
 
+    /**
+     * Create a new Email Sent response from the given attributes.
+     */
     public static function from(array $attributes): self
     {
         return new self(

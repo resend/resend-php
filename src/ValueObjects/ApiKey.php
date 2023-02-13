@@ -23,6 +23,9 @@ final class ApiKey implements Stringable
         return new self($apiKey);
     }
 
+    /**
+     * Returns the string representation of the object.
+     */
     public function toString(): string
     {
         return $this->apiKey;
