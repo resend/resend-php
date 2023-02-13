@@ -15,11 +15,17 @@ final class ResourceUri implements Stringable
         //
     }
 
+    /**
+     * Create a new Resource URI value object.
+     */
     public static function create(string $resource): self
     {
         return new self($resource);
     }
 
+    /**
+     * Returns the string representation of the object.
+     */
     public function toString(): string
     {
         return $this->uri;

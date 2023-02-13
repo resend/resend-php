@@ -26,6 +26,13 @@ class HttpTransporter implements Transporter
         //
     }
 
+    /**
+     * Sends a request to the Resend API.
+     *
+     * @return array<array-key, mixed>
+     *
+     * @throws ErrorException|TransporterException|UnserializableResponse
+     */
     public function request(Payload $payload): array
     {
         $request = $payload->toRequest($this->baseUri, $this->headers);
