@@ -3,7 +3,7 @@
 namespace Resend;
 
 use Resend\Contracts\Transporter;
-use Resend\Responses\Email\EmailSent;
+use Resend\Responses\Email\Sent;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Client
@@ -22,12 +22,12 @@ class Client
      *
      * @see https://resend.com/docs/api-reference/send-email#body-parameters
      */
-    public function sendEmail(array $parameters): EmailSent
+    public function sendEmail(array $parameters): Sent
     {
         $payload = Payload::create('email', $parameters);
 
         $result = $this->transporter->request($payload);
 
-        return EmailSent::from($result);
+        return Sent::from($result);
     }
 }

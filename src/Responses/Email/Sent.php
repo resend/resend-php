@@ -5,7 +5,7 @@ namespace Resend\Responses\Email;
 use Resend\Concerns\ArrayAccessible;
 use Resend\Contracts\Response;
 
-final class EmailSent implements Response
+final class Sent implements Response
 {
     use ArrayAccessible;
 
