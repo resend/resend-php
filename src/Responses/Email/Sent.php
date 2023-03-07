@@ -15,7 +15,8 @@ final class Sent implements Response
     public function __construct(
         public readonly string $id,
         public readonly string $from,
-        public readonly string $to
+        public readonly string $to,
+        public readonly string $createdAt
     ) {
         //
     }
@@ -28,7 +29,8 @@ final class Sent implements Response
         return new self(
             $attributes['id'],
             $attributes['from'],
-            $attributes['to']
+            $attributes['to'],
+            $attributes['created_at']
         );
     }
 
@@ -41,6 +43,7 @@ final class Sent implements Response
             'id' => $this->id,
             'from' => $this->from,
             'to' => $this->to,
+            'created_at' => $this->createdAt,
         ];
     }
 }

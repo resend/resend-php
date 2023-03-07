@@ -13,7 +13,9 @@ test('from', function () {
 test('as array accessible', function () {
     $email = Sent::from(email());
 
-    expect($email['id'])->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
+    expect($email['id'])->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794')
+        ->and(isset($email['created_at']))->toBeTrue()
+        ->and($email['created_at'])->toBe('2022-07-25T00:28:32.493138+00:00');
 });
 
 test('to array', function () {
