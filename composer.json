@@ -1,16 +1,13 @@
 {
-    "name": "resend/client",
+    "name": "resend/resend-php",
     "description": "Resend PHP library.",
     "keywords": ["php", "resend", "sdk", "api", "client"],
+    "homepage": "https://resend.com/",
     "license": "MIT",
     "authors": [
         {
-            "name": "Jayan Ratna",
-            "email": "jayan@pixelet.co"
-        },
-        {
             "name": "Resend and contributors",
-            "homepage": "https://github.com/jayanratna/resend-php/contributors"
+            "homepage": "https://github.com/resendlabs/resend-php/contributors"
         }
     ],
     "require": {
