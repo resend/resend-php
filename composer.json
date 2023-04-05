@@ -7,7 +7,7 @@
     "authors": [
         {
             "name": "Resend and contributors",
-            "homepage": "https://github.com/jayanratna/resend-php/contributors"
+            "homepage": "https://github.com/resendlabs/resend-php/contributors"
         }
     ],
     "require": {
