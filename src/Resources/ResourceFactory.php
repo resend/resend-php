@@ -7,9 +7,6 @@ use Resend\Contracts\Transporter;
 
 final class ResourceFactory
 {
-    /**
-     * @var array<string, string>
-     */
     private static array $classMap = [
         'apiKeys' => ApiKeys::class,
         'domains' => Domains::class,

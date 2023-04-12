@@ -21,6 +21,15 @@ final class Payload
         //
     }
 
+    public static function list(string $resource): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::GET;
+        $uri = ResourceUri::list($resource);
+
+        return new self($contentType, $method, $uri);
+    }
+
     /**
      * Create a new Transporter Payload instance.
      */
@@ -31,6 +40,15 @@ final class Payload
         $uri = ResourceUri::create($resource);
 
         return new self($contentType, $method, $uri, $parameters);
+    }
+
+    public static function delete(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::DELETE;
+        $uri = ResourceUri::delete($resource, $id);
+
+        return new self($contentType, $method, $uri);
     }
 
     /**
