@@ -23,6 +23,16 @@ final class ResourceUri implements Stringable
         return new self($resource);
     }
 
+    public static function list(string $resource): self
+    {
+        return new self($resource);
+    }
+
+    public static function delete(string $resource, string $id): self
+    {
+        return new self("{$resource}/{$id}");
+    }
+
     /**
      * Returns the string representation of the object.
      */

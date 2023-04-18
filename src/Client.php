@@ -3,19 +3,19 @@
 namespace Resend;
 
 use Resend\Contracts\Transporter;
-use Resend\Resources\ResourceFactory;
 use Resend\Responses\Email\Sent;
+use Resend\Service\ServiceFactory;
 use Resend\ValueObjects\Transporter\Payload;
 
 /**
  * Client used to send requests to the Resend API.
  *
- * @property \Resend\Resources\ApiKeys $apiKeys
- * @property \Resend\Resources\ApiKeys $domains
+ * @property \Resend\Service\ApiKey $apiKeys
+ * @property \Resend\Service\Domain $domains
  */
 class Client
 {
-    private ResourceFactory $resourceFactory;
+    private ServiceFactory $serviceFactory;
 
     /**
      * Create a new Client instance with the given transporter.
@@ -42,18 +42,18 @@ class Client
 
     public function __get(string $name)
     {
-        return $this->getResource($name);
+        return $this->getService($name);
     }
 
     /**
-     * Attach the API services to the client.
+     * Attach the given API service to the client.
      */
-    private function getResource(string $name)
+    private function getService(string $name)
     {
-        if (! isset($this->resourceFactory)) {
-            $this->resourceFactory = new ResourceFactory($this->transporter);
+        if (! isset($this->serviceFactory)) {
+            $this->serviceFactory = new ServiceFactory($this->transporter);
         }
 
-        return $this->resourceFactory->getResource($name);
+        return $this->serviceFactory->getService($name);
     }
 }

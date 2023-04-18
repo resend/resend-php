@@ -2,7 +2,10 @@
 
 namespace Resend\Contracts;
 
-interface Resource
+use ArrayAccess;
+use JsonSerializable;
+
+interface Resource extends ArrayAccess, JsonSerializable
 {
     //
 }
