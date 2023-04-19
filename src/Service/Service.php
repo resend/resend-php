@@ -28,7 +28,7 @@ abstract class Service
     {
         $class = $this->mapping[$resourceType];
 
-        if (is_array($attributes['data'])) {
+        if (isset($attributes['data']) && is_array($attributes['data'])) {
             foreach ($attributes['data'] as $key => $value) {
                 $attributes['data'][$key] = $class::from($value);
             }
