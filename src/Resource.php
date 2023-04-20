@@ -20,6 +20,9 @@ class Resource implements ResourceContract
         $this->fill($attributes);
     }
 
+    /**
+     * Create a new resource from the given attributes.
+     */
     public static function from(array $attributes): static
     {
         return new static($attributes);
@@ -37,6 +40,9 @@ class Resource implements ResourceContract
         }
     }
 
+    /**
+     * Get an attribute by name.
+     */
     public function getAttribute($name)
     {
         if (! $name) {
@@ -50,6 +56,9 @@ class Resource implements ResourceContract
         return null;
     }
 
+    /**
+     * Get all attributes for the resource.
+     */
     public function getAttributes(): array
     {
         return $this->attributes;
