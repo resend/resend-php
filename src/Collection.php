@@ -11,6 +11,9 @@ use Traversable;
  */
 final class Collection extends Resource implements IteratorAggregate
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->data);

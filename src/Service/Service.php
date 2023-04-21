@@ -24,6 +24,9 @@ abstract class Service
         //
     }
 
+    /**
+     * Create a new resource for the given  with the given attributes.
+     */
     protected function createResource(string $resourceType, array $attributes)
     {
         $class = $this->mapping[$resourceType];

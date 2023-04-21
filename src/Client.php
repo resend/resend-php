@@ -14,6 +14,9 @@ use Resend\ValueObjects\Transporter\Payload;
  */
 class Client
 {
+    /**
+     * The service factory instance.
+     */
     private ServiceFactory $serviceFactory;
 
     /**
@@ -39,6 +42,9 @@ class Client
         return Email::from($result);
     }
 
+    /**
+     * Magic method to retrieve a service by name.
+     */
     public function __get(string $name)
     {
         return $this->getService($name);

@@ -2,8 +2,8 @@
 
 namespace Resend;
 
-use Exception;
 use Resend\Contracts\Resource as ResourceContract;
+use Resend\Exceptions\MissingAttributeException;
 
 class Resource implements ResourceContract
 {
@@ -45,11 +45,7 @@ class Resource implements ResourceContract
      */
     public function getAttribute($name)
     {
-        if (! $name) {
-            return;
-        }
-
-        if (array_key_exists($name, $this->attributes)) {
+        if ($name && array_key_exists($name, $this->attributes)) {
             return $this->getAttributes()[$name] ?? null;
         }
 
@@ -107,7 +103,7 @@ class Resource implements ResourceContract
     {
         try {
             return ! is_null($this->getAttribute($offset));
-        } catch (Exception $e) {
+        } catch (MissingAttributeException) {
             return false;
         }
     }

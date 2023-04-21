@@ -27,3 +27,12 @@ it('has a body when making a POST request', function () {
         'to' => 'test@resend.com',
     ]));
 });
+
+it('does not have a body when making a GET request', function () {
+    $payload = Payload::list('api-keys');
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    expect($payload->toRequest($baseUri, $headers)->getBody()->getContents())->toBe('');
+});
