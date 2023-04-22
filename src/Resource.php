@@ -45,7 +45,11 @@ class Resource implements ResourceContract
      */
     public function getAttribute($name)
     {
-        if ($name && array_key_exists($name, $this->attributes)) {
+        if (! $name) {
+            return;
+        }
+
+        if (array_key_exists($name, $this->attributes)) {
             return $this->getAttributes()[$name] ?? null;
         }
 
@@ -94,6 +98,9 @@ class Resource implements ResourceContract
         return $this->getAttribute($name);
     }
 
+    /**
+     * Get all the attributes when dumping the resource.
+     */
     public function __debugInfo(): array
     {
         return $this->getAttributes();

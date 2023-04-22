@@ -36,3 +36,15 @@ it('does not have a body when making a GET request', function () {
 
     expect($payload->toRequest($baseUri, $headers)->getBody()->getContents())->toBe('');
 });
+
+it('does not have a body when making a DELETE request', function () {
+    $payload = Payload::delete('api-keys', 're_123456');
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect($request->getBody()->getContents())->toBe('')
+        ->and($request->getUri()->getPath())->toBe('/api-keys/re_123456');
+});
