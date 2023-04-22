@@ -8,7 +8,10 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * @property array $data
+ * @template TResource of Resource
+ * @template-implements \IteratorAggregate<TResource>
+ *
+ * @property TResource[] $data
  */
 final class Collection extends Resource implements IteratorAggregate
 {
