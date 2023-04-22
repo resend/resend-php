@@ -40,3 +40,19 @@ it('can return a JSON representation of attributes', function () {
 
     expect($json)->toBe('{"name":"foo"}');
 });
+
+it('throws an exception when an offset is set', function () {
+    $resource = new Resource([
+        'name' => 'foo',
+    ]);
+
+    $resource['id'] = 're_123456';
+})->throws(BadMethodCallException::class);
+
+it('throws an exception when and offset is unset', function () {
+    $resource = new Resource([
+        'name' => 'foo',
+    ]);
+
+    unset($resource['name']);
+})->throws(BadMethodCallException::class);

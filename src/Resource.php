@@ -2,6 +2,7 @@
 
 namespace Resend;
 
+use BadMethodCallException;
 use Resend\Contracts\Resource as ResourceContract;
 use Resend\Exceptions\MissingAttributeException;
 
@@ -69,7 +70,7 @@ class Resource implements ResourceContract
      */
     public function toArray(): array
     {
-        return $this->attributes;
+        return $this->getAttributes();
     }
 
     /**
@@ -122,11 +123,11 @@ class Resource implements ResourceContract
 
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        //
+        throw new BadMethodCallException('Cannot set resource attributes.');
     }
 
     public function offsetUnset(mixed $offset): void
     {
-        //
+        throw new BadMethodCallException('Cannot unset resource attributes.');
     }
 }
