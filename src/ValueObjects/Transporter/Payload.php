@@ -2,7 +2,8 @@
 
 namespace Resend\ValueObjects\Transporter;
 
-use GuzzleHttp\Psr7\Request;
+use Http\Discovery\Psr17Factory;
+use Psr\Http\Message\RequestInterface;
 use Resend\Enums\Transporter\ContentType;
 use Resend\Enums\Transporter\Method;
 use Resend\ValueObjects\ResourceUri;
@@ -54,17 +55,30 @@ final class Payload
     /**
      * Creates a new Psr 7 Request instance.
      */
-    public function toRequest(BaseUri $baseUri, Headers $headers): Request
+    public function toRequest(BaseUri $baseUri, Headers $headers): RequestInterface
     {
+        $psr17Factory = new Psr17Factory();
+
         $body = null;
+
         $uri = $baseUri->toString() . $this->uri->toString();
 
         $headers = $headers->withContentType($this->contentType);
 
         if ($this->method === Method::POST) {
-            $body = json_encode($this->parameters, JSON_THROW_ON_ERROR);
+            $body = $psr17Factory->createStream(json_encode($this->parameters, JSON_THROW_ON_ERROR));
         }
 
-        return new Request($this->method->value, $uri, $headers->toArray(), $body);
+        $request = $psr17Factory->createRequest($this->method->value, $uri);
+
+        if ($body !== null) {
+            $request = $request->withBody($body);
+        }
+
+        foreach ($headers->toArray() as $name => $value) {
+            $request = $request->withHeader($name, $value);
+        }
+
+        return $request;
     }
 }

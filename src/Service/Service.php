@@ -5,6 +5,8 @@ namespace Resend\Service;
 use Resend\ApiKey;
 use Resend\Collection;
 use Resend\Contracts\Transporter;
+use Resend\Domain;
+use Resend\Resource;
 
 abstract class Service
 {
@@ -13,6 +15,7 @@ abstract class Service
      */
     protected $mapping = [
         'api-keys' => ApiKey::class,
+        'domains' => Domain::class,
     ];
 
     /**
@@ -29,7 +32,7 @@ abstract class Service
      */
     protected function createResource(string $resourceType, array $attributes)
     {
-        $class = $this->mapping[$resourceType];
+        $class = isset($this->mapping[$resourceType]) ? $this->mapping[$resourceType] : Resource::class;
 
         if (isset($attributes['data']) && is_array($attributes['data'])) {
             foreach ($attributes['data'] as $key => $value) {
