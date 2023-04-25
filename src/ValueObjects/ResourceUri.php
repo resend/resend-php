@@ -39,6 +39,11 @@ final class ResourceUri implements Stringable
         return new self("{$resource}/{$id}");
     }
 
+    public static function verify(string $resource, string $id): self
+    {
+        return new self("{$resource}/{$id}/verify");
+    }
+
     /**
      * Returns the string representation of the object.
      */

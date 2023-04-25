@@ -37,6 +37,11 @@ final class Domain extends Service
      */
     public function remove(string $id): \Resend\Domain
     {
+        $payload = Payload::delete('domains', $id);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('domains', $result);
     }
 
     /**
@@ -44,5 +49,10 @@ final class Domain extends Service
      */
     public function verify(string $id): \Resend\Domain
     {
+        $payload = Payload::verify('domains', $id);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('domains', $result);
     }
 }

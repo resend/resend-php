@@ -52,6 +52,15 @@ final class Payload
         return new self($contentType, $method, $uri);
     }
 
+    public static function verify(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::POST;
+        $uri = ResourceUri::verify($resource, $id);
+
+        return new self($contentType, $method, $uri);
+    }
+
     /**
      * Creates a new Psr 7 Request instance.
      */
