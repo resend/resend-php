@@ -48,3 +48,15 @@ it('does not have a body when making a DELETE request', function () {
     expect($request->getBody()->getContents())->toBe('')
         ->and($request->getUri()->getPath())->toBe('/api-keys/re_123456');
 });
+
+it('can send verify requests with empty body', function () {
+    $payload = Payload::verify('domains', 're_123456');
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect($request->getBody()->getContents())->toBe('[]')
+        ->and($request->getUri()->getPath())->toBe('/domains/re_123456/verify');
+});
