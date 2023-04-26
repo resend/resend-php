@@ -3,6 +3,7 @@
 namespace Resend\ValueObjects\Transporter;
 
 use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 use Resend\Enums\Transporter\ContentType;
 use Resend\Enums\Transporter\Method;
 use Resend\ValueObjects\ResourceUri;
@@ -21,6 +22,15 @@ final class Payload
         //
     }
 
+    public static function list(string $resource): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::GET;
+        $uri = ResourceUri::list($resource);
+
+        return new self($contentType, $method, $uri);
+    }
+
     /**
      * Create a new Transporter Payload instance.
      */
@@ -33,12 +43,31 @@ final class Payload
         return new self($contentType, $method, $uri, $parameters);
     }
 
+    public static function delete(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::DELETE;
+        $uri = ResourceUri::delete($resource, $id);
+
+        return new self($contentType, $method, $uri);
+    }
+
+    public static function verify(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::POST;
+        $uri = ResourceUri::verify($resource, $id);
+
+        return new self($contentType, $method, $uri);
+    }
+
     /**
      * Creates a new Psr 7 Request instance.
      */
-    public function toRequest(BaseUri $baseUri, Headers $headers): Request
+    public function toRequest(BaseUri $baseUri, Headers $headers): RequestInterface
     {
         $body = null;
+
         $uri = $baseUri->toString() . $this->uri->toString();
 
         $headers = $headers->withContentType($this->contentType);

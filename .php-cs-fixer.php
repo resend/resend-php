@@ -113,6 +113,10 @@ $rules = [
         'positions' => ['inside', 'outside'],
     ],
     'no_spaces_inside_parenthesis' => true,
+    'no_superfluous_phpdoc_tags' => [
+        'allow_mixed' => true,
+        'allow_unused_params' => true,
+    ],
     'no_trailing_comma_in_list_call' => true,
     'no_trailing_comma_in_singleline_array' => true,
     'no_trailing_whitespace' => true,

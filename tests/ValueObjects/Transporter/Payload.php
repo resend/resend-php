@@ -27,3 +27,36 @@ it('has a body when making a POST request', function () {
         'to' => 'test@resend.com',
     ]));
 });
+
+it('does not have a body when making a GET request', function () {
+    $payload = Payload::list('api-keys');
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    expect($payload->toRequest($baseUri, $headers)->getBody()->getContents())->toBe('');
+});
+
+it('does not have a body when making a DELETE request', function () {
+    $payload = Payload::delete('api-keys', 're_123456');
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect($request->getBody()->getContents())->toBe('')
+        ->and($request->getUri()->getPath())->toBe('/api-keys/re_123456');
+});
+
+it('can send verify requests with empty body', function () {
+    $payload = Payload::verify('domains', 're_123456');
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect($request->getBody()->getContents())->toBe('[]')
+        ->and($request->getUri()->getPath())->toBe('/domains/re_123456/verify');
+});

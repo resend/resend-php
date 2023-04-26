@@ -16,11 +16,32 @@ final class ResourceUri implements Stringable
     }
 
     /**
-     * Create a new Resource URI value object.
+     * Create a new Resource URI value object that creates the given resource.
      */
     public static function create(string $resource): self
     {
         return new self($resource);
+    }
+
+    /**
+     * Create a new Resource URI value object that lists the given resource.
+     */
+    public static function list(string $resource): self
+    {
+        return new self($resource);
+    }
+
+    /**
+     * Create a new Resource URI value object that deletes the given resource.
+     */
+    public static function delete(string $resource, string $id): self
+    {
+        return new self("{$resource}/{$id}");
+    }
+
+    public static function verify(string $resource, string $id): self
+    {
+        return new self("{$resource}/{$id}/verify");
     }
 
     /**
