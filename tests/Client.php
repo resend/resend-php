@@ -4,7 +4,7 @@ use Resend\Email;
 use Resend\Service\ApiKey;
 
 test('send email', function () {
-    $client = mockClient('POST', 'email', [
+    $client = mockClient('POST', 'emails', [
         'to' => 'test@resend.com',
     ], email());
 

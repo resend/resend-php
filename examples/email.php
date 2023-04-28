@@ -9,7 +9,7 @@ $resend = Resend::client($_ENV['RESEND_API_KEY']);
 // Attempt to send out an email...
 try {
     // Send an email using plain text...
-    $result = $resend->sendEmail([
+    $result = $resend->emails->send([
         'from' => $_ENV['MAIL_FROM_ADDRESS'],
         'to' => 'user@gmail.com',
         'subject' => 'hello world',

@@ -32,6 +32,14 @@ final class ResourceUri implements Stringable
     }
 
     /**
+     * Create a new Resource URI value object that retrieves the given resource.
+     */
+    public static function get(string $resource, string $id): self
+    {
+        return new self("{$resource}/{$id}");
+    }
+
+    /**
      * Create a new Resource URI value object that deletes the given resource.
      */
     public static function delete(string $resource, string $id): self

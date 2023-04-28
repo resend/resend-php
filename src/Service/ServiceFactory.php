@@ -14,6 +14,7 @@ final class ServiceFactory
     private static array $classMap = [
         'apiKeys' => ApiKey::class,
         'domains' => Domain::class,
+        'emails' => Email::class,
     ];
 
     /**
