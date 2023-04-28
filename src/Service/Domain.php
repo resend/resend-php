@@ -8,6 +8,8 @@ final class Domain extends Service
 {
     /**
      * Add a new domain.
+     *
+     * @see https://resend.com/docs/api-reference/domains/create-domain#body-parameters
      */
     public function create(array $parameters): \Resend\Domain
     {
@@ -22,6 +24,8 @@ final class Domain extends Service
      * List all domains.
      *
      * @return \Resend\Collection<\Resend\Domain>
+     *
+     * @see https://resend.com/docs/api-reference/domains/list-domains
      */
     public function list(): \Resend\Collection
     {
@@ -34,6 +38,8 @@ final class Domain extends Service
 
     /**
      * Remove a domain with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/domains/delete-domain#path-parameters
      */
     public function remove(string $id): \Resend\Domain
     {
@@ -46,6 +52,8 @@ final class Domain extends Service
 
     /**
      * Verify a domain with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/domains/verify-domain#path-parameters
      */
     public function verify(string $id): \Resend\Domain
     {

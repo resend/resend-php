@@ -6,6 +6,7 @@ use Resend\ApiKey;
 use Resend\Collection;
 use Resend\Contracts\Transporter;
 use Resend\Domain;
+use Resend\Email;
 use Resend\Resource;
 
 abstract class Service
@@ -16,6 +17,7 @@ abstract class Service
     protected $mapping = [
         'api-keys' => ApiKey::class,
         'domains' => Domain::class,
+        'emails' => Email::class,
     ];
 
     /**

@@ -31,6 +31,15 @@ final class Payload
         return new self($contentType, $method, $uri);
     }
 
+    public static function get(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::GET;
+        $uri = ResourceUri::get($resource, $id);
+
+        return new self($contentType, $method, $uri);
+    }
+
     /**
      * Create a new Transporter Payload instance.
      */

@@ -4,13 +4,13 @@ namespace Resend;
 
 use Resend\Contracts\Transporter;
 use Resend\Service\ServiceFactory;
-use Resend\ValueObjects\Transporter\Payload;
 
 /**
  * Client used to send requests to the Resend API.
  *
  * @property \Resend\Service\ApiKey $apiKeys
  * @property \Resend\Service\Domain $domains
+ * @property \Resend\Service\Email $emails
  */
 class Client
 {
@@ -31,15 +31,12 @@ class Client
     /**
      * Send an email with the given parameters.
      *
-     * @see https://resend.com/docs/api-reference/send-email#body-parameters
+     * @deprecated
+     * @see @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
      */
     public function sendEmail(array $parameters): Email
     {
-        $payload = Payload::create('email', $parameters);
-
-        $result = $this->transporter->request($payload);
-
-        return Email::from($result);
+        return $this->emails->send($parameters);
     }
 
     /**

@@ -107,6 +107,9 @@ class Resource implements ResourceContract
         return $this->getAttributes();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetExists(mixed $offset): bool
     {
         try {
@@ -116,16 +119,25 @@ class Resource implements ResourceContract
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetGet(mixed $offset): mixed
     {
         return $this->getAttribute($offset);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         throw new BadMethodCallException('Cannot set resource attributes.');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetUnset(mixed $offset): void
     {
         throw new BadMethodCallException('Cannot unset resource attributes.');
