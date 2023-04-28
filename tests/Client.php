@@ -8,6 +8,7 @@ test('send email', function () {
         'to' => 'test@resend.com',
     ], email());
 
+    // Use deprecated method until it is removed...
     $result = $client->sendEmail([
         'to' => 'test@resend.com',
     ]);

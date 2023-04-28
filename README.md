@@ -22,7 +22,7 @@ Then, interact with Resend's API:
 ```php
 $resend = Resend::client('re_123456789');
 
-$resend->sendEmail([
+$resend->emails->create([
     'from' => 'onboarding@resend.dev',
     'to' => 'user@gmail.com',
     'subject' => 'hello world',
