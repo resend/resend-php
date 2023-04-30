@@ -2,6 +2,7 @@
 
 namespace Resend;
 
+use Resend\Contracts\Client as ClientContract;
 use Resend\Contracts\Transporter;
 use Resend\Service\ServiceFactory;
 
@@ -12,7 +13,7 @@ use Resend\Service\ServiceFactory;
  * @property \Resend\Service\Domain $domains
  * @property \Resend\Service\Email $emails
  */
-class Client
+class Client implements ClientContract
 {
     /**
      * The service factory instance.
