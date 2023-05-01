@@ -13,7 +13,7 @@ use Traversable;
  *
  * @property TResource[] $data
  */
-final class Collection extends Resource implements IteratorAggregate
+class Collection extends Resource implements IteratorAggregate
 {
     /**
      * {@inheritdoc}

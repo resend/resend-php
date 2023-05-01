@@ -4,7 +4,7 @@ namespace Resend\Service;
 
 use Resend\ValueObjects\Transporter\Payload;
 
-final class ApiKey extends Service
+class ApiKey extends Service
 {
     /**
      * Create a new API key.

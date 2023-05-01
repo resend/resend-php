@@ -4,7 +4,7 @@ namespace Resend\Service;
 
 use Resend\Contracts\Transporter;
 
-final class ServiceFactory
+class ServiceFactory
 {
     /**
      * A list of service classes.

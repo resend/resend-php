@@ -4,7 +4,7 @@ namespace Resend\Service;
 
 use Resend\ValueObjects\Transporter\Payload;
 
-final class Domain extends Service
+class Domain extends Service
 {
     /**
      * Add a new domain.

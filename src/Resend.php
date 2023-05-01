@@ -7,7 +7,7 @@ use Resend\ValueObjects\ApiKey;
 use Resend\ValueObjects\Transporter\BaseUri;
 use Resend\ValueObjects\Transporter\Headers;
 
-final class Resend
+class Resend
 {
     /**
      * Creates a new Resend Client with the given API key.
