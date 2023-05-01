@@ -5,7 +5,7 @@ namespace Resend\Exceptions;
 use Exception;
 use JsonException;
 
-final class UnserializableResponse extends Exception
+class UnserializableResponse extends Exception
 {
     /**
      * Create a new Unserializable Response exception.

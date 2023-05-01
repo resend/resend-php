@@ -8,7 +8,7 @@ namespace Resend;
  * @property string $created_at Time at which the API key was created.
  * @property string|null $token The new API key to authenticate request with Resend.
  */
-final class ApiKey extends Resource
+class ApiKey extends Resource
 {
     //
 }

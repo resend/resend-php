@@ -8,7 +8,7 @@ namespace Resend;
  * @property string $to The email recipient address.
  * @property string $created_at Time at which the API key was created.
  */
-final class Email extends Resource
+class Email extends Resource
 {
     //
 }

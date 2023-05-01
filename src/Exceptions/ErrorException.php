@@ -4,7 +4,7 @@ namespace Resend\Exceptions;
 
 use Exception;
 
-final class ErrorException extends Exception
+class ErrorException extends Exception
 {
     /**
      * Creates a new Error Exception instance.

@@ -2,7 +2,7 @@
 
 namespace Resend;
 
-final class Domain extends Resource
+class Domain extends Resource
 {
     //
 }

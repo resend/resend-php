@@ -4,7 +4,7 @@ namespace Resend\Service;
 
 use Resend\ValueObjects\Transporter\Payload;
 
-final class Email extends Service
+class Email extends Service
 {
     /**
      * Retrieve an email with the given ID.

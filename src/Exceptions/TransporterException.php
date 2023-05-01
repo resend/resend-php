@@ -5,7 +5,7 @@ namespace Resend\Exceptions;
 use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 
-final class TransporterException extends Exception
+class TransporterException extends Exception
 {
     /**
      * Create a new Transporter exception.
