@@ -5,6 +5,7 @@ namespace Resend\Transporters;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 use Resend\Contracts\Transporter;
 use Resend\Exceptions\ErrorException;
 use Resend\Exceptions\TransporterException;
@@ -43,7 +44,9 @@ class HttpTransporter implements Transporter
             throw new TransporterException($clientException);
         }
 
-        $contents = (string) $response->getBody();
+        $contents = $response->getBody()->getContents();
+
+        $this->throwIfJsonError($response, $contents);
 
         try {
             $response = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
@@ -51,10 +54,30 @@ class HttpTransporter implements Transporter
             throw new UnserializableResponse($jsonException);
         }
 
-        if (isset($response['error'])) {
-            throw new ErrorException($response['error']);
+        return $response;
+    }
+
+    /**
+     * Throw an exception if there is a JSON error.
+     */
+    protected function throwIfJsonError(ResponseInterface $response, string $contents): void
+    {
+        if ($response->getStatusCode() < 400) {
+            return;
         }
 
-        return $response;
+        try {
+            $response = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
+
+            $errors = ['missing_required_fields', 'missing_required_field', 'missing_api_key', 'invalid_api_key', 'invalid_from_address', 'not_found', 'method_not_allowed', 'invalid_scope', 'internal_server_error'];
+            if (
+                isset($response['error']) ||
+                in_array($response['name'], $errors)
+            ) {
+                throw new ErrorException($response['error'] ?? $response);
+            }
+        } catch (JsonException $jsonException) {
+            throw new UnserializableResponse($jsonException);
+        }
     }
 }
