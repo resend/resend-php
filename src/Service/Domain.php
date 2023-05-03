@@ -32,7 +32,6 @@ class Domain extends Service
         $payload = Payload::list('domains');
 
         $result = $this->transporter->request($payload);
-        var_dump($result);
 
         return $this->createResource('domains', $result);
     }
