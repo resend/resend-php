@@ -69,7 +69,7 @@ class HttpTransporter implements Transporter
         try {
             $response = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
 
-            $errors = ['missing_required_fields', 'missing_required_field', 'missing_api_key', 'invalid_api_key', 'invalid_from_address', 'not_found', 'method_not_allowed', 'invalid_scope', 'internal_server_error'];
+            $errors = ['missing_required_fields', 'missing_required_field', 'missing_api_key', 'invalid_api_key', 'invalid_from_address', 'validation_error', 'not_found', 'method_not_allowed', 'invalid_scope', 'internal_server_error'];
             if (
                 isset($response['error']) ||
                 in_array($response['name'], $errors)
