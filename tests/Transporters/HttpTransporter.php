@@ -95,7 +95,23 @@ test('request can handle serialization errors', function () {
     $this->http->request($payload);
 })->throws(UnserializableResponse::class, 'Syntax error');
 
-test('throw json errors', function () {
+test('request can throw resend errors', function () {
+    $payload = Payload::create('email', ['to' => 'test@resend.com']);
+    $response = new Response(422, [], json_encode([
+        'statusCode' => 422,
+        'name' => 'missing_required_field',
+        'message' => 'Missing `to` field',
+    ]));
+
+    $this->client
+        ->shouldReceive('sendRequest')
+        ->once()
+        ->andReturn($response);
+
+    $this->http->request($payload);
+})->throws(ErrorException::class);
+
+test('request can throw json error', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
     $response = new Response(422, [], 'err');
 
