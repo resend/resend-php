@@ -69,15 +69,37 @@ class HttpTransporter implements Transporter
         try {
             $response = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
 
-            $errors = ['missing_required_fields', 'missing_required_field', 'missing_api_key', 'invalid_api_key', 'invalid_from_address', 'validation_error', 'not_found', 'method_not_allowed', 'invalid_scope', 'restricted_api_key', 'internal_server_error'];
             if (
                 isset($response['error']) ||
-                in_array($response['name'], $errors)
+                $this->isResendError($response['name'])
             ) {
                 throw new ErrorException($response['error'] ?? $response);
             }
         } catch (JsonException $jsonException) {
             throw new UnserializableResponse($jsonException);
         }
+    }
+
+    /**
+     * Determine if the given error name is a Resend error.
+     */
+    protected function isResendError(string $errorName): bool
+    {
+        $errors = [
+            'missing_required_fields',
+            'missing_required_field',
+            'invalid_from_address',
+            'validation_error',
+            'missing_api_key',
+            'invalid_api_key',
+            'restricted_api_key',
+            'invalid_scope',
+            'rate_limit_exceeded',
+            'not_found',
+            'method_not_allowed',
+            'internal_server_error',
+        ];
+
+        return in_array($errorName, $errors);
     }
 }
