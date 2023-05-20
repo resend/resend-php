@@ -3,6 +3,15 @@
 use Resend\Collection;
 use Resend\Domain;
 
+it('can get a domain resource', function () {
+    $client = mockClient('GET', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], domain());
+
+    $result = $client->domains->get('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+
+    expect($result)->toBeInstanceOf(Domain::class)
+        ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+});
+
 it('can create a domain resource', function () {
     $client = mockClient('POST', 'domains', [
         'name' => 'resend.dev',

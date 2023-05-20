@@ -7,6 +7,20 @@ use Resend\ValueObjects\Transporter\Payload;
 class Domain extends Service
 {
     /**
+     * Retrieve a domain with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/domains/get-domain
+     */
+    public function get(string $id): \Resend\Domain
+    {
+        $payload = Payload::get('domains', $id);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('domains', $result);
+    }
+
+    /**
      * Add a new domain.
      *
      * @see https://resend.com/docs/api-reference/domains/create-domain#body-parameters

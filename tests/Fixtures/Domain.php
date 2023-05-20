@@ -3,6 +3,7 @@
 function domain(): array
 {
     return [
+        'object' => 'domain',
         'id' => '4dd369bc-aa82-4ff3-97de-514ae3000ee0',
         'name' => 'resend.dev',
         'status' => 'pending',
