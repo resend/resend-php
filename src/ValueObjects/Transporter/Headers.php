@@ -29,6 +29,17 @@ final class Headers
     }
 
     /**
+     * Create a new Headers value object with the given user agent and existing headers.
+     */
+    public function withUserAgent(string $name, string $version): self
+    {
+        return new self([
+            ...$this->headers,
+            'User-Agent' => $name . '/' . $version,
+        ]);
+    }
+
+    /**
      * Create a new Headers value object with the given content type and existing headers.
      */
     public function withContentType(ContentType $contentType, string $suffix = ''): self

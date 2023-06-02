@@ -9,6 +9,8 @@ use Resend\ValueObjects\Transporter\Headers;
 
 class Resend
 {
+    const VERSION = '0.7.0';
+
     /**
      * Creates a new Resend Client with the given API key.
      */
@@ -16,7 +18,7 @@ class Resend
     {
         $apiKey = ApiKey::from($apiKey);
         $baseUri = BaseUri::from('api.resend.com');
-        $headers = Headers::withAuthorization($apiKey);
+        $headers = Headers::withAuthorization($apiKey)->withUserAgent('resend-php', self::VERSION);
 
         $client = new GuzzleClient();
         $transporter = new HttpTransporter($client, $baseUri, $headers);
