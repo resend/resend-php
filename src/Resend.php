@@ -18,7 +18,7 @@ class Resend
     {
         $apiKey = ApiKey::from($apiKey);
         $baseUri = BaseUri::from('api.resend.com');
-        $headers = Headers::withAuthorization($apiKey)->withUserAgent('resend-php', self::VERSION);
+        $headers = Headers::withAuthorization($apiKey);
 
         $client = new GuzzleClient();
         $transporter = new HttpTransporter($client, $baseUri, $headers);
