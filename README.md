@@ -31,4 +31,4 @@ $resend->emails->send([
 ```
 
 > **Note**
-> This client is heavily inspired by [OpenAI PHP](https://github.com/openai-php).
+> This client is inspired by [OpenAI PHP](https://github.com/openai-php).
