@@ -7,6 +7,13 @@
 
 ---
 
+## Examples
+
+Send email with:
+
+* [PHP](https://github.com/resendlabs/resend-php-example)
+* [Laravel](https://github.com/resendlabs/resend-laravel-example)
+
 ## Getting started
 
 > **Requires [PHP 8.1+](https://php.net/releases/)**
