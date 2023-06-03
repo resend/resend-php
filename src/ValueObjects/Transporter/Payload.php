@@ -4,6 +4,7 @@ namespace Resend\ValueObjects\Transporter;
 
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
+use Resend;
 use Resend\Enums\Transporter\ContentType;
 use Resend\Enums\Transporter\Method;
 use Resend\ValueObjects\ResourceUri;
@@ -79,7 +80,8 @@ final class Payload
 
         $uri = $baseUri->toString() . $this->uri->toString();
 
-        $headers = $headers->withContentType($this->contentType);
+        $headers = $headers->withUserAgent('resend-php', Resend::VERSION)
+            ->withContentType($this->contentType);
 
         if ($this->method === Method::POST) {
             $body = json_encode($this->parameters, JSON_THROW_ON_ERROR);

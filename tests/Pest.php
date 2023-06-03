@@ -22,6 +22,7 @@ function mockClient(string $method, string $resource, array $parameters, array|s
             $request = $payload->toRequest($baseUri, $headers);
 
             return $request->getMethod() === $method
+                && $request->getHeader('User-Agent')[0] === 'resend-php/' . Resend::VERSION
                 && $request->getUri()->getPath() === "/{$resource}";
         })->andReturn($response);
 

@@ -9,6 +9,8 @@ use Resend\ValueObjects\Transporter\Headers;
 
 class Resend
 {
+    const VERSION = '0.7.0';
+
     /**
      * Creates a new Resend Client with the given API key.
      */
