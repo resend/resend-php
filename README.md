@@ -7,6 +7,13 @@
 
 ---
 
+## Examples
+
+Send email with:
+
+* [PHP](https://github.com/resendlabs/resend-php-example)
+* [Laravel](https://github.com/resendlabs/resend-laravel-example)
+
 ## Getting started
 
 > **Requires [PHP 8.1+](https://php.net/releases/)**
@@ -31,4 +38,4 @@ $resend->emails->send([
 ```
 
 > **Note**
-> This client is heavily inspired by [OpenAI PHP](https://github.com/openai-php).
+> This client is inspired by [OpenAI PHP](https://github.com/openai-php).
