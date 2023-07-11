@@ -89,6 +89,7 @@ class HttpTransporter implements Transporter
             'missing_required_fields',
             'missing_required_field',
             'invalid_from_address',
+            'invalid_to_address',
             'validation_error',
             'missing_api_key',
             'invalid_api_key',
