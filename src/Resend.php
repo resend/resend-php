@@ -17,10 +17,10 @@ class Resend
     /**
      * Creates a new Resend Client with the given API key.
      */
-    public static function client(string $apiKey): Client
+    public static function client(string $apiKey, $config = []): Client
     {
         $apiKey = ApiKey::from($apiKey);
-        $baseUri = BaseUri::from('api.resend.com');
+        $baseUri = BaseUri::from(isset($config['api_base']) ? $config['api_base'] : 'api.resend.com');
         $headers = Headers::withAuthorization($apiKey);
 
         $client = new GuzzleClient();

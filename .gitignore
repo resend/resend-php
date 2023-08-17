@@ -12,3 +12,6 @@ composer.lock
 
 # Ignore cached PHPUnit results.
 .phpunit.result.cache
+
+# Ignore sample content.
+/content/
