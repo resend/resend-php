@@ -95,6 +95,7 @@ class HttpTransporter implements Transporter
             'invalid_api_key',
             'restricted_api_key',
             'invalid_scope',
+            'invalid_parameter',
             'rate_limit_exceeded',
             'not_found',
             'method_not_allowed',
