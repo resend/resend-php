@@ -2,7 +2,6 @@
 
 namespace Resend;
 
-use Exception;
 use Resend\Exceptions\WebhookSignatureVerificationException;
 
 final class WebhookSignature
@@ -29,13 +28,13 @@ final class WebhookSignature
 
         foreach ($passedSignatures as $versionedSignature) {
             $signatureParts = explode(',', $versionedSignature, 2);
-            $version = $signatureParts[0];
-            $passedSignature = $signatureParts[1];
 
+            $version = $signatureParts[0];
             if ($version !== 'v1') {
                 continue;
             }
 
+            $passedSignature = $signatureParts[1];
             if (hash_equals($expectedSignature, $passedSignature)) {
                 $signatureFound = true;
 
@@ -59,6 +58,9 @@ final class WebhookSignature
         return "v1,{$signature}";
     }
 
+    /**
+     * Determine the correct secret from the user provided secret string.
+     */
     protected static function getSecret(string $secret): string
     {
         $prefix = 'whsec_';
@@ -69,15 +71,17 @@ final class WebhookSignature
         return base64_decode($secret);
     }
 
+    /**
+     * Verify the given timestamp with the set tolerance.
+     */
     protected static function verifyTimestamp(string $timestamp, int $tolerance = 300)
     {
-        $now = time();
-
-        try {
-            $timestamp = intval($timestamp, 10);
-        } catch (Exception $exception) {
+        if (! is_numeric($timestamp)) {
             throw new WebhookSignatureVerificationException('Invalid timestamp');
         }
+
+        $now = time();
+        $timestamp = (int) $timestamp;
 
         if ($timestamp < ($now - $tolerance)) {
             throw new WebhookSignatureVerificationException('Message timestamp too old');

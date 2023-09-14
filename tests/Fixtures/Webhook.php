@@ -1,6 +1,6 @@
 <?php
 
-function webhook(int $timestamp)
+function webhook(?int $timestamp = null)
 {
     $payload = '{"test": 2432232315}';
     $secret = 'MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw';
@@ -18,6 +18,5 @@ function webhook(int $timestamp)
     return [
         'payload' => $payload,
         'headers' => $headers,
-        'signature' => $signature,
     ];
 }
