@@ -49,6 +49,14 @@ class Client implements ClientContract
     }
 
     /**
+     * Magic method to retrieve a service by name.
+     */
+    public function __call(string $name, array $arguments)
+    {
+        return $this->getService($name);
+    }
+
+    /**
      * Attach the given API service to the client.
      */
     private function getService(string $name)

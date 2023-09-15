@@ -20,9 +20,16 @@ test('send email', function () {
         ->to->toBe('user@gmail.com');
 });
 
-test('service is created when required', function () {
+test('service is created when required through property', function () {
     $resend = Resend::client('foo');
 
     expect($resend->apiKeys)
+        ->toBeInstanceOf(ApiKey::class);
+});
+
+test('sevice is created when required through method', function () {
+    $resend = Resend::client('foo');
+
+    expect($resend->apiKeys())
         ->toBeInstanceOf(ApiKey::class);
 });
