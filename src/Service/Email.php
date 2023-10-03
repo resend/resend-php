@@ -43,4 +43,18 @@ class Email extends Service
     {
         return $this->create($parameters);
     }
+
+    /**
+     * Send a batch of emails with the given parameters.
+     *
+     * @see https://resend.com/docs/api-reference/emails/send-batch-emails#body-parameters
+     */
+    public function batch(array $parameters)
+    {
+        $payload = Payload::create('emails/batch', $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('emails', $result);
+    }
 }
