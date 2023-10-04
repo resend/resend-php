@@ -9,3 +9,17 @@ function email(): array
         'created_at' => '2022-07-25T00:28:32.493138+00:00',
     ];
 }
+
+function batch(): array
+{
+    return [
+        'data' => [
+            [
+                'id' => '49a3999c-0ce1-4ea6-ab68-afcd6dc2e794',
+            ],
+            [
+                'id' => '49a3999c-0ce1-4ea6-ab68-afcd6dc2e794',
+            ],
+        ],
+    ];
+}
