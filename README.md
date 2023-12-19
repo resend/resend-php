@@ -11,8 +11,8 @@
 
 Send email with:
 
-* [PHP](https://github.com/resendlabs/resend-php-example)
-* [Laravel](https://github.com/resendlabs/resend-laravel-example)
+* [PHP](https://github.com/resend/resend-php-example)
+* [Laravel](https://github.com/resend/resend-laravel-example)
 
 ## Getting started
 
