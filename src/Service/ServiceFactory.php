@@ -14,6 +14,7 @@ class ServiceFactory
     private static array $classMap = [
         'apiKeys' => ApiKey::class,
         'batch' => Batch::class,
+        'contacts' => Contact::class,
         'domains' => Domain::class,
         'emails' => Email::class,
     ];
