@@ -21,6 +21,20 @@ class Contact extends Service
     }
 
     /**
+     * Add a contact to an audience.
+     *
+     * @see https://resend.com/docs/api-reference/contacts/create-contact
+     */
+    public function create(string $audienceId, array $parameters): \Resend\Contact
+    {
+        $payload = Payload::create("audiences/$audienceId/contacts", $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('contacts', $result);
+    }
+
+    /**
      * List all contacts from an audience.
      *
      * @return \Resend\Collection<\Resend\Contact>
@@ -30,6 +44,20 @@ class Contact extends Service
     public function list(string $audienceId): \Resend\Collection
     {
         $payload = Payload::list("audiences/$audienceId/contacts");
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('contacts', $result);
+    }
+
+    /**
+     * Remove a contact from an audience.
+     *
+     * @see https://resend.com/docs/api-reference/contacts/delete-contact
+     */
+    public function remove(string $audienceId, string $id): \Resend\Contact
+    {
+        $payload = Payload::delete("audiences/$audienceId/contacts", $id);
 
         $result = $this->transporter->request($payload);
 
