@@ -34,6 +34,19 @@ it('can get a list of contacts in an audience', function () {
         ->data->toBeArray();
 });
 
+it('can update a contact in an audience', function () {
+    $client = mockClient('PATCH', 'audiences/78261eea-8f8b-4381-83c6-79fa7120f1cf/contacts/e169aa45-1ecf-4183-9955-b1499d5701d3', [
+        'first_name' => 'Steve',
+    ], contact());
+
+    $result = $client->contacts->update('78261eea-8f8b-4381-83c6-79fa7120f1cf', 'e169aa45-1ecf-4183-9955-b1499d5701d3', [
+        'first_name' => 'Steve',
+    ]);
+
+    expect($result)->toBeInstanceOf(Contact::class)
+        ->id->toBe('e169aa45-1ecf-4183-9955-b1499d5701d3');
+});
+
 it('can remove a contact in an audience', function () {
     $client = mockClient('DELETE', 'audiences/78261eea-8f8b-4381-83c6-79fa7120f1cf/contacts/e169aa45-1ecf-4183-9955-b1499d5701d3', [], contact());
 
