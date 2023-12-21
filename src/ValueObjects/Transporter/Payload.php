@@ -65,7 +65,7 @@ final class Payload
     public static function update(string $resource, string $id, array $parameters): self
     {
         $contentType = ContentType::JSON;
-        $method = Method::PATCH;
+        $method = Method::PUT;
         $uri = ResourceUri::update($resource, $id);
 
         return new self($contentType, $method, $uri, $parameters);
@@ -107,7 +107,7 @@ final class Payload
         $headers = $headers->withUserAgent('resend-php', Resend::VERSION)
             ->withContentType($this->contentType);
 
-        if ($this->method === Method::POST) {
+        if ($this->method === Method::POST || $this->method === Method::PUT) {
             $body = json_encode($this->parameters, JSON_THROW_ON_ERROR);
         }
 
