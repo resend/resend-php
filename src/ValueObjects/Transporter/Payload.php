@@ -65,7 +65,7 @@ final class Payload
     public static function update(string $resource, string $id, array $parameters): self
     {
         $contentType = ContentType::JSON;
-        $method = Method::PUT;
+        $method = Method::PATCH;
         $uri = ResourceUri::update($resource, $id);
 
         return new self($contentType, $method, $uri, $parameters);
