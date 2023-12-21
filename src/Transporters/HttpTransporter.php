@@ -45,7 +45,6 @@ class HttpTransporter implements Transporter
         }
 
         $contents = $response->getBody()->getContents();
-        var_dump($contents);
 
         $this->throwIfJsonError($response, $contents);
 

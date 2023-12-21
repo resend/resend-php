@@ -107,7 +107,7 @@ final class Payload
         $headers = $headers->withUserAgent('resend-php', Resend::VERSION)
             ->withContentType($this->contentType);
 
-        if ($this->method === Method::POST || $this->method === Method::PUT) {
+        if ($this->method === Method::POST || $this->method === Method::PATCH || $this->method === Method::PUT) {
             $body = json_encode($this->parameters, JSON_THROW_ON_ERROR);
         }
 
