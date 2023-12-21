@@ -51,6 +51,20 @@ class Contact extends Service
     }
 
     /**
+     * Update a contact in an audience.
+     *
+     * @see https://resend.com/docs/api-reference/contacts/update-contacts
+     */
+    public function update(string $audienceId, string $id, array $parameters): \Resend\Contact
+    {
+        $payload = Payload::update("audiences/$audienceId/contacts", $id, $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('contacts', $result);
+    }
+
+    /**
      * Remove a contact from an audience.
      *
      * @see https://resend.com/docs/api-reference/contacts/delete-contact
