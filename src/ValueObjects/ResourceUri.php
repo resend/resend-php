@@ -40,6 +40,14 @@ final class ResourceUri implements Stringable
     }
 
     /**
+     * Create a new Resource URI value object that updates the given resource.
+     */
+    public static function update(string $resource, string $id): self
+    {
+        return new self("{$resource}/{$id}");
+    }
+
+    /**
      * Create a new Resource URI value object that deletes the given resource.
      */
     public static function delete(string $resource, string $id): self
@@ -47,6 +55,9 @@ final class ResourceUri implements Stringable
         return new self("{$resource}/{$id}");
     }
 
+    /**
+     * Create a new Resource URI value object that verifies the given resource.
+     */
     public static function verify(string $resource, string $id): self
     {
         return new self("{$resource}/{$id}/verify");

@@ -12,6 +12,7 @@ use Resend\Service\ServiceFactory;
  * @property \Resend\Service\ApiKey $apiKeys
  * @property \Resend\Service\Audience $audiences
  * @property \Resend\Service\Batch $batch
+ * @property \Resend\Service\Contact $contacts
  * @property \Resend\Service\Domain $domains
  * @property \Resend\Service\Email $emails
  */
