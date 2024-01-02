@@ -23,6 +23,9 @@ final class Payload
         //
     }
 
+    /**
+     * Create a new Transporter Payload instance.
+     */
     public static function list(string $resource): self
     {
         $contentType = ContentType::JSON;
@@ -32,6 +35,9 @@ final class Payload
         return new self($contentType, $method, $uri);
     }
 
+    /**
+     * Create a new Transporter Payload instance.
+     */
     public static function get(string $resource, string $id): self
     {
         $contentType = ContentType::JSON;
@@ -53,6 +59,21 @@ final class Payload
         return new self($contentType, $method, $uri, $parameters);
     }
 
+    /**
+     * Create a new Transporter Payload instance.
+     */
+    public static function update(string $resource, string $id, array $parameters): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::PATCH;
+        $uri = ResourceUri::update($resource, $id);
+
+        return new self($contentType, $method, $uri, $parameters);
+    }
+
+    /**
+     * Create a new Transporter Payload instance.
+     */
     public static function delete(string $resource, string $id): self
     {
         $contentType = ContentType::JSON;
@@ -62,6 +83,9 @@ final class Payload
         return new self($contentType, $method, $uri);
     }
 
+    /**
+     * Create a new Transporter Payload instance.
+     */
     public static function verify(string $resource, string $id): self
     {
         $contentType = ContentType::JSON;
@@ -83,7 +107,7 @@ final class Payload
         $headers = $headers->withUserAgent('resend-php', Resend::VERSION)
             ->withContentType($this->contentType);
 
-        if ($this->method === Method::POST) {
+        if ($this->method === Method::POST || $this->method === Method::PATCH || $this->method === Method::PUT) {
             $body = json_encode($this->parameters, JSON_THROW_ON_ERROR);
         }
 
