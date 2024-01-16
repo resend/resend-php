@@ -6,7 +6,7 @@ use Resend\Contact;
 it('can get a contact in an audience', function () {
     $client = mockClient('GET', 'audiences/78261eea-8f8b-4381-83c6-79fa7120f1cf/contacts/e169aa45-1ecf-4183-9955-b1499d5701d3', [], contact());
 
-    $result = $client->contacts->get('78261eea-8f8b-4381-83c6-79fa7120f1cf', 'e169aa45-1ecf-4183-9955-b1499d5701d3');
+    $result = $client->contacts->get(audienceId: '78261eea-8f8b-4381-83c6-79fa7120f1cf', id: 'e169aa45-1ecf-4183-9955-b1499d5701d3');
 
     expect($result)->toBeInstanceOf(Contact::class)
         ->id->toBe('e169aa45-1ecf-4183-9955-b1499d5701d3');
@@ -50,7 +50,16 @@ it('can update a contact in an audience', function () {
 it('can remove a contact in an audience', function () {
     $client = mockClient('DELETE', 'audiences/78261eea-8f8b-4381-83c6-79fa7120f1cf/contacts/e169aa45-1ecf-4183-9955-b1499d5701d3', [], contact());
 
-    $result = $client->contacts->remove('78261eea-8f8b-4381-83c6-79fa7120f1cf', 'e169aa45-1ecf-4183-9955-b1499d5701d3');
+    $result = $client->contacts->remove(audienceId: '78261eea-8f8b-4381-83c6-79fa7120f1cf', id: 'e169aa45-1ecf-4183-9955-b1499d5701d3');
+
+    expect($result)->toBeInstanceOf(Contact::class)
+        ->id->toBe('e169aa45-1ecf-4183-9955-b1499d5701d3');
+});
+
+it('can remove a contact in an audience using an email', function () {
+    $client = mockClient('DELETE', 'audiences/78261eea-8f8b-4381-83c6-79fa7120f1cf/contacts/acme@example.com', [], contact());
+
+    $result = $client->contacts->remove(audienceId: '78261eea-8f8b-4381-83c6-79fa7120f1cf', id: 'acme@example.com');
 
     expect($result)->toBeInstanceOf(Contact::class)
         ->id->toBe('e169aa45-1ecf-4183-9955-b1499d5701d3');
