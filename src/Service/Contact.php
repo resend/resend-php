@@ -11,9 +11,9 @@ class Contact extends Service
      *
      * @see https://resend.com/docs/api-reference/contacts/get-contact
      */
-    public function get(string $audienceId, string $contactId): \Resend\Contact
+    public function get(string $audienceId, string $id): \Resend\Contact
     {
-        $payload = Payload::get("audiences/$audienceId/contacts", $contactId);
+        $payload = Payload::get("audiences/$audienceId/contacts", $id);
 
         $result = $this->transporter->request($payload);
 
