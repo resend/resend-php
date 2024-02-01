@@ -13,3 +13,9 @@ it('can be created with a protocol', function () {
 
     expect($baseUri->toString())->toBe('http://api.resend.test/');
 });
+
+it('can be created with a trailing slash', function () {
+    $baseUri = BaseUri::from('https://eu-api.resend.com/');
+
+    expect($baseUri->toString())->toBe('https://eu-api.resend.com/');
+});

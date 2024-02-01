@@ -30,7 +30,9 @@ final class BaseUri implements Stringable
     {
         foreach (['http://', 'https://'] as $protocol) {
             if (str_starts_with($this->baseUri, $protocol)) {
-                return "{$this->baseUri}/";
+                return str_ends_with($this->baseUri, '/')
+                    ? "{$this->baseUri}"
+                    : "{$this->baseUri}/";
             }
         }
 
