@@ -3,6 +3,7 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
          colors="true"
          cacheDirectory=".phpunit.cache"
+         beStrictAboutOutputDuringTests="true"
 >
     <testsuites>
         <testsuite name="default">

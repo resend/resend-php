@@ -15,11 +15,15 @@ function mockClient(string $method, string $resource, array $parameters, array|s
     $transporter
         ->shouldReceive($methodName)
         ->once()
-        ->withArgs(function (Payload $payload) use ($method, $resource) {
+        ->withArgs(function (Payload $payload) use ($method, $resource, $parameters) {
             $baseUri = BaseUri::from('api.resend.com');
             $headers = Headers::withAuthorization(ApiKey::from('foo'));
 
             $request = $payload->toRequest($baseUri, $headers);
+
+            if ($method === 'POST' && (string) $request->getBody() !== json_encode($parameters)) {
+                return false;
+            }
 
             return $request->getMethod() === $method
                 && $request->getHeader('User-Agent')[0] === 'resend-php/' . Resend::VERSION

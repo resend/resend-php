@@ -7,7 +7,7 @@
     "authors": [
         {
             "name": "Resend and contributors",
-            "homepage": "https://github.com/resendlabs/resend-php/contributors"
+            "homepage": "https://github.com/resend/resend-php/contributors"
         }
     ],
     "require": {
@@ -16,8 +16,8 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.13",
-        "pestphp/pest": "^2.0",
-        "pestphp/pest-plugin-mock": "^2.0"
+        "mockery/mockery": "^1.6",
+        "pestphp/pest": "^2.0"
     },
     "autoload": {
         "psr-4": {

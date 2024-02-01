@@ -86,19 +86,21 @@ class HttpTransporter implements Transporter
     protected function isResendError(string $errorName): bool
     {
         $errors = [
-            'missing_required_fields',
-            'missing_required_field',
-            'invalid_from_address',
-            'invalid_to_address',
-            'validation_error',
-            'missing_api_key',
-            'invalid_api_key',
-            'restricted_api_key',
-            'invalid_scope',
-            'rate_limit_exceeded',
-            'not_found',
-            'method_not_allowed',
             'internal_server_error',
+            'invalid_api_key',
+            'invalid_attachment',
+            'invalid_from_address',
+            'invalid_parameter',
+            'invalid_scope',
+            'invalid_to_address',
+            'method_not_allowed',
+            'missing_api_key',
+            'missing_required_field',
+            'missing_required_fields',
+            'not_found',
+            'rate_limit_exceeded',
+            'restricted_api_key',
+            'validation_error',
         ];
 
         return in_array($errorName, $errors);
