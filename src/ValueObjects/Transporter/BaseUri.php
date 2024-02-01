@@ -28,6 +28,14 @@ final class BaseUri implements Stringable
      */
     public function toString(): string
     {
+        foreach (['http://', 'https://'] as $protocol) {
+            if (str_starts_with($this->baseUri, $protocol)) {
+                return str_ends_with($this->baseUri, '/')
+                    ? "{$this->baseUri}"
+                    : "{$this->baseUri}/";
+            }
+        }
+
         return "https://{$this->baseUri}/";
     }
 }
