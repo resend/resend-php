@@ -34,6 +34,17 @@ it('can get a list of domain resources', function () {
         ->data->toBeArray();
 });
 
+it('can update a domain resource', function () {
+    $client = mockClient('PATCH', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], domain());
+
+    $result = $client->domains->update('4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
+        'open_tracking' => false,
+        'click_tracking' => true,
+    ]);
+
+    expect($result)->toBeInstanceOf(Domain::class);
+});
+
 it('can remove a domain resource', function () {
     $client = mockClient('DELETE', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], domain());
 

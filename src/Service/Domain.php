@@ -51,6 +51,20 @@ class Domain extends Service
     }
 
     /**
+     * Update a domain with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/domains/update-domain
+     */
+    public function update(string $id, array $parameters): \Resend\Domain
+    {
+        $payload = Payload::update('domains', $id, $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('domains', $result);
+    }
+
+    /**
      * Remove a domain with the given ID.
      *
      * @see https://resend.com/docs/api-reference/domains/delete-domain#path-parameters
