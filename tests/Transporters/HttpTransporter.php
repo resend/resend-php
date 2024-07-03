@@ -97,7 +97,7 @@ test('request can handle serialization errors', function () {
 
 test('request can throw resend errors', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
-    $response = new Response(422, [], json_encode([
+    $response = new Response(422, ['content-type' => 'application/json'], json_encode([
         'statusCode' => 422,
         'name' => 'missing_required_field',
         'message' => 'Missing `to` field',
@@ -113,7 +113,7 @@ test('request can throw resend errors', function () {
 
 test('request can throw json error', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
-    $response = new Response(422, [], 'err');
+    $response = new Response(422, ['content-type' => 'application/json'], 'err');
 
     $this->client
         ->shouldReceive('sendRequest')
@@ -125,7 +125,7 @@ test('request can throw json error', function () {
 
 test('request can handle server errors', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
-    $response = new Response(422, [], json_encode([
+    $response = new Response(422, ['content-type' => 'application/json'], json_encode([
         'error' => [
             'code' => 422,
             'type' => 'missing_required_field',
@@ -145,3 +145,15 @@ test('request can handle server errors', function () {
             ->and($exception->getErrorType())->toBe('missing_required_field');
     });
 });
+
+test('request can handle non json errors', function () {
+    $payload = Payload::create('email', ['to' => 'test@resend.com']);
+    $response = new Response(200, ['content-type' => 'text/html'], 'err');
+
+    $this->client
+        ->shouldReceive('sendRequest')
+        ->once()
+        ->andReturn($response);
+
+    $this->http->request($payload);
+})->throws(UnserializableResponse::class, 'Syntax error');
