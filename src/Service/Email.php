@@ -43,4 +43,16 @@ class Email extends Service
     {
         return $this->create($parameters);
     }
+
+    /**
+     * Cancel a scheduled email with the given ID.
+     */
+    public function cancelSchedule(string $id): \Resend\Email
+    {
+        $payload = Payload::delete('emails', $id, 'schedule');
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('emails', $result);
+    }
 }
