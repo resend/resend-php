@@ -45,11 +45,27 @@ class Email extends Service
     }
 
     /**
-     * Cancel a scheduled email with the given ID.
+     * Update a scheduled email with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/emails/update-email
      */
-    public function cancelSchedule(string $id): \Resend\Email
+    public function update(string $id, array $parameters): \Resend\Email
     {
-        $payload = Payload::delete('emails', $id, 'schedule');
+        $payload = Payload::update('emails', $id, $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('emails', $result);
+    }
+
+    /**
+     * Cancel a scheduled email with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/emails/cancel-email
+     */
+    public function cancel(string $id): \Resend\Email
+    {
+        $payload = Payload::cancel('emails', $id);
 
         $result = $this->transporter->request($payload);
 

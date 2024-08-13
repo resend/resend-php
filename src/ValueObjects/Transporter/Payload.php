@@ -74,11 +74,11 @@ final class Payload
     /**
      * Create a new Transporter Payload instance.
      */
-    public static function delete(string $resource, string $id, ?string $action = null): self
+    public static function delete(string $resource, string $id): self
     {
         $contentType = ContentType::JSON;
         $method = Method::DELETE;
-        $uri = $action ? ResourceUri::withAction($resource, $id, $action) : ResourceUri::delete($resource, $id);
+        $uri = ResourceUri::delete($resource, $id);
 
         return new self($contentType, $method, $uri);
     }
@@ -91,6 +91,18 @@ final class Payload
         $contentType = ContentType::JSON;
         $method = Method::POST;
         $uri = ResourceUri::withAction($resource, $id, 'verify');
+
+        return new self($contentType, $method, $uri);
+    }
+
+    /**
+     * Create a new Transporter Payload instance.
+     */
+    public static function cancel(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::POST;
+        $uri = ResourceUri::withAction($resource, $id, 'cancel');
 
         return new self($contentType, $method, $uri);
     }
