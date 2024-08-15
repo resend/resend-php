@@ -90,7 +90,19 @@ final class Payload
     {
         $contentType = ContentType::JSON;
         $method = Method::POST;
-        $uri = ResourceUri::verify($resource, $id);
+        $uri = ResourceUri::withAction($resource, $id, 'verify');
+
+        return new self($contentType, $method, $uri);
+    }
+
+    /**
+     * Create a new Transporter Payload instance.
+     */
+    public static function cancel(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::POST;
+        $uri = ResourceUri::withAction($resource, $id, 'cancel');
 
         return new self($contentType, $method, $uri);
     }

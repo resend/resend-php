@@ -57,10 +57,20 @@ final class ResourceUri implements Stringable
 
     /**
      * Create a new Resource URI value object that verifies the given resource.
+     *
+     * @deprecated Use withAction instead
      */
     public static function verify(string $resource, string $id): self
     {
         return new self("{$resource}/{$id}/verify");
+    }
+
+    /**
+     * Create a new Resource URI value object with the given action.
+     */
+    public static function withAction(string $resource, string $id, string $action): self
+    {
+        return new self("{$resource}/{$id}/{$action}");
     }
 
     /**
