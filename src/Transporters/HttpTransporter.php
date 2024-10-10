@@ -2,6 +2,8 @@
 
 namespace Resend\Transporters;
 
+use Closure;
+use GuzzleHttp\Exception\ClientException;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -38,23 +40,35 @@ class HttpTransporter implements Transporter
     {
         $request = $payload->toRequest($this->baseUri, $this->headers);
 
-        try {
-            $response = $this->client->sendRequest($request);
-        } catch (ClientExceptionInterface $clientException) {
-            throw new TransporterException($clientException);
-        }
+        $response = $this->sendRequest(fn () => $this->client->sendRequest($request));
 
         $contents = $response->getBody()->getContents();
 
         $this->throwIfJsonError($response, $contents);
 
         try {
-            $response = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
+            $data = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $jsonException) {
             throw new UnserializableResponse($jsonException);
         }
 
-        return $response;
+        return $data;
+    }
+
+    /**
+     * Send the given request callable.
+     */
+    private function sendRequest(Closure $callable): ResponseInterface
+    {
+        try {
+            return $callable();
+        } catch (ClientExceptionInterface $clientException) {
+            if ($clientException instanceof ClientException) {
+                $this->throwIfJsonError($clientException->getResponse(), $clientException->getResponse()->getBody()->getContents());
+            }
+
+            throw new TransporterException($clientException);
+        }
     }
 
     /**
@@ -63,6 +77,11 @@ class HttpTransporter implements Transporter
     protected function throwIfJsonError(ResponseInterface $response, string $contents): void
     {
         if ($response->getStatusCode() < 400) {
+            return;
+        }
+
+        // Only handle JSON content types...
+        if (! str_contains($response->getHeaderLine('Content-Type'), 'application/json')) {
             return;
         }
 
