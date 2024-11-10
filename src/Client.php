@@ -33,6 +33,16 @@ class Client implements ClientContract
     }
 
     /**
+     * Send an email.
+     * @param Email $email The email to send.
+     * @return \Resend\Email The sent email.
+     */
+    public function send(Email $email): \Resend\Email
+    {
+        return $this->emails->create($email->toArray());
+    }
+
+    /**
      * Send an email with the given parameters.
      *
      * @deprecated
