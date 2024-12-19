@@ -15,6 +15,7 @@ use Resend\ValueObjects\Transporter\Headers;
 use Resend\ValueObjects\Transporter\Payload;
 
 beforeEach(function () {
+    /** @var ClientInterface|Mockery\MockInterface */
     $this->client = Mockery::mock(ClientInterface::class);
 
     $apiKey = ApiKey::from('foo');

@@ -4,6 +4,7 @@ namespace Resend\Service;
 
 use Resend\ApiKey;
 use Resend\Audience;
+use Resend\Broadcast;
 use Resend\Collection;
 use Resend\Contact;
 use Resend\Contracts\Transporter;
@@ -19,6 +20,7 @@ abstract class Service
     protected $mapping = [
         'api-keys' => ApiKey::class,
         'audiences' => Audience::class,
+        'broadcasts' => Broadcast::class,
         'contacts' => Contact::class,
         'domains' => Domain::class,
         'emails' => Email::class,

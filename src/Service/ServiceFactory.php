@@ -15,6 +15,7 @@ class ServiceFactory
         'apiKeys' => ApiKey::class,
         'audiences' => Audience::class,
         'batch' => Batch::class,
+        'broadcasts' => Broadcast::class,
         'contacts' => Contact::class,
         'domains' => Domain::class,
         'emails' => Email::class,

@@ -9,12 +9,13 @@ use Resend\Service\ServiceFactory;
 /**
  * Client used to send requests to the Resend API.
  *
- * @property \Resend\Service\ApiKey $apiKeys
- * @property \Resend\Service\Audience $audiences
- * @property \Resend\Service\Batch $batch
- * @property \Resend\Service\Contact $contacts
- * @property \Resend\Service\Domain $domains
- * @property \Resend\Service\Email $emails
+ * @property Service\ApiKey $apiKeys
+ * @property Service\Audience $audiences
+ * @property Service\Batch $batch
+ * @property Service\Broadcast $broadcasts
+ * @property Service\Contact $contacts
+ * @property Service\Domain $domains
+ * @property Service\Email $emails
  */
 class Client implements ClientContract
 {
@@ -36,7 +37,7 @@ class Client implements ClientContract
      * Send an email with the given parameters.
      *
      * @deprecated
-     * @see @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
+     * @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
      */
     public function sendEmail(array $parameters): Email
     {
