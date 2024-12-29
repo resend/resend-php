@@ -35,7 +35,10 @@ it('can get a list of domain resources', function () {
 });
 
 it('can update a domain resource', function () {
-    $client = mockClient('PATCH', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], domain());
+    $client = mockClient('PATCH', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
+        'open_tracking' => false,
+        'click_tracking' => true,
+    ], domain());
 
     $result = $client->domains->update('4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
         'open_tracking' => false,
@@ -54,9 +57,12 @@ it('can remove a domain resource', function () {
 });
 
 it('can verify a domain resource', function () {
-    $client = mockClient('POST', 'domains/re_1234567/verify', [], domain());
+    $client = mockClient('POST', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0/verify', [], [
+        'object' => 'domain',
+        'id' => '4dd369bc-aa82-4ff3-97de-514ae3000ee0',
+    ]);
 
-    $result = $client->domains->verify('re_1234567');
+    $result = $client->domains->verify('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
 
     expect($result)->toBeInstanceOf(Domain::class)
         ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0');

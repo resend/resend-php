@@ -9,7 +9,7 @@ use Resend\ValueObjects\Transporter\Payload;
 
 function mockClient(string $method, string $resource, array $parameters, array|string $response, $methodName = 'request')
 {
-    /** @var \Mockery\MockInterface|\Resend\Contracts\Transporter $transporter */
+    /** @var Mockery\MockInterface|Transporter $transporter */
     $transporter = Mockery::mock(Transporter::class);
 
     $transporter
@@ -21,7 +21,10 @@ function mockClient(string $method, string $resource, array $parameters, array|s
 
             $request = $payload->toRequest($baseUri, $headers);
 
-            if ($method === 'POST' && (string) $request->getBody() !== json_encode($parameters)) {
+            if (
+                ($method === 'POST' || $method === 'PATCH' || $method === 'PUT')
+                && (string) $request->getBody() !== json_encode((object) $parameters)
+            ) {
                 return false;
             }
 
