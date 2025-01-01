@@ -120,7 +120,7 @@ final class Payload
             ->withContentType($this->contentType);
 
         if ($this->method === Method::POST || $this->method === Method::PATCH || $this->method === Method::PUT) {
-            $body = json_encode($this->parameters, JSON_THROW_ON_ERROR);
+            $body = json_encode((object) $this->parameters, JSON_THROW_ON_ERROR);
         }
 
         return new Request($this->method->value, $uri, $headers->toArray(), $body);
