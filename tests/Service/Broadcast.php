@@ -40,6 +40,19 @@ it('can get a list of broadcast resources', function () {
         ->data->toBeArray();
 });
 
+it('can send a broadcast resource', function () {
+    $client = mockClient('POST', 'broadcasts/559ac32e-9ef5-46fb-82a1-b76b840c0f7b/send', [
+        'scheduled_at' => 'in 1 min',
+    ], broadcast());
+
+    $result = $client->broadcasts->send('559ac32e-9ef5-46fb-82a1-b76b840c0f7b', [
+        'scheduled_at' => 'in 1 min',
+    ]);
+
+    expect($result)->toBeInstanceOf(Broadcast::class)
+        ->id->toBe('559ac32e-9ef5-46fb-82a1-b76b840c0f7b');
+});
+
 it('can remove a broadcast resource', function () {
     $client = mockClient('DELETE', 'broadcasts/559ac32e-9ef5-46fb-82a1-b76b840c0f7b', [], broadcast());
 

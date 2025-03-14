@@ -21,11 +21,14 @@ function mockClient(string $method, string $resource, array $parameters, array|s
 
             $request = $payload->toRequest($baseUri, $headers);
 
-            if (
-                ($method === 'POST' || $method === 'PATCH' || $method === 'PUT')
-                && (string) $request->getBody() !== json_encode((object) $parameters)
-            ) {
-                return false;
+            if ($method === 'POST' || $method === 'PATCH' || $method === 'PUT') {
+                $expectedBody = ($parameters === [] || ! array_is_list($parameters))
+                    ? json_encode((object) $parameters, JSON_THROW_ON_ERROR)
+                    : json_encode($parameters, JSON_THROW_ON_ERROR);
+
+                if ((string) $request->getBody() !== $expectedBody) {
+                    return false;
+                }
             }
 
             return $request->getMethod() === $method
