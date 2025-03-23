@@ -51,6 +51,20 @@ class Broadcast extends Service
     }
 
     /**
+     * Update a broadcast to send to your audience.
+     *
+     * @see https://resend.com/docs/api-reference/broadcasts/update-broadcast
+     */
+    public function update(string $id, array $parameters): \Resend\Broadcast
+    {
+        $payload = Payload::update('broadcasts', $id, $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('broadcasts', $result);
+    }
+
+    /**
      * Start sending broadcasts to your audience.
      *
      * @see https://resend.com/docs/api-reference/broadcasts/send-broadcast
