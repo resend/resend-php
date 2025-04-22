@@ -21,3 +21,13 @@ it('can have content/type', function () {
         'Content-Type' => 'application/json',
     ]);
 });
+
+it('can have a idempotency key', function () {
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))
+        ->withIdempotencyKey('unique-key');
+
+    expect($headers->toArray())->toBe([
+        'Authorization' => 'Bearer foo',
+        'Idempotency-Key' => 'unique-key',
+    ]);
+});

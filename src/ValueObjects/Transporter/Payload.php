@@ -18,7 +18,8 @@ final class Payload
         private readonly ContentType $contentType,
         private readonly Method $method,
         private readonly ResourceUri $uri,
-        private readonly array $parameters = []
+        private readonly array $parameters = [],
+        private readonly ?string $idempotencyKey = null
     ) {
         //
     }
@@ -50,13 +51,18 @@ final class Payload
     /**
      * Create a new Transporter Payload instance.
      */
-    public static function create(string $resource, array $parameters): self
+    public static function create(string $resource, array $parameters, array $options = []): self
     {
         $contentType = ContentType::JSON;
         $method = Method::POST;
         $uri = ResourceUri::create($resource);
+        $idempotencyKey = null;
 
-        return new self($contentType, $method, $uri, $parameters);
+        if (array_key_exists('idempotency_key', $options)) {
+            $idempotencyKey = $options['idempotency_key'];
+        }
+
+        return new self($contentType, $method, $uri, $parameters, $idempotencyKey);
     }
 
     /**
@@ -118,6 +124,10 @@ final class Payload
 
         $headers = $headers->withUserAgent('resend-php', Resend::VERSION)
             ->withContentType($this->contentType);
+
+        if ($this->idempotencyKey) {
+            $headers = $headers->withIdempotencyKey($this->idempotencyKey);
+        }
 
         if ($this->method === Method::POST || $this->method === Method::PATCH || $this->method === Method::PUT) {
             $body = json_encode(

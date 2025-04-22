@@ -6,7 +6,7 @@ use Resend\Collection;
 it('can create a new resource class from an API response', function () {
     $client = mockClient('POST', 'api-keys', [
         'name' => 'Production',
-    ], apiKey());
+    ], [], apiKey());
 
     $apiKeys = $client->apiKeys->create([
         'name' => 'Production',
@@ -17,7 +17,7 @@ it('can create a new resource class from an API response', function () {
 });
 
 it('can create a new collection class of resources from an API response', function () {
-    $client = mockClient('GET', 'api-keys', [], apiKeys());
+    $client = mockClient('GET', 'api-keys', [], [], apiKeys());
 
     $apiKeys = $client->apiKeys->list();
 

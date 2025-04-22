@@ -51,6 +51,17 @@ final class Headers
     }
 
     /**
+     * Create a new Headers value object with the given idempotency key and existing headers.
+     */
+    public function withIdempotencyKey(string $key): self
+    {
+        return new self([
+            ...$this->headers,
+            'Idempotency-Key' => $key,
+        ]);
+    }
+
+    /**
      * Return the headers as an array.
      */
     public function toArray(): array

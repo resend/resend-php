@@ -6,7 +6,7 @@ use Resend\Service\ApiKey;
 test('send email', function () {
     $client = mockClient('POST', 'emails', [
         'to' => 'test@resend.com',
-    ], email());
+    ], [], email());
 
     // Use deprecated method until it is removed...
     $result = $client->sendEmail([
