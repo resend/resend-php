@@ -106,8 +106,11 @@ class HttpTransporter implements Transporter
     {
         $errors = [
             'application_error',
+            'concurrent_idempotent_requests',
             'daily_quota_exceeded',
             'invalid_attachment',
+            'invalid_idempotency_key',
+            'invalid_idempotent_request',
             'missing_api_key',
             'missing_required_field',
             'not_found',
