@@ -4,7 +4,7 @@ use Resend\Collection;
 use Resend\Domain;
 
 it('can get a domain resource', function () {
-    $client = mockClient('GET', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], domain());
+    $client = mockClient('GET', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], [], domain());
 
     $result = $client->domains->get('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
 
@@ -15,7 +15,7 @@ it('can get a domain resource', function () {
 it('can create a domain resource', function () {
     $client = mockClient('POST', 'domains', [
         'name' => 'resend.dev',
-    ], domain());
+    ], [], domain());
 
     $result = $client->domains->create([
         'name' => 'resend.dev',
@@ -26,7 +26,7 @@ it('can create a domain resource', function () {
 });
 
 it('can get a list of domain resources', function () {
-    $client = mockClient('GET', 'domains', [], domains());
+    $client = mockClient('GET', 'domains', [], [], domains());
 
     $result = $client->domains->list();
 
@@ -38,7 +38,7 @@ it('can update a domain resource', function () {
     $client = mockClient('PATCH', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
         'open_tracking' => false,
         'click_tracking' => true,
-    ], domain());
+    ], [], domain());
 
     $result = $client->domains->update('4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
         'open_tracking' => false,
@@ -49,7 +49,7 @@ it('can update a domain resource', function () {
 });
 
 it('can remove a domain resource', function () {
-    $client = mockClient('DELETE', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], domain());
+    $client = mockClient('DELETE', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], [], domain());
 
     $result = $client->domains->remove('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
 
@@ -57,7 +57,7 @@ it('can remove a domain resource', function () {
 });
 
 it('can verify a domain resource', function () {
-    $client = mockClient('POST', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0/verify', [], [
+    $client = mockClient('POST', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0/verify', [], [], [
         'object' => 'domain',
         'id' => '4dd369bc-aa82-4ff3-97de-514ae3000ee0',
     ]);

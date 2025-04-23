@@ -7,7 +7,7 @@ use Resend\ValueObjects\Transporter\BaseUri;
 use Resend\ValueObjects\Transporter\Headers;
 use Resend\ValueObjects\Transporter\Payload;
 
-function mockClient(string $method, string $resource, array $parameters, array|string $response, $methodName = 'request')
+function mockClient(string $method, string $resource, array $parameters, array $rawHeaders, array|string $response, $methodName = 'request')
 {
     /** @var Mockery\MockInterface|Transporter $transporter */
     $transporter = Mockery::mock(Transporter::class);
@@ -15,7 +15,7 @@ function mockClient(string $method, string $resource, array $parameters, array|s
     $transporter
         ->shouldReceive($methodName)
         ->once()
-        ->withArgs(function (Payload $payload) use ($method, $resource, $parameters) {
+        ->withArgs(function (Payload $payload) use ($method, $resource, $parameters, $rawHeaders) {
             $baseUri = BaseUri::from('api.resend.com');
             $headers = Headers::withAuthorization(ApiKey::from('foo'));
 
@@ -27,6 +27,16 @@ function mockClient(string $method, string $resource, array $parameters, array|s
                     : json_encode($parameters, JSON_THROW_ON_ERROR);
 
                 if ((string) $request->getBody() !== $expectedBody) {
+                    return false;
+                }
+            }
+
+            if (array_key_exists('Idempotency-Key', $rawHeaders)) {
+                if (! $request->hasHeader('Idempotency-Key')) {
+                    return false;
+                }
+
+                if ($request->getHeader('Idempotency-Key')[0] !== $rawHeaders['Idempotency-Key']) {
                     return false;
                 }
             }

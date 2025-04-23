@@ -25,9 +25,9 @@ class Email extends Service
      *
      * @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
      */
-    public function create(array $parameters): \Resend\Email
+    public function create(array $parameters, array $options = []): \Resend\Email
     {
-        $payload = Payload::create('emails', $parameters);
+        $payload = Payload::create('emails', $parameters, $options);
 
         $result = $this->transporter->request($payload);
 
@@ -39,9 +39,9 @@ class Email extends Service
      *
      * @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
      */
-    public function send(array $parameters): \Resend\Email
+    public function send(array $parameters, array $options = []): \Resend\Email
     {
-        return $this->create($parameters);
+        return $this->create($parameters, $options);
     }
 
     /**

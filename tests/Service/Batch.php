@@ -18,7 +18,7 @@ it('can send a  batch of emails', function () {
         ],
     ];
 
-    $client = mockClient('POST', 'emails/batch', $payload, batch());
+    $client = mockClient('POST', 'emails/batch', $payload, [], batch());
 
     $result = $client->batch->send($payload);
 
