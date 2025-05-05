@@ -2,6 +2,7 @@
 
 namespace Resend\Service;
 
+use InvalidArgumentException;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Contact extends Service
@@ -11,9 +12,15 @@ class Contact extends Service
      *
      * @see https://resend.com/docs/api-reference/contacts/get-contact
      */
-    public function get(string $audienceId, string $id): \Resend\Contact
+    public function get(string $audienceId, ?string $id = null, ?string $email = null): \Resend\Contact
     {
-        $payload = Payload::get("audiences/$audienceId/contacts", $id);
+        if (! ($id xor $email)) {
+            throw new InvalidArgumentException('You must provide either an ID or an email, but not both.');
+        }
+
+        $idOrEmail = $id ?? $email;
+
+        $payload = Payload::get("audiences/$audienceId/contacts", $idOrEmail);
 
         $result = $this->transporter->request($payload);
 
