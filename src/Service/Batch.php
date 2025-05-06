@@ -13,9 +13,9 @@ class Batch extends Service
      *
      * @see https://resend.com/docs/api-reference/emails/send-batch-emails#body-parameters
      */
-    public function create(array $parameters): \Resend\Collection
+    public function create(array $parameters, array $options = []): \Resend\Collection
     {
-        $payload = Payload::create('emails/batch', $parameters);
+        $payload = Payload::create('emails/batch', $parameters, $options);
 
         $result = $this->transporter->request($payload);
 
@@ -29,8 +29,8 @@ class Batch extends Service
      *
      * @see https://resend.com/docs/api-reference/emails/send-batch-emails#body-parameters
      */
-    public function send(array $parameters): \Resend\Collection
+    public function send(array $parameters, array $options = []): \Resend\Collection
     {
-        return $this->create($parameters);
+        return $this->create($parameters, $options);
     }
 }
