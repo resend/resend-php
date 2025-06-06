@@ -41,10 +41,27 @@ class HttpTransporter implements Transporter
         $request = $payload->toRequest($this->baseUri, $this->headers);
 
         $response = $this->sendRequest(fn () => $this->client->sendRequest($request));
-
         $contents = $response->getBody()->getContents();
+        $contentType = $response->getHeaderLine('Content-Type');
 
         $this->throwIfJsonError($response, $contents);
+
+        // Only decode as JSON if appropriate
+        if (! str_contains($contentType, 'application/json')) {
+            throw new UnserializableResponse(
+                new JsonException(
+                    "Unexpected Content-Type '{$contentType}'. Response body: " . substr($contents, 0, 200)
+                ),
+                $contents
+            );
+        }
+
+        if (trim($contents) === '') {
+            throw new UnserializableResponse(
+                new JsonException('Empty response body'),
+                $contents
+            );
+        }
 
         try {
             $data = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
@@ -90,12 +107,12 @@ class HttpTransporter implements Transporter
 
             if (
                 isset($response['error']) ||
-                $this->isResendError($response['name'])
+                (isset($response['name']) && $this->isResendError($response['name']))
             ) {
                 throw new ErrorException($response['error'] ?? $response);
             }
         } catch (JsonException $jsonException) {
-            throw new UnserializableResponse($jsonException);
+            throw new UnserializableResponse($jsonException, $contents);
         }
     }
 

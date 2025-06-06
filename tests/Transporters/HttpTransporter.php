@@ -29,9 +29,11 @@ beforeEach(function () {
 
 test('request', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
-    $response = new Response(200, [], json_encode([
-        'foo',
-    ]));
+    $response = new Response(
+        200,
+        ['Content-Type' => 'application/json'],
+        json_encode(['foo'])
+    );
 
     $this->client
          ->shouldReceive('sendRequest')
@@ -51,10 +53,14 @@ test('request', function () {
 
 test('request response', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
-    $response = new Response(200, [], json_encode([
-        'id' => 'test_123',
-        'to' => 'test@resend.com',
-    ]));
+    $response = new Response(
+        200,
+        ['Content-Type' => 'application/json'],
+        json_encode([
+            'id' => 'test_123',
+            'to' => 'test@resend.com',
+        ])
+    );
 
     $this->client
          ->shouldReceive('sendRequest')
@@ -86,7 +92,7 @@ test('request can handle client errors', function () {
 
 test('request can handle serialization errors', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
-    $response = new Response(200, [], 'err');
+    $response = new Response(200, ['content-type' => 'text/plain'], 'err');
 
     $this->client
         ->shouldReceive('sendRequest')
@@ -94,7 +100,7 @@ test('request can handle serialization errors', function () {
         ->andReturn($response);
 
     $this->http->request($payload);
-})->throws(UnserializableResponse::class, 'Syntax error');
+})->throws(UnserializableResponse::class, "Unexpected Content-Type 'text/plain'. Response body: err");
 
 test('request can throw resend errors', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
@@ -157,4 +163,4 @@ test('request can handle non json errors', function () {
         ->andReturn($response);
 
     $this->http->request($payload);
-})->throws(UnserializableResponse::class, 'Syntax error');
+})->throws(UnserializableResponse::class, "Unexpected Content-Type 'text/html'. Response body: err");
