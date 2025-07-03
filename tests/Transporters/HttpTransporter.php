@@ -96,6 +96,22 @@ test('request can handle serialization errors', function () {
     $this->http->request($payload);
 })->throws(UnserializableResponse::class, 'Syntax error');
 
+test('request can handle regular json errors', function () {
+    $payload = Payload::create('email', ['to' => 'test@resend.com']);
+    $response = new Response(
+        401,
+        ['Content-Type' => 'application/json'],
+        json_encode(['error' => 'Unauthorized'])
+    );
+
+    $this->client
+        ->shouldReceive('sendRequest')
+        ->once()
+        ->andReturn($response);
+
+    $this->http->request($payload);
+})->throws(ErrorException::class, 'Unauthorized');
+
 test('request can throw resend errors', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
     $response = new Response(422, ['content-type' => 'application/json'], json_encode([
