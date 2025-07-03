@@ -72,6 +72,22 @@ test('request response', function () {
     expect($response);
 });
 
+test('request can handle string errors', function () {
+    $payload = Payload::create('email', ['to' => 'test@resend.com']);
+    $response = new Response(
+        401,
+        ['Content-Type' => 'text/plain'],
+        'Unauthorized'
+    );
+
+    $this->client
+         ->shouldReceive('sendRequest')
+         ->once()
+         ->andReturn($response);
+
+    $this->http->request($payload);
+})->throws(UnserializableResponse::class, "Unexpected Content-Type 'text/plain'. Response body: Unauthorized");
+
 test('request can handle client errors', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
 
@@ -115,8 +131,13 @@ test('request can throw resend errors', function () {
         ->once()
         ->andReturn($response);
 
-    $this->http->request($payload);
-})->throws(ErrorException::class);
+    expect(fn () => $this->http->request($payload))->toThrow(function (ErrorException $exception) {
+        expect($exception->getMessage())->toBe('Missing `to` field')
+            ->and($exception->getErrorMessage())->toBe('Missing `to` field')
+            ->and($exception->getErrorCode())->toBe(422)
+            ->and($exception->getErrorType())->toBe('missing_required_field');
+    });
+});
 
 test('request can throw json error', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
