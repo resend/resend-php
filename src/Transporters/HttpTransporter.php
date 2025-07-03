@@ -92,7 +92,13 @@ class HttpTransporter implements Transporter
                 isset($response['error']) ||
                 $this->isResendError($response['name'])
             ) {
-                throw new ErrorException($response['error'] ?? $response);
+                $error = $response['error'] ?? $response;
+
+                if (! is_array($error)) {
+                    $error = ['message' => is_string($error) ? $error : json_encode($error)];
+                }
+
+                throw new ErrorException($error);
             }
         } catch (JsonException $jsonException) {
             throw new UnserializableResponse($jsonException);
