@@ -27,7 +27,7 @@ class ErrorException extends Exception
      */
     public function getErrorType(): string
     {
-        return $this->contents['type'];
+        return $this->contents['type'] ?? $this->contents['name'];
     }
 
     /**
@@ -35,6 +35,6 @@ class ErrorException extends Exception
      */
     public function getErrorCode(): int
     {
-        return $this->contents['code'];
+        return $this->contents['code'] ?? $this->contents['statusCode'];
     }
 }
