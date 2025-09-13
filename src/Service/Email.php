@@ -23,7 +23,7 @@ class Email extends Service
     /**
      * Send an email with the given parameters.
      *
-     * @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
+     * @see https://resend.com/docs/api-reference/emails/send-email
      */
     public function create(array $parameters, array $options = []): \Resend\Email
     {
@@ -37,11 +37,25 @@ class Email extends Service
     /**
      * Send an email with the given parameters.
      *
-     * @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
+     * @see https://resend.com/docs/api-reference/emails/send-email
      */
     public function send(array $parameters, array $options = []): \Resend\Email
     {
         return $this->create($parameters, $options);
+    }
+
+    /**
+     * List all emails.
+     *
+     * @see https://resend.com/docs/api-reference/emails/list-emails
+     */
+    public function list(array $options = []): \Resend\Collection
+    {
+        $payload = Payload::list('emails', $options);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('emails', $result);
     }
 
     /**
