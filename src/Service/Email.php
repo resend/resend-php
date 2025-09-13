@@ -47,6 +47,8 @@ class Email extends Service
     /**
      * List all emails.
      *
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
+     *
      * @see https://resend.com/docs/api-reference/emails/list-emails
      */
     public function list(array $options = []): \Resend\Collection
