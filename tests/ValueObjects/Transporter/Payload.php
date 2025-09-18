@@ -37,6 +37,24 @@ it('does not have a body when making a GET request', function () {
     expect($payload->toRequest($baseUri, $headers)->getBody()->getContents())->toBe('');
 });
 
+it('can create pagination requests', function () {
+    $payload = Payload::list('emails', ['limit' => 2, 'after' => 'cursor123', 'before' => 'cursor789']);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    expect((string) $payload->toRequest($baseUri, $headers)->getUri())->toBe('https://api.resend.com/emails?limit=2&after=cursor123&before=cursor789');
+});
+
+it('can create pagination requests with a single option', function () {
+    $payload = Payload::list('emails', ['limit' => 2]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    expect((string) $payload->toRequest($baseUri, $headers)->getUri())->toBe('https://api.resend.com/emails?limit=2');
+});
+
 it('does not have a body when making a DELETE request', function () {
     $payload = Payload::delete('api-keys', 're_123456');
 

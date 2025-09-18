@@ -27,11 +27,25 @@ final class Payload
     /**
      * Create a new Transporter Payload instance.
      */
-    public static function list(string $resource): self
+    public static function list(string $resource, array $options = []): self
     {
         $contentType = ContentType::JSON;
         $method = Method::GET;
-        $uri = ResourceUri::list($resource);
+        $searchParams = [];
+
+        if (array_key_exists('limit', $options)) {
+            $searchParams['limit'] = $options['limit'];
+        }
+
+        if (array_key_exists('after', $options)) {
+            $searchParams['after'] = $options['after'];
+        }
+
+        if (array_key_exists('before', $options)) {
+            $searchParams['before'] = $options['before'];
+        }
+
+        $uri = ResourceUri::list(! empty($searchParams) ? $resource . '?' . http_build_query($searchParams) : $resource);
 
         return new self($contentType, $method, $uri);
     }
