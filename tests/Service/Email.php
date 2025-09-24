@@ -1,5 +1,6 @@
 <?php
 
+use Resend\Collection;
 use Resend\Email;
 
 it('can get an email resource', function () {
@@ -47,4 +48,40 @@ it('can cancel a scheduled email', function () {
 
     expect($result)->toBeInstanceOf(Email::class)
         ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
+});
+
+it('can get a list of email resources', function () {
+    $client = mockClient('GET', 'emails', [], [], emails());
+
+    $result = $client->emails->list();
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+});
+
+it('can get a list of email resources with a limit', function () {
+    $client = mockClient('GET', 'emails?limit=2', [], [], emails());
+
+    $result = $client->emails->list(['limit' => 2]);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+});
+
+it('can get a list of email resources before cursor', function () {
+    $client = mockClient('GET', 'emails?before=cursor123', [], [], emails());
+
+    $result = $client->emails->list(['before' => 'cursor123']);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+});
+
+it('can get a list of email resources after cursor', function () {
+    $client = mockClient('GET', 'emails?after=cursor123', [], [], emails());
+
+    $result = $client->emails->list(['after' => 'cursor123']);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
 });

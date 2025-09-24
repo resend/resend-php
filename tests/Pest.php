@@ -21,6 +21,9 @@ function mockClient(string $method, string $resource, array $parameters, array $
 
             $request = $payload->toRequest($baseUri, $headers);
 
+            $uri = (string) $request->getUri();
+            $pathWithQuery = str_replace('https://' . $request->getUri()->getHost(), '', $uri);
+
             if ($method === 'POST' || $method === 'PATCH' || $method === 'PUT') {
                 $expectedBody = ($parameters === [] || ! array_is_list($parameters))
                     ? json_encode((object) $parameters, JSON_THROW_ON_ERROR)
@@ -43,7 +46,7 @@ function mockClient(string $method, string $resource, array $parameters, array $
 
             return $request->getMethod() === $method
                 && $request->getHeader('User-Agent')[0] === 'resend-php/' . Resend::VERSION
-                && $request->getUri()->getPath() === "/{$resource}";
+                && $pathWithQuery === "/{$resource}";
         })->andReturn($response);
 
     return new Client($transporter);
