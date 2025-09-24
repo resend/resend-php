@@ -49,3 +49,27 @@ it('can send a batch of emails with an idempotency key', function () {
     expect($result)->toBeInstanceOf(Collection::class)
         ->data->toBeArray();
 });
+
+it('can send a batch of emails with batch validation', function () {
+    $payload = [
+        [
+            'to' => 'test@resend.com',
+            'from' => 'noreply@resend.com',
+            'subject' => 'Acme',
+            'text' => 'it works!',
+        ],
+        [
+            'to' => 'test@resend.com',
+            'from' => 'noreply@resend.com',
+            'subject' => 'Acme',
+            'text' => 'it works!',
+        ],
+    ];
+
+    $client = mockClient('POST', 'emails/batch', $payload, ['x-batch-validation' => 'permissive'], batch());
+
+    $result = $client->batch->send($payload, ['batch_validation' => 'permissive']);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+});

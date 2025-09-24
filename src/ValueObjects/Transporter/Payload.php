@@ -19,7 +19,7 @@ final class Payload
         private readonly Method $method,
         private readonly ResourceUri $uri,
         private readonly array $parameters = [],
-        private readonly ?string $idempotencyKey = null
+        private ?Headers $headers = null
     ) {
         //
     }
@@ -70,13 +70,13 @@ final class Payload
         $contentType = ContentType::JSON;
         $method = Method::POST;
         $uri = ResourceUri::create($resource);
-        $idempotencyKey = null;
+        $headers = new Headers([]);
 
         if (array_key_exists('idempotency_key', $options)) {
-            $idempotencyKey = $options['idempotency_key'];
+            $headers = $headers->withIdempotencyKey($options['idempotency_key']);
         }
 
-        return new self($contentType, $method, $uri, $parameters, $idempotencyKey);
+        return new self($contentType, $method, $uri, $parameters, $headers);
     }
 
     /**
@@ -128,6 +128,16 @@ final class Payload
     }
 
     /**
+     * Add the given header and value to the payload.
+     */
+    public function withHeader(string $header, string $value): self
+    {
+        $this->headers = $this->headers->with($header, $value);
+
+        return $this;
+    }
+
+    /**
      * Creates a new Psr 7 Request instance.
      */
     public function toRequest(BaseUri $baseUri, Headers $headers): RequestInterface
@@ -136,12 +146,13 @@ final class Payload
 
         $uri = $baseUri->toString() . $this->uri->toString();
 
-        $headers = $headers->withUserAgent('resend-php', Resend::VERSION)
-            ->withContentType($this->contentType);
-
-        if ($this->idempotencyKey) {
-            $headers = $headers->withIdempotencyKey($this->idempotencyKey);
+        $mergedHeaders = $headers;
+        if ($this->headers !== null) {
+            $mergedHeaders = $headers->merge($this->headers);
         }
+
+        $mergedHeaders = $mergedHeaders->withUserAgent('resend-php', Resend::VERSION)
+            ->withContentType($this->contentType);
 
         if ($this->method === Method::POST || $this->method === Method::PATCH || $this->method === Method::PUT) {
             $body = json_encode(
@@ -150,6 +161,6 @@ final class Payload
             );
         }
 
-        return new Request($this->method->value, $uri, $headers->toArray(), $body);
+        return new Request($this->method->value, $uri, $mergedHeaders->toArray(), $body);
     }
 }
