@@ -7,7 +7,7 @@ use Resend\ValueObjects\Transporter\Payload;
 class Topic extends Service
 {
     /**
-    * Retrieve a topic with the given ID.
+     * Retrieve a topic with the given ID.
      *
      * @see https://resend.com/docs/api-reference/topics/get-topic
      */
@@ -21,7 +21,7 @@ class Topic extends Service
     }
 
     /**
-     * Create and email topics to segment your audience.
+     * Create a topic to segment your audience.
      *
      * @see https://resend.com/docs/api-reference/topics/create-topic
      */
