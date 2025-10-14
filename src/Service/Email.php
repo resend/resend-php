@@ -9,7 +9,7 @@ class Email extends Service
     /**
      * Retrieve an email with the given ID.
      *
-     * @see https://resend.com/docs/api-reference/emails/retrieve-email#path-parameters
+     * @see https://resend.com/docs/api-reference/emails/retrieve-email
      */
     public function get(string $id): \Resend\Email
     {

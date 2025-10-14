@@ -16,6 +16,7 @@ use Resend\Service\ServiceFactory;
  * @property Service\Contact $contacts
  * @property Service\Domain $domains
  * @property Service\Email $emails
+ * @property Service\Topic $topics
  */
 class Client implements ClientContract
 {
