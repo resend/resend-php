@@ -37,13 +37,14 @@ class Domain extends Service
     /**
      * List all domains.
      *
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
      * @return \Resend\Collection<\Resend\Domain>
      *
      * @see https://resend.com/docs/api-reference/domains/list-domains
      */
-    public function list(): \Resend\Collection
+    public function list(array $options = []): \Resend\Collection
     {
-        $payload = Payload::list('domains');
+        $payload = Payload::list('domains', $options);
 
         $result = $this->transporter->request($payload);
 

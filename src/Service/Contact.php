@@ -44,13 +44,14 @@ class Contact extends Service
     /**
      * List all contacts from an audience.
      *
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
      * @return \Resend\Collection<\Resend\Contact>
      *
      * @see https://resend.com/docs/api-reference/contacts/list-contacts
      */
-    public function list(string $audienceId): \Resend\Collection
+    public function list(string $audienceId, array $options = []): \Resend\Collection
     {
-        $payload = Payload::list("audiences/$audienceId/contacts");
+        $payload = Payload::list("audiences/$audienceId/contacts", $options);
 
         $result = $this->transporter->request($payload);
 

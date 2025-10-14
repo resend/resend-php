@@ -37,13 +37,14 @@ class Broadcast extends Service
     /**
      * List all domains.
      *
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
      * @return \Resend\Collection<\Resend\Broadcast>
      *
      * @see https://resend.com/docs/api-reference/broadcasts/list-broadcasts
      */
-    public function list(): \Resend\Collection
+    public function list(array $options = []): \Resend\Collection
     {
-        $payload = Payload::list('broadcasts');
+        $payload = Payload::list('broadcasts', $options);
 
         $result = $this->transporter->request($payload);
 
