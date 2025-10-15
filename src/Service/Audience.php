@@ -37,13 +37,14 @@ class Audience extends Service
     /**
      * List all audiences.
      *
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
      * @return \Resend\Collection<\Resend\Audience>
      *
      * @see https://resend.com/docs/api-reference/audiences/list-audiences
      */
-    public function list(): \Resend\Collection
+    public function list(array $options = []): \Resend\Collection
     {
-        $payload = Payload::list('audiences');
+        $payload = Payload::list('audiences', $options);
 
         $result = $this->transporter->request($payload);
 

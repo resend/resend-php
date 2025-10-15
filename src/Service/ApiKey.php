@@ -23,13 +23,14 @@ class ApiKey extends Service
     /**
      * List all API keys.
      *
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
      * @return \Resend\Collection<\Resend\ApiKey>
      *
      * @see https://resend.com/docs/api-reference/api-keys/list-api-keys
      */
-    public function list(): \Resend\Collection
+    public function list(array $options = []): \Resend\Collection
     {
-        $payload = Payload::list('api-keys');
+        $payload = Payload::list('api-keys', $options);
 
         $result = $this->transporter->request($payload);
 
