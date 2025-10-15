@@ -79,6 +79,30 @@ it('can send verify requests with empty body', function () {
         ->and($request->getUri()->getPath())->toBe('/domains/re_123456/verify');
 });
 
+it('can send publish requests with empty body', function () {
+    $payload = Payload::publish('templates', 're_123456');
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect($request->getBody()->getContents())->toBe('{}')
+        ->and($request->getUri()->getPath())->toBe('/templates/re_123456/publish');
+});
+
+it('can send duplicate requests with empty body', function () {
+    $payload = Payload::duplicate('templates', 're_123456');
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect($request->getBody()->getContents())->toBe('{}')
+        ->and($request->getUri()->getPath())->toBe('/templates/re_123456/duplicate');
+});
+
 it('can convert an empty array body to a JSON object', function () {
     $payload = Payload::create('domains', []);
 

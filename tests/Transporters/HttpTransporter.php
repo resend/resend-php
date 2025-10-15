@@ -201,3 +201,15 @@ test('request can handle non json errors', function () {
 
     $this->http->request($payload);
 })->throws(UnserializableResponse::class, "Unexpected Content-Type 'text/html'. Response body: err");
+
+test('request throws on empty JSON response body', function () {
+    $payload = Payload::create('email', ['to' => 'test@resend.com']);
+    $response = new Response(200, ['Content-Type' => 'application/json'], '');
+
+    $this->client
+        ->shouldReceive('sendRequest')
+        ->once()
+        ->andReturn($response);
+
+    $this->http->request($payload);
+})->throws(UnserializableResponse::class, 'Empty');
