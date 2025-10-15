@@ -11,6 +11,7 @@ use Resend\Contracts\Transporter;
 use Resend\Domain;
 use Resend\Email;
 use Resend\Resource;
+use Resend\Template;
 
 abstract class Service
 {
@@ -24,6 +25,7 @@ abstract class Service
         'contacts' => Contact::class,
         'domains' => Domain::class,
         'emails' => Email::class,
+        'templates' => Template::class,
     ];
 
     /**
