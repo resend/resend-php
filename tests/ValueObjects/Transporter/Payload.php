@@ -90,3 +90,7 @@ it('can convert an empty array body to a JSON object', function () {
     expect($request->getBody()->getContents())->toBe('{}')
         ->and($request->getUri()->getPath())->toBe('/domains');
 });
+
+it('throws an error when using an empty string to get a single resource', function () {
+    Payload::get('domains', '');
+})->throws(InvalidArgumentException::class, 'The domains ID must be a non-empty string.');
