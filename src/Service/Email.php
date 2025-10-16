@@ -2,10 +2,24 @@
 
 namespace Resend\Service;
 
+use Resend\Contracts\Transporter;
+use Resend\Service\Emails\Receiving;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Email extends Service
 {
+    public Receiving $receiving;
+
+    /**
+     * Create a new email service instance with the given transport.
+     */
+    public function __construct(Transporter $transporter)
+    {
+        $this->receiving = new Receiving($transporter);
+
+        parent::__construct($transporter);
+    }
+
     /**
      * Retrieve an email with the given ID.
      *

@@ -10,6 +10,7 @@ use Resend\Contact;
 use Resend\Contracts\Transporter;
 use Resend\Domain;
 use Resend\Email;
+use Resend\Emails\Receiving;
 use Resend\Resource;
 
 abstract class Service
@@ -24,10 +25,11 @@ abstract class Service
         'contacts' => Contact::class,
         'domains' => Domain::class,
         'emails' => Email::class,
+        'receiving' => Receiving::class,
     ];
 
     /**
-     * Create a transportable instance with the given transporter.
+     * Create a service instance with the given transporter.
      */
     public function __construct(
         protected readonly Transporter $transporter
