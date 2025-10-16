@@ -10,7 +10,7 @@ use Resend\Service\ServiceFactory;
  * Client used to send requests to the Resend API.
  *
  * @property Service\ApiKey $apiKeys
- * @property Service\Attachments $attachments
+ * @property Service\Attachment $attachments
  * @property Service\Audience $audiences
  * @property Service\Batch $batch
  * @property Service\Broadcast $broadcasts

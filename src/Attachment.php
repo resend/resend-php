@@ -1,8 +1,6 @@
 <?php
 
-namespace Resend\Attachments;
-
-use Resend\Resource;
+namespace Resend;
 
 /**
  * @property string $object The type of object.
@@ -13,7 +11,7 @@ use Resend\Resource;
  * @property string $content_id The content identifier for the attachment.
  * @property string $content The content of the attachment.
  */
-class Receiving extends Resource
+class Attachment extends Resource
 {
     //
 }
