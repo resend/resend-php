@@ -3,6 +3,7 @@
 namespace Resend\Service;
 
 use Resend\ApiKey;
+use Resend\Attachments\Receiving as AttachmentsReceiving;
 use Resend\Audience;
 use Resend\Broadcast;
 use Resend\Collection;
@@ -20,12 +21,13 @@ abstract class Service
      */
     protected $mapping = [
         'api-keys' => ApiKey::class,
+        'attachments.receiving' => AttachmentsReceiving::class,
         'audiences' => Audience::class,
         'broadcasts' => Broadcast::class,
         'contacts' => Contact::class,
         'domains' => Domain::class,
+        'emails.receiving' => Receiving::class,
         'emails' => Email::class,
-        'receiving' => Receiving::class,
     ];
 
     /**

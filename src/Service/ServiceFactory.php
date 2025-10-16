@@ -13,6 +13,7 @@ class ServiceFactory
      */
     private static array $classMap = [
         'apiKeys' => ApiKey::class,
+        'attachments' => Attachment::class,
         'audiences' => Audience::class,
         'batch' => Batch::class,
         'broadcasts' => Broadcast::class,

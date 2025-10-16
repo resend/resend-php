@@ -18,7 +18,7 @@ class Receiving extends Service
 
         $result = $this->transporter->request($payload);
 
-        return $this->createResource('receiving', $result);
+        return $this->createResource('emails.receiving', $result);
     }
 
     /**
@@ -35,6 +35,6 @@ class Receiving extends Service
 
         $result = $this->transporter->request($payload);
 
-        return $this->createResource('receiving', $result);
+        return $this->createResource('emails.receiving', $result);
     }
 }
