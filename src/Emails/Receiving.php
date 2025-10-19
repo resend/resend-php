@@ -17,6 +17,7 @@ use Resend\Resource;
  * @property null|array $cc The email addresses of all carbon copy recipients.
  * @property null|array $reply_to The reply to email address.
  * @property string $message_id The unique identifier for the message.
+ * @property null|array $headers The headers for the received email.
  * @property array $attachments The attachments for the email.
  */
 class Receiving extends Resource
