@@ -52,6 +52,20 @@ class Webhook extends Service
     }
 
     /**
+     * Update a webhook with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/webhooks/update-webhook
+     */
+    public function update(string $id, array $parameters): \Resend\Webhook
+    {
+        $payload = Payload::update('webhooks', $id, $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('webhooks', $result);
+    }
+
+    /**
      * Remove a webhook with the given ID.
      *
      * @see https://resend.com/docs/api-reference/webhooks/delete-webhook

@@ -36,6 +36,19 @@ it('can get a list of webhook resources', function () {
         ->data->toBeArray();
 });
 
+it('can update a webhook resource', function () {
+    $client = mockClient('PATCH', 'webhooks/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
+        'status' => 'enabled',
+    ], [], webhook());
+
+    $result = $client->webhooks->update('4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
+        'status' => 'enabled',
+    ]);
+
+    expect($result)->toBeInstanceOf(Webhook::class)
+        ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+});
+
 it('can remove a webhook resource', function () {
     $client = mockClient('DELETE', 'webhooks/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], [], webhook());
 
