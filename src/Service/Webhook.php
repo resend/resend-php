@@ -83,7 +83,7 @@ class Webhook extends Service
     /**
      * Determine if the incoming webhook request is valid.
      */
-    public function verify(string $payload, array $headers, string $secret, ?int $tolerance = null): bool
+    public function verify(string $payload, array $headers, string $secret, ?int $tolerance = 300): bool
     {
         return WebhookSignature::verify($payload, $headers, $secret, $tolerance);
     }
