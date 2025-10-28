@@ -3,6 +3,7 @@
 namespace Resend\Service;
 
 use Resend\ValueObjects\Transporter\Payload;
+use Resend\WebhookSignature;
 
 class Webhook extends Service
 {
@@ -77,5 +78,13 @@ class Webhook extends Service
         $result = $this->transporter->request($payload);
 
         return $this->createResource('webhooks', $result);
+    }
+
+    /**
+     * Determine if the incoming webhook request is valid.
+     */
+    public function verify(string $payload, array $headers, string $secret, ?int $tolerance = null): bool
+    {
+        return WebhookSignature::verify($payload, $headers, $secret, $tolerance);
     }
 }

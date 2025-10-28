@@ -57,3 +57,11 @@ it('can remove a webhook resource', function () {
     expect($result)->toBeInstanceOf(Webhook::class)
         ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
 });
+
+it('can verify webhook requests', function () {
+    $webhook = webhookRequest(time());
+
+    $verified = Resend::client('re_123456')->webhooks->verify($webhook['payload'], $webhook['headers'], 'MfKQ9r8GKYqrTwjUPD8ILPZIo2LaLaSw', 300);
+
+    expect($verified)->toBeTrue();
+});
