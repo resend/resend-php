@@ -10,7 +10,7 @@ namespace Resend;
  * @property string $created_at Time at which the template was created.
  * @property string $updated_at Time at which the template was updated.
  * @property string $status The status of the template. Can be `published` or `draft`.
- * @property string $published_at Time at which the template was published.
++ * @property null|string $published_at Time at which the template was published.
  * @property string $from The sender's email address.
  * @property string $subject The email subject.
  * @property null|array $reply_to The reply to email addresses.
