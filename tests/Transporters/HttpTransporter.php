@@ -212,4 +212,4 @@ test('request throws on empty JSON response body', function () {
         ->andReturn($response);
 
     $this->http->request($payload);
-})->throws(UnserializableResponse::class, 'Empty');
+})->throws(UnserializableResponse::class, 'Empty response body');
