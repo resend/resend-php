@@ -17,6 +17,7 @@ class ServiceFactory
         'batch' => Batch::class,
         'broadcasts' => Broadcast::class,
         'contacts' => Contact::class,
+        'contactProperties' => ContactProperty::class,
         'domains' => Domain::class,
         'emails' => Email::class,
     ];

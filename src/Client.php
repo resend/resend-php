@@ -14,6 +14,7 @@ use Resend\Service\ServiceFactory;
  * @property Service\Batch $batch
  * @property Service\Broadcast $broadcasts
  * @property Service\Contact $contacts
+ * @property Service\ContactProperty $contactProperties
  * @property Service\Domain $domains
  * @property Service\Email $emails
  */
