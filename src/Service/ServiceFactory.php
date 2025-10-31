@@ -19,6 +19,7 @@ class ServiceFactory
         'contacts' => Contact::class,
         'domains' => Domain::class,
         'emails' => Email::class,
+        'templates' => Template::class,
         'webhooks' => Webhook::class,
     ];
 
