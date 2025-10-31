@@ -56,3 +56,14 @@ it('throws an exception when and offset is unset', function () {
 
     unset($resource['name']);
 })->throws(BadMethodCallException::class);
+
+it('checks offsetExists directly', function () {
+    $resource = new Resource([
+        'id' => 're_1234',
+        'name' => 'foo',
+    ]);
+
+    expect($resource->offsetExists('name'))->toBeTrue()
+        ->and($resource->offsetExists('foo'))->toBeFalse()
+        ->and($resource->offsetExists(null))->toBeFalse();
+});

@@ -3,6 +3,7 @@
 namespace Resend\ValueObjects\Transporter;
 
 use GuzzleHttp\Psr7\Request;
+use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Resend;
 use Resend\Enums\Transporter\ContentType;
@@ -55,6 +56,10 @@ final class Payload
      */
     public static function get(string $resource, string $id): self
     {
+        if (trim($id) === '') {
+            throw new InvalidArgumentException("The {$resource} ID must be a non-empty string.");
+        }
+
         $contentType = ContentType::JSON;
         $method = Method::GET;
         $uri = ResourceUri::get($resource, $id);
@@ -123,6 +128,30 @@ final class Payload
         $contentType = ContentType::JSON;
         $method = Method::POST;
         $uri = ResourceUri::withAction($resource, $id, 'cancel');
+
+        return new self($contentType, $method, $uri);
+    }
+
+    /**
+     * Create a new Transporter Payload instance.
+     */
+    public static function publish(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::POST;
+        $uri = ResourceUri::withAction($resource, $id, 'publish');
+
+        return new self($contentType, $method, $uri);
+    }
+
+    /**
+     * Create a new Transporter Payload instance.
+     */
+    public static function duplicate(string $resource, string $id): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::POST;
+        $uri = ResourceUri::withAction($resource, $id, 'duplicate');
 
         return new self($contentType, $method, $uri);
     }
