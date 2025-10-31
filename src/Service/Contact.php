@@ -11,7 +11,7 @@ class Contact extends Service
     public Topic $topics;
 
     /**
-     * Create a new email service instance with the given transport.
+     * Create a new contact service instance with the given transport.
      */
     public function __construct(Transporter $transporter)
     {
