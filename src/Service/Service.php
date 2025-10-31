@@ -13,6 +13,7 @@ use Resend\Email;
 use Resend\Emails\Attachment;
 use Resend\Emails\Receiving;
 use Resend\Resource;
+use Resend\Segment;
 use Resend\Template;
 use Resend\Topic;
 use Resend\Webhook;
@@ -31,6 +32,7 @@ abstract class Service
         'domains' => Domain::class,
         'receiving' => Receiving::class,
         'emails' => Email::class,
+        'segments' => Segment::class,
         'templates' => Template::class,
         'topics' => Topic::class,
         'webhooks' => Webhook::class,
