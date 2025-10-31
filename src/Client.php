@@ -16,6 +16,7 @@ use Resend\Service\ServiceFactory;
  * @property Service\Contact $contacts
  * @property Service\Domain $domains
  * @property Service\Email $emails
+ * @property Service\Template $templates
  * @property Service\Topic $topics
  * @property Service\Webhook $webhooks
  */
@@ -33,17 +34,6 @@ class Client implements ClientContract
         private readonly Transporter $transporter
     ) {
         //
-    }
-
-    /**
-     * Send an email with the given parameters.
-     *
-     * @deprecated
-     * @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
-     */
-    public function sendEmail(array $parameters): Email
-    {
-        return $this->emails->send($parameters);
     }
 
     /**
