@@ -2,10 +2,24 @@
 
 namespace Resend\Service;
 
+use Resend\Contracts\Transporter;
+use Resend\Service\Contacts\Segment;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Contact extends Service
 {
+    public Segment $segments;
+
+    /**
+     * Create a new email service instance with the given transport.
+     */
+    public function __construct(Transporter $transporter)
+    {
+        $this->segments = new Segment($transporter);
+
+        parent::__construct($transporter);
+    }
+
     /**
      * Retrieve a single contact by ID or email.
      *

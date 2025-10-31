@@ -38,6 +38,7 @@ class Topic extends Service
      * Retrieve a list of topics.
      *
      * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
+     * @return \Resend\Collection<\Resend\Topic>
      *
      * @see https://resend.com/docs/api-reference/topics/list-topics
      */
