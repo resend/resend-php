@@ -14,6 +14,7 @@ use Resend\Emails\Attachment;
 use Resend\Emails\Receiving;
 use Resend\Resource;
 use Resend\Template;
+use Resend\Topic;
 use Resend\Webhook;
 
 abstract class Service
@@ -31,6 +32,7 @@ abstract class Service
         'receiving' => Receiving::class,
         'emails' => Email::class,
         'templates' => Template::class,
+        'topics' => Topic::class,
         'webhooks' => Webhook::class,
     ];
 

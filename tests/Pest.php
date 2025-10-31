@@ -24,29 +24,43 @@ function mockClient(string $method, string $resource, array $parameters, array $
             $uri = (string) $request->getUri();
             $pathWithQuery = str_replace('https://' . $request->getUri()->getHost(), '', $uri);
 
-            if ($method === 'POST' || $method === 'PATCH' || $method === 'PUT') {
+            if ($request->getMethod() !== $method) {
+                throw new Exception("[mockClient] HTTP method mismatch: expected '{$method}', got '{$request->getMethod()}'");
+            }
+
+            $userAgent = $request->getHeader('User-Agent')[0] ?? null;
+            $expectedUserAgent = 'resend-php/' . (defined('Resend::VERSION') ? Resend::VERSION : 'UNKNOWN');
+            if ($userAgent !== $expectedUserAgent) {
+                throw new Exception("[mockClient] User-Agent mismatch: expected '{$expectedUserAgent}', got '{$userAgent}'");
+            }
+
+            if ($pathWithQuery !== "/{$resource}") {
+                throw new Exception("[mockClient] Path mismatch: expected '/{$resource}', got '{$pathWithQuery}'");
+            }
+
+            if (in_array($method, ['POST', 'PATCH', 'PUT'], true)) {
                 $expectedBody = ($parameters === [] || ! array_is_list($parameters))
                     ? json_encode((object) $parameters, JSON_THROW_ON_ERROR)
                     : json_encode($parameters, JSON_THROW_ON_ERROR);
 
-                if ((string) $request->getBody() !== $expectedBody) {
-                    return false;
+                $actualBody = (string) $request->getBody();
+                if ($actualBody !== $expectedBody) {
+                    throw new Exception("[mockClient] Body mismatch:\nExpected: {$expectedBody}\nActual:   {$actualBody}");
                 }
             }
 
             if (array_key_exists('Idempotency-Key', $rawHeaders)) {
                 if (! $request->hasHeader('Idempotency-Key')) {
-                    return false;
+                    throw new Exception('[mockClient] Missing Idempotency-Key header');
                 }
 
-                if ($request->getHeader('Idempotency-Key')[0] !== $rawHeaders['Idempotency-Key']) {
-                    return false;
+                $actualIdempotency = $request->getHeader('Idempotency-Key')[0] ?? null;
+                if ($actualIdempotency !== $rawHeaders['Idempotency-Key']) {
+                    throw new Exception("[mockClient] Idempotency-Key mismatch: expected '{$rawHeaders['Idempotency-Key']}', got '{$actualIdempotency}'");
                 }
             }
 
-            return $request->getMethod() === $method
-                && $request->getHeader('User-Agent')[0] === 'resend-php/' . Resend::VERSION
-                && $pathWithQuery === "/{$resource}";
+            return true;
         })->andReturn($response);
 
     return new Client($transporter);
