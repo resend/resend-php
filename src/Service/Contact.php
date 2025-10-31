@@ -2,25 +2,18 @@
 
 namespace Resend\Service;
 
-use InvalidArgumentException;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Contact extends Service
 {
     /**
-     * Retrieve a single contact from an audience.
+     * Retrieve a single contact by ID or email.
      *
      * @see https://resend.com/docs/api-reference/contacts/get-contact
      */
-    public function get(string $audienceId, ?string $id = null, ?string $email = null): \Resend\Contact
+    public function get(string $idOrEmail): \Resend\Contact
     {
-        if (! ($id xor $email)) {
-            throw new InvalidArgumentException('You must provide either an ID or an email, but not both.');
-        }
-
-        $idOrEmail = $id ?? $email;
-
-        $payload = Payload::get("audiences/$audienceId/contacts", $idOrEmail);
+        $payload = Payload::get('contacts', $idOrEmail);
 
         $result = $this->transporter->request($payload);
 
@@ -28,13 +21,13 @@ class Contact extends Service
     }
 
     /**
-     * Add a contact to an audience.
+     * Create a contact.
      *
      * @see https://resend.com/docs/api-reference/contacts/create-contact
      */
-    public function create(string $audienceId, array $parameters): \Resend\Contact
+    public function create(array $parameters): \Resend\Contact
     {
-        $payload = Payload::create("audiences/$audienceId/contacts", $parameters);
+        $payload = Payload::create('contacts', $parameters);
 
         $result = $this->transporter->request($payload);
 
@@ -42,16 +35,16 @@ class Contact extends Service
     }
 
     /**
-     * List all contacts from an audience.
+     * List all contacts.
      *
      * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
      * @return \Resend\Collection<\Resend\Contact>
      *
      * @see https://resend.com/docs/api-reference/contacts/list-contacts
      */
-    public function list(string $audienceId, array $options = []): \Resend\Collection
+    public function list(array $options = []): \Resend\Collection
     {
-        $payload = Payload::list("audiences/$audienceId/contacts", $options);
+        $payload = Payload::list('contacts', $options);
 
         $result = $this->transporter->request($payload);
 
@@ -59,13 +52,13 @@ class Contact extends Service
     }
 
     /**
-     * Update a contact in an audience.
+     * Update a contact by ID or email.
      *
      * @see https://resend.com/docs/api-reference/contacts/update-contacts
      */
-    public function update(string $audienceId, string $id, array $parameters): \Resend\Contact
+    public function update(string $idOrEmail, array $parameters): \Resend\Contact
     {
-        $payload = Payload::update("audiences/$audienceId/contacts", $id, $parameters);
+        $payload = Payload::update('contacts', $idOrEmail, $parameters);
 
         $result = $this->transporter->request($payload);
 
@@ -73,13 +66,13 @@ class Contact extends Service
     }
 
     /**
-     * Remove a contact from an audience.
+     * Remove a contact by ID or email.
      *
      * @see https://resend.com/docs/api-reference/contacts/delete-contact
      */
-    public function remove(string $audienceId, string $id): \Resend\Contact
+    public function remove(string $idOrEmail): \Resend\Contact
     {
-        $payload = Payload::delete("audiences/$audienceId/contacts", $id);
+        $payload = Payload::delete('contacts', $idOrEmail);
 
         $result = $this->transporter->request($payload);
 
