@@ -7,6 +7,7 @@ use Resend\Audience;
 use Resend\Broadcast;
 use Resend\Collection;
 use Resend\Contact;
+use Resend\ContactProperty;
 use Resend\Contracts\Transporter;
 use Resend\Domain;
 use Resend\Email;
@@ -29,6 +30,7 @@ abstract class Service
         'audiences' => Audience::class,
         'broadcasts' => Broadcast::class,
         'contacts' => Contact::class,
+        'contact-properties' => ContactProperty::class,
         'domains' => Domain::class,
         'receiving' => Receiving::class,
         'emails' => Email::class,
