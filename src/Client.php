@@ -36,17 +36,6 @@ class Client implements ClientContract
     }
 
     /**
-     * Send an email with the given parameters.
-     *
-     * @deprecated
-     * @see https://resend.com/docs/api-reference/emails/send-email#body-parameters
-     */
-    public function sendEmail(array $parameters): Email
-    {
-        return $this->emails->send($parameters);
-    }
-
-    /**
      * Magic method to retrieve a service by name.
      */
     public function __get(string $name)
