@@ -1,6 +1,6 @@
 <?php
 
-function inboundAttachment(): array
+function sentAttachment(): array
 {
     return [
         'object' => 'attachment',
@@ -13,7 +13,7 @@ function inboundAttachment(): array
     ];
 }
 
-function inboundAttachments(): array
+function sentAttachments(): array
 {
     return
     [

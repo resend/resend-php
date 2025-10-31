@@ -2,11 +2,25 @@
 
 namespace Resend\Service\Emails;
 
+use Resend\Contracts\Transporter;
+use Resend\Service\Emails\Receiving\Attachment;
 use Resend\Service\Service;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Receiving extends Service
 {
+    public Attachment $attachments;
+
+    /**
+     * Create a new email receiving service instance with the given transport.
+     */
+    public function __construct(Transporter $transporter)
+    {
+        $this->attachments = new Attachment($transporter);
+
+        parent::__construct($transporter);
+    }
+
     /**
      * Retrieve an inbound email with the given ID.
      *

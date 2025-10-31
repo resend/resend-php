@@ -1,18 +1,18 @@
 <?php
 
-namespace Resend\Service\Attachments;
+namespace Resend\Service\Emails\Receiving;
 
 use Resend\Service\Service;
 use Resend\ValueObjects\Transporter\Payload;
 
-class Receiving extends Service
+class Attachment extends Service
 {
     /**
      * Retrieve an attachment for an inbound email.
      *
-     * @see https://resend.com/docs/api-reference/attachments/retrieve-inbound-email-attachment
+     * @see https://resend.com/docs/api-reference/attachments/retrieve-received-email-attachment
      */
-    public function get(string $emailId, string $id): \Resend\Attachment
+    public function get(string $emailId, string $id): \Resend\Emails\Attachment
     {
         $payload = Payload::get("emails/receiving/$emailId/attachments", $id);
 
@@ -25,9 +25,9 @@ class Receiving extends Service
      * List all attachments and their contents for the given ID.
      *
      * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
-     * @return \Resend\Collection<\Resend\Attachment>
+     * @return \Resend\Collection<\Resend\Emails\Attachment>
      *
-     * @see https://resend.com/docs/api-reference/attachments/list-inbound-email-attachments
+     * @see https://resend.com/docs/api-reference/attachments/list-received-email-attachments
      */
     public function list(string $emailId, array $options = []): \Resend\Collection
     {

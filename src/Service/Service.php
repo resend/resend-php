@@ -3,7 +3,6 @@
 namespace Resend\Service;
 
 use Resend\ApiKey;
-use Resend\Attachment;
 use Resend\Audience;
 use Resend\Broadcast;
 use Resend\Collection;
@@ -11,6 +10,7 @@ use Resend\Contact;
 use Resend\Contracts\Transporter;
 use Resend\Domain;
 use Resend\Email;
+use Resend\Emails\Attachment;
 use Resend\Emails\Receiving;
 use Resend\Resource;
 use Resend\Webhook;
