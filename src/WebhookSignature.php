@@ -6,7 +6,7 @@ use Resend\Exceptions\WebhookSignatureVerificationException;
 
 final class WebhookSignature
 {
-    public static function verify(string $payload, array $headers, string $secret, ?int $tolerance = null): bool
+    public static function verify(string $payload, array $headers, string $secret, ?int $tolerance = 300): bool
     {
         $secret = static::getSecret($secret);
 

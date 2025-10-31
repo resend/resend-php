@@ -12,6 +12,7 @@ use Resend\Domain;
 use Resend\Email;
 use Resend\Resource;
 use Resend\Topic;
+use Resend\Webhook;
 
 abstract class Service
 {
@@ -26,6 +27,7 @@ abstract class Service
         'domains' => Domain::class,
         'emails' => Email::class,
         'topics' => Topic::class,
+        'webhooks' => Webhook::class,
     ];
 
     /**
