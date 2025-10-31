@@ -12,6 +12,7 @@ use Resend\Contracts\Transporter;
 use Resend\Domain;
 use Resend\Email;
 use Resend\Resource;
+use Resend\Webhook;
 
 abstract class Service
 {
@@ -26,6 +27,7 @@ abstract class Service
         'contact-properties' => ContactProperty::class,
         'domains' => Domain::class,
         'emails' => Email::class,
+        'webhooks' => Webhook::class,
     ];
 
     /**
