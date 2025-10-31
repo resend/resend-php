@@ -9,7 +9,7 @@ beforeEach(function () {
 });
 
 it('returns a true value', function () {
-    $webhook = webhook(time());
+    $webhook = webhookRequest(time());
 
     $verified = WebhookSignature::verify($webhook['payload'], $webhook['headers'], $this->secret, 300);
 
@@ -17,14 +17,14 @@ it('returns a true value', function () {
 });
 
 it('throws an exception when a required header is missing', function () {
-    $webhook = webhook(time());
+    $webhook = webhookRequest(time());
     $headers = array_slice($webhook['headers'], 2, 1);
 
     WebhookSignature::verify($webhook['payload'], $headers, $this->secret, 300);
 })->throws(WebhookSignatureVerificationException::class);
 
 it('throws an exception for an incorrect signature version', function () {
-    $webhook = webhook(time());
+    $webhook = webhookRequest(time());
     $headers = array_merge($webhook['headers'], [
         'svix-signature' => 'signature',
     ]);
@@ -33,7 +33,7 @@ it('throws an exception for an incorrect signature version', function () {
 })->throws(WebhookSignatureVerificationException::class, 'No signatures found matching the expected signature');
 
 it('can remove the whsec_ prefix from the secret before verification', function () {
-    $webhook = webhook(time());
+    $webhook = webhookRequest(time());
 
     $verified = WebhookSignature::verify($webhook['payload'], $webhook['headers'], 'whsec_' . $this->secret, 300);
 
@@ -41,7 +41,7 @@ it('can remove the whsec_ prefix from the secret before verification', function 
 });
 
 it('throws an exception for an incorrect timestamp', function () {
-    $webhook = webhook(null);
+    $webhook = webhookRequest(null);
     $headers = array_merge($webhook['headers'], [
         'svix-timestamp' => 'September',
     ]);
@@ -50,7 +50,7 @@ it('throws an exception for an incorrect timestamp', function () {
 })->throws(WebhookSignatureVerificationException::class, 'Invalid timestamp');
 
 it('throws an exception for an older timestamp', function () {
-    $webhook = webhook(time());
+    $webhook = webhookRequest(time());
 
     $headers = array_merge($webhook['headers'], [
         'svix-timestamp' => time() - 400,
@@ -60,7 +60,7 @@ it('throws an exception for an older timestamp', function () {
 })->throws(WebhookSignatureVerificationException::class, 'Message timestamp too old');
 
 it('throws an exception for a newer timestamp', function () {
-    $webhook = webhook(time());
+    $webhook = webhookRequest(time());
 
     $headers = array_merge($webhook['headers'], [
         'svix-timestamp' => time() + 400,

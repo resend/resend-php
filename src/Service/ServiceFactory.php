@@ -20,6 +20,7 @@ class ServiceFactory
         'domains' => Domain::class,
         'emails' => Email::class,
         'segments' => Segment::class,
+        'webhooks' => Webhook::class,
     ];
 
     /**

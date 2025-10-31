@@ -17,6 +17,7 @@ use Resend\Service\ServiceFactory;
  * @property Service\Domain $domains
  * @property Service\Email $emails
  * @property Service\Segment $segments
+ * @property Service\Webhook $webhooks
  */
 class Client implements ClientContract
 {
