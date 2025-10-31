@@ -12,6 +12,22 @@ it('can get an email resource', function () {
         ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
 });
 
+it('can send an email', function () {
+    $client = mockClient('POST', 'emails', [
+        'to' => 'test@resend.com',
+    ], [], email());
+
+    $result = $client->emails->send([
+        'to' => 'test@resend.com',
+    ]);
+
+    expect($result)
+        ->toBeInstanceOf(Email::class)
+        ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794')
+        ->from->toBe('onboarding@resend.dev')
+        ->to->toBe('user@gmail.com');
+});
+
 it('can send an email with an idempotency key', function () {
     $client = mockClient('POST', 'emails', [
         'to' => 'test@resend.com',

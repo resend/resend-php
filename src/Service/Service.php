@@ -10,8 +10,12 @@ use Resend\Contact;
 use Resend\Contracts\Transporter;
 use Resend\Domain;
 use Resend\Email;
+use Resend\Emails\Attachment;
+use Resend\Emails\Receiving;
 use Resend\Resource;
 use Resend\Segment;
+use Resend\Template;
+use Resend\Topic;
 use Resend\Webhook;
 
 abstract class Service
@@ -21,17 +25,21 @@ abstract class Service
      */
     protected $mapping = [
         'api-keys' => ApiKey::class,
+        'attachments' => Attachment::class,
         'audiences' => Audience::class,
         'broadcasts' => Broadcast::class,
         'contacts' => Contact::class,
         'domains' => Domain::class,
+        'receiving' => Receiving::class,
         'emails' => Email::class,
         'segments' => Segment::class,
+        'templates' => Template::class,
+        'topics' => Topic::class,
         'webhooks' => Webhook::class,
     ];
 
     /**
-     * Create a transportable instance with the given transporter.
+     * Create a service instance with the given transporter.
      */
     public function __construct(
         protected readonly Transporter $transporter
