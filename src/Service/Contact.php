@@ -3,11 +3,14 @@
 namespace Resend\Service;
 
 use Resend\Contracts\Transporter;
+use Resend\Service\Contacts\Segment;
 use Resend\Service\Contacts\Topic;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Contact extends Service
 {
+    public Segment $segments;
+
     public Topic $topics;
 
     /**
@@ -15,6 +18,7 @@ class Contact extends Service
      */
     public function __construct(Transporter $transporter)
     {
+        $this->segments = new Segment($transporter);
         $this->topics = new Topic($transporter);
 
         parent::__construct($transporter);
