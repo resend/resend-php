@@ -34,6 +34,20 @@ it('can get a list of topic resources', function () {
         ->data->toBeArray();
 });
 
+it('can update a topic resource', function () {
+    $client = mockClient('PATCH', 'topics/b6d24b8e-af0b-4c3c-be0c-359bbd97381e', [
+        'name' => 'Weekly Newsletter',
+        'description' => 'Weekly newsletter for our subscribers',
+    ], [], topic());
+
+    $result = $client->topics->update('b6d24b8e-af0b-4c3c-be0c-359bbd97381e', [
+        'name' => 'Weekly Newsletter',
+        'description' => 'Weekly newsletter for our subscribers',
+    ]);
+
+    expect($result)->toBeInstanceOf(Topic::class);
+});
+
 it('can remove a topic resource', function () {
     $client = mockClient('DELETE', 'topics/b6d24b8e-af0b-4c3c-be0c-359bbd97381e', [], [], topic());
 
