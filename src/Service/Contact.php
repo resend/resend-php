@@ -55,14 +55,18 @@ class Contact extends Service
     /**
      * List all contacts.
      *
-     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
+     * @param array{'segment_id'?: string, 'limit'?: int, 'before'?: string, 'after'?: string} $options
      * @return \Resend\Collection<\Resend\Contact>
      *
      * @see https://resend.com/docs/api-reference/contacts/list-contacts
      */
     public function list(array $options = []): \Resend\Collection
     {
-        $payload = Payload::list('contacts', $options);
+        $segmentId = array_key_exists('segment_id', $options) ? $options['segment_id'] : null;
+
+        $payload = $segmentId
+            ? Payload::list("segments/{$segmentId}/contacts", $options)
+            : Payload::list('contacts', $options);
 
         $result = $this->transporter->request($payload);
 

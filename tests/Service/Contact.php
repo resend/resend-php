@@ -43,6 +43,15 @@ it('can get a list of contacts', function () {
         ->data->toBeArray();
 });
 
+it('can get a list of contacts by segment_id', function () {
+    $client = mockClient('GET', 'segments/b6d24b8e-af0b-4c3c-be0c-359bbd97381a/contacts', [], [], contacts());
+
+    $result = $client->contacts->list(['segment_id' => 'b6d24b8e-af0b-4c3c-be0c-359bbd97381a']);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+});
+
 it('can update a contact by id', function () {
     $client = mockClient('PATCH', 'contacts/e169aa45-1ecf-4183-9955-b1499d5701d3', [
         'first_name' => 'Steve',
