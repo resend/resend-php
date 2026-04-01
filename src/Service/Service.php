@@ -14,6 +14,7 @@ use Resend\Domain;
 use Resend\Email;
 use Resend\Emails\Attachment;
 use Resend\Emails\Receiving;
+use Resend\Log;
 use Resend\Resource;
 use Resend\Segment;
 use Resend\Template;
@@ -36,6 +37,7 @@ abstract class Service
         'domains' => Domain::class,
         'receiving' => Receiving::class,
         'emails' => Email::class,
+        'logs' => Log::class,
         'segments' => Segment::class,
         'templates' => Template::class,
         'topics' => Topic::class,

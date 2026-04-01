@@ -20,6 +20,7 @@ class ServiceFactory
         'contactProperties' => ContactProperty::class,
         'domains' => Domain::class,
         'emails' => Email::class,
+        'logs' => Log::class,
         'segments' => Segment::class,
         'templates' => Template::class,
         'topics' => Topic::class,
