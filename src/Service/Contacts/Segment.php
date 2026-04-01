@@ -7,6 +7,11 @@ use Resend\ValueObjects\Transporter\Payload;
 
 class Segment extends Service
 {
+    /**
+     * Add an existing contact by ID or email to a segment.
+     *
+     * @see https://resend.com/docs/api-reference/contacts/add-contact-to-segment
+     */
     public function add(string $contact, string $segmentId): \Resend\Segment
     {
         $payload = Payload::create("contacts/$contact/segments/$segmentId", []);
@@ -33,6 +38,11 @@ class Segment extends Service
         return $this->createResource('segments', $result);
     }
 
+    /**
+     * Remove an existing contact by ID or email from a segment.
+     *
+     * @see https://resend.com/docs/api-reference/contacts/delete-contact-segment
+     */
     public function remove(string $contact, string $segmentId): \Resend\Segment
     {
         $payload = Payload::delete("contacts/$contact/segments", $segmentId);

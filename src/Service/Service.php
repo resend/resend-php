@@ -11,6 +11,7 @@ use Resend\ContactProperty;
 use Resend\Contacts\Topic as ContactTopic;
 use Resend\Contracts\Transporter;
 use Resend\Domain;
+use Resend\Domains\TrackingDomain;
 use Resend\Email;
 use Resend\Emails\Attachment;
 use Resend\Emails\Receiving;
@@ -30,15 +31,16 @@ abstract class Service
         'attachments' => Attachment::class,
         'audiences' => Audience::class,
         'broadcasts' => Broadcast::class,
-        'contacts' => Contact::class,
         'contact-properties' => ContactProperty::class,
         'contact-topics' => ContactTopic::class,
+        'contacts' => Contact::class,
         'domains' => Domain::class,
-        'receiving' => Receiving::class,
         'emails' => Email::class,
+        'receiving' => Receiving::class,
         'segments' => Segment::class,
         'templates' => Template::class,
         'topics' => Topic::class,
+        'tracking-domains' => TrackingDomain::class,
         'webhooks' => Webhook::class,
     ];
 

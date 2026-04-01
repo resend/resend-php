@@ -2,10 +2,24 @@
 
 namespace Resend\Service;
 
+use Resend\Contracts\Transporter;
+use Resend\Service\Domains\TrackingDomain;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Domain extends Service
 {
+    public TrackingDomain $trackingDomains;
+
+    /**
+     * Create a new domain service instance with the given transport.
+     */
+    public function __construct(Transporter $transporter)
+    {
+        $this->trackingDomains = new TrackingDomain($transporter);
+
+        parent::__construct($transporter);
+    }
+
     /**
      * Retrieve a domain with the given ID.
      *
