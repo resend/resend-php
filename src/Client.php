@@ -11,12 +11,14 @@ use Resend\Service\ServiceFactory;
  *
  * @property Service\ApiKey $apiKeys
  * @property Service\Audience $audiences
+ * @property Service\Automation $automations
  * @property Service\Batch $batch
  * @property Service\Broadcast $broadcasts
  * @property Service\Contact $contacts
  * @property Service\ContactProperty $contactProperties
  * @property Service\Domain $domains
  * @property Service\Email $emails
+ * @property Service\Event $events
  * @property Service\Log $logs
  * @property Service\Segment $segments
  * @property Service\Template $templates

@@ -4,6 +4,7 @@ namespace Resend\Service;
 
 use Resend\ApiKey;
 use Resend\Audience;
+use Resend\Automation;
 use Resend\Broadcast;
 use Resend\Collection;
 use Resend\Contact;
@@ -14,6 +15,7 @@ use Resend\Domain;
 use Resend\Email;
 use Resend\Emails\Attachment;
 use Resend\Emails\Receiving;
+use Resend\Event;
 use Resend\Log;
 use Resend\Resource;
 use Resend\Segment;
@@ -30,14 +32,16 @@ abstract class Service
         'api-keys' => ApiKey::class,
         'attachments' => Attachment::class,
         'audiences' => Audience::class,
+        'automation' => Automation::class,
         'broadcasts' => Broadcast::class,
-        'contacts' => Contact::class,
         'contact-properties' => ContactProperty::class,
         'contact-topics' => ContactTopic::class,
+        'contacts' => Contact::class,
         'domains' => Domain::class,
-        'receiving' => Receiving::class,
         'emails' => Email::class,
+        'events' => Event::class,
         'logs' => Log::class,
+        'receiving' => Receiving::class,
         'segments' => Segment::class,
         'templates' => Template::class,
         'topics' => Topic::class,
