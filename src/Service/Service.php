@@ -5,6 +5,7 @@ namespace Resend\Service;
 use Resend\ApiKey;
 use Resend\Audience;
 use Resend\Automation;
+use Resend\Automations\Runs\Step as AutomationRunStep;
 use Resend\Broadcast;
 use Resend\Collection;
 use Resend\Contact;
@@ -19,6 +20,7 @@ use Resend\Event;
 use Resend\Log;
 use Resend\Resource;
 use Resend\Segment;
+use Resend\Service\Automations\Run as AutomationRun;
 use Resend\Template;
 use Resend\Topic;
 use Resend\Webhook;
@@ -32,7 +34,9 @@ abstract class Service
         'api-keys' => ApiKey::class,
         'attachments' => Attachment::class,
         'audiences' => Audience::class,
-        'automation' => Automation::class,
+        'automation-run-steps' => AutomationRunStep::class,
+        'automation-runs' => AutomationRun::class,
+        'automations' => Automation::class,
         'broadcasts' => Broadcast::class,
         'contact-properties' => ContactProperty::class,
         'contact-topics' => ContactTopic::class,
