@@ -48,14 +48,14 @@ function automation(): array
             ],
             [
                 'id' => 'f6a7b8c9-d0e1-2345-f123-456789012345',
-                'from_step_id' => 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
-                'to_step_id' => 'c3d4e5f6-a7b8-9012-cdef-123456789012',
+                'from' => 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
+                'to' => 'c3d4e5f6-a7b8-9012-cdef-123456789012',
                 'edge_type' => 'default',
             ],
             [
                 'id' => 'a7b8c9d0-e1f2-3456-0123-567890123456',
-                'from_step_id' => 'c3d4e5f6-a7b8-9012-cdef-123456789012',
-                'to_step_id' => 'd4e5f6a7-b8c9-0123-def1-234567890123',
+                'from' => 'c3d4e5f6-a7b8-9012-cdef-123456789012',
+                'to' => 'd4e5f6a7-b8c9-0123-def1-234567890123',
                 'edge_type' => 'default',
             ],
         ],

@@ -73,3 +73,12 @@ it('can remove an automation', function () {
     expect($result)->toBeInstanceOf(Automation::class)
         ->id->toBe('c9b16d4f-ba6c-4e2e-b044-6bf4404e57fd');
 });
+
+it('can stop an automation', function () {
+    $client = mockClient('POST', 'automations/c9b16d4f-ba6c-4e2e-b044-6bf4404e57fd/stop', [], [], automation());
+
+    $result = $client->automations->stop('c9b16d4f-ba6c-4e2e-b044-6bf4404e57fd');
+
+    expect($result)->toBeInstanceOf(Automation::class)
+        ->id->toBe('c9b16d4f-ba6c-4e2e-b044-6bf4404e57fd');
+});

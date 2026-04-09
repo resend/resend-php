@@ -92,4 +92,18 @@ class Automation extends Service
 
         return $this->createResource('automations', $result);
     }
+
+    /**
+     * Stop a running automation.
+     *
+     * @see https://resend.com/docs/api-reference/automations/stop-automation
+     */
+    public function stop(string $automationId): \Resend\Automation
+    {
+        $payload = Payload::create("automations/$automationId/stop", []);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('automations', $result);
+    }
 }

@@ -2,25 +2,11 @@
 
 namespace Resend\Service\Automations;
 
-use Resend\Contracts\Transporter;
-use Resend\Service\Automations\Runs\Step;
 use Resend\Service\Service;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Run extends Service
 {
-    public Step $steps;
-
-    /**
-     * Create a new automation run service instance with the given transport.
-     */
-    public function __construct(Transporter $transporter)
-    {
-        $this->steps = new Step($transporter);
-
-        parent::__construct($transporter);
-    }
-
     /**
      * Retrieve a single automation run.
      *
