@@ -42,7 +42,7 @@ function automation(): array
         'edges' => [
             [
                 'id' => 'e5f6a7b8-c9d0-1234-ef12-345678901234',
-                'from_step_id' => 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+                'from' => 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
                 'to_step_id' => 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
                 'edge_type' => 'default',
             ],
