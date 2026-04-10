@@ -11,12 +11,12 @@ function automation(): array
         'updated_at' => '2025-10-01 12:00:00.000000+00',
         'steps' => [
             [
-                'id' => 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+                'key' => 'trigger',
                 'type' => 'trigger',
                 'config' => ['event_name' => 'user.created'],
             ],
             [
-                'id' => 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
+                'key' => 'send_welcome',
                 'type' => 'send_email',
                 'config' => [
                     'template_id' => 'tpl_xxxxxxxxx',
@@ -25,12 +25,12 @@ function automation(): array
                 ],
             ],
             [
-                'id' => 'c3d4e5f6-a7b8-9012-cdef-123456789012',
+                'key' => 'wait_2_days',
                 'type' => 'delay',
-                'config' => ['seconds' => 172800],
+                'config' => ['duration' => '2 days'],
             ],
             [
-                'id' => 'd4e5f6a7-b8c9-0123-def1-234567890123',
+                'key' => 'send_getting_started',
                 'type' => 'send_email',
                 'config' => [
                     'template_id' => 'f6e86e54-0ab4-404d-8edc-d52ea8cf602e',
@@ -39,24 +39,21 @@ function automation(): array
                 ],
             ],
         ],
-        'edges' => [
+        'connections' => [
             [
-                'id' => 'e5f6a7b8-c9d0-1234-ef12-345678901234',
-                'from' => 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-                'to' => 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
-                'edge_type' => 'default',
+                'from' => 'trigger',
+                'to' => 'send_welcome',
+                'type' => 'default',
             ],
             [
-                'id' => 'f6a7b8c9-d0e1-2345-f123-456789012345',
-                'from' => 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
-                'to' => 'c3d4e5f6-a7b8-9012-cdef-123456789012',
-                'edge_type' => 'default',
+                'from' => 'send_welcome',
+                'to' => 'wait_2_days',
+                'type' => 'default',
             ],
             [
-                'id' => 'a7b8c9d0-e1f2-3456-0123-567890123456',
-                'from' => 'c3d4e5f6-a7b8-9012-cdef-123456789012',
-                'to' => 'd4e5f6a7-b8c9-0123-def1-234567890123',
-                'edge_type' => 'default',
+                'from' => 'wait_2_days',
+                'to' => 'send_getting_started',
+                'type' => 'default',
             ],
         ],
     ];

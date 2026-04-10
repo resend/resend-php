@@ -10,7 +10,7 @@ namespace Resend;
  * @property string $created_at Time at which the automation was created.
  * @property string $updated_at Time at which the automation was updated.
  * @property array $steps The automation steps.
- * @property array $edges The automation edges.
+ * @property array $connections The automation connections.
  */
 class Automation extends Resource
 {

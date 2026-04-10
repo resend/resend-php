@@ -14,6 +14,14 @@ function event(): array
     ];
 }
 
+function sentEvent(): array
+{
+    return [
+        'object' => 'event',
+        'event' => 'user.created',
+    ];
+}
+
 function events(): array
 {
     return [

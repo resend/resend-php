@@ -46,6 +46,10 @@ final class Payload
             $searchParams['before'] = $options['before'];
         }
 
+        if (array_key_exists('status', $options)) {
+            $searchParams['status'] = $options['status'];
+        }
+
         $uri = ResourceUri::list(! empty($searchParams) ? $resource . '?' . http_build_query($searchParams) : $resource);
 
         return new self($contentType, $method, $uri);

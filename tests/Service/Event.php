@@ -109,7 +109,7 @@ it('can send an event with email', function () {
     $client = mockClient('POST', 'events/send', [
         'event' => 'user.created',
         'email' => 'test@example.com',
-    ], [], event());
+    ], [], sentEvent());
 
     $result = $client->events->send([
         'event' => 'user.created',
@@ -117,14 +117,14 @@ it('can send an event with email', function () {
     ]);
 
     expect($result)->toBeInstanceOf(Event::class)
-        ->id->toBe('a1b2c3d4-e5f6-7890-abcd-ef1234567890');
+        ->event->toBe('user.created');
 });
 
 it('can send an event with contact_id', function () {
     $client = mockClient('POST', 'events/send', [
         'event' => 'user.created',
         'contact_id' => 'user_123',
-    ], [], event());
+    ], [], sentEvent());
 
     $result = $client->events->send([
         'event' => 'user.created',
@@ -132,11 +132,11 @@ it('can send an event with contact_id', function () {
     ]);
 
     expect($result)->toBeInstanceOf(Event::class)
-        ->id->toBe('a1b2c3d4-e5f6-7890-abcd-ef1234567890');
+        ->event->toBe('user.created');
 });
 
 it('throws when both email and contact_id are provided', function () {
-    $client = mockClient('POST', 'events/send', [], [], event(), null);
+    $client = mockClient('POST', 'events/send', [], [], sentEvent(), null);
 
     $client->events->send([
         'event' => 'user.created',
@@ -146,7 +146,7 @@ it('throws when both email and contact_id are provided', function () {
 })->throws(InvalidArgumentException::class, 'Either contact_id or email must be provided, but not both.');
 
 it('throws when neither email nor contact_id is provided', function () {
-    $client = mockClient('POST', 'events/send', [], [], event(), null);
+    $client = mockClient('POST', 'events/send', [], [], sentEvent(), null);
 
     $client->events->send([
         'event' => 'user.created',

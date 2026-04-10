@@ -23,7 +23,7 @@ it('can create an automation', function () {
                 'config' => ['event_name' => 'user.created'],
             ],
         ],
-        'edges' => [],
+        'connections' => [],
     ], [], automation());
 
     $result = $client->automations->create([
@@ -36,7 +36,7 @@ it('can create an automation', function () {
                 'config' => ['event_name' => 'user.created'],
             ],
         ],
-        'edges' => [],
+        'connections' => [],
     ]);
 
     expect($result)->toBeInstanceOf(Automation::class)
