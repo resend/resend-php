@@ -4,12 +4,12 @@ use Resend\Collection;
 use Resend\Domain;
 
 it('can get a domain resource', function () {
-    $client = mockClient('GET', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], [], domain());
+    $client = mockClient('GET', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206', [], [], domain());
 
-    $result = $client->domains->get('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+    $result = $client->domains->get('d91cd9bd-1176-453e-8fc1-35364d380206');
 
     expect($result)->toBeInstanceOf(Domain::class)
-        ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+        ->id->toBe('d91cd9bd-1176-453e-8fc1-35364d380206');
 });
 
 it('can create a domain resource', function () {
@@ -22,7 +22,7 @@ it('can create a domain resource', function () {
     ]);
 
     expect($result)->toBeInstanceOf(Domain::class)
-        ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+        ->id->toBe('d91cd9bd-1176-453e-8fc1-35364d380206');
 });
 
 it('can get a list of domain resources', function () {
@@ -35,12 +35,12 @@ it('can get a list of domain resources', function () {
 });
 
 it('can update a domain resource', function () {
-    $client = mockClient('PATCH', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
+    $client = mockClient('PATCH', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206', [
         'open_tracking' => false,
         'click_tracking' => true,
     ], [], domain());
 
-    $result = $client->domains->update('4dd369bc-aa82-4ff3-97de-514ae3000ee0', [
+    $result = $client->domains->update('d91cd9bd-1176-453e-8fc1-35364d380206', [
         'open_tracking' => false,
         'click_tracking' => true,
     ]);
@@ -49,21 +49,21 @@ it('can update a domain resource', function () {
 });
 
 it('can remove a domain resource', function () {
-    $client = mockClient('DELETE', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0', [], [], domain());
+    $client = mockClient('DELETE', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206', [], [], domain());
 
-    $result = $client->domains->remove('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+    $result = $client->domains->remove('d91cd9bd-1176-453e-8fc1-35364d380206');
 
     expect($result)->toBeInstanceOf(Domain::class);
 });
 
 it('can verify a domain resource', function () {
-    $client = mockClient('POST', 'domains/4dd369bc-aa82-4ff3-97de-514ae3000ee0/verify', [], [], [
+    $client = mockClient('POST', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206/verify', [], [], [
         'object' => 'domain',
-        'id' => '4dd369bc-aa82-4ff3-97de-514ae3000ee0',
+        'id' => 'd91cd9bd-1176-453e-8fc1-35364d380206',
     ]);
 
-    $result = $client->domains->verify('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+    $result = $client->domains->verify('d91cd9bd-1176-453e-8fc1-35364d380206');
 
     expect($result)->toBeInstanceOf(Domain::class)
-        ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+        ->id->toBe('d91cd9bd-1176-453e-8fc1-35364d380206');
 });
