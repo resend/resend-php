@@ -51,7 +51,7 @@ class Automation extends Service
     /**
      * Retrieve a list of automations.
      *
-     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string, 'status'?: string} $options
      * @return \Resend\Collection<\Resend\Automation>
      *
      * @see https://resend.com/docs/api-reference/automations/list-automations
