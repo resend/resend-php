@@ -37,6 +37,17 @@ class Automation extends Service
     /**
      * Create a new automation to automate email sequences.
      *
+     * @param array{
+     *     name: string,
+     *     status?: 'enabled'|'disabled',
+     *     steps: array<int, array{
+     *         key: string,
+     *         type: 'trigger'|'send_email'|'delay'|'wait_for_event'|'condition'|'contact_update'|'contact_delete'|'add_to_segment',
+     *         config: array
+     *     }>,
+     *     connections: array<int, array{from: string, to: string, type?: 'default'|'condition_met'|'condition_not_met'|'timeout'|'event_received'}>
+     * } $parameters
+     *
      * @see https://resend.com/docs/api-reference/automations/create-automation
      */
     public function create(array $parameters): \Resend\Automation
@@ -51,7 +62,7 @@ class Automation extends Service
     /**
      * Retrieve a list of automations.
      *
-     * @param array{'limit'?: int, 'before'?: string, 'after'?: string, 'status'?: string} $options
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string, 'status'?: 'enabled'|'disabled'} $options
      * @return \Resend\Collection<\Resend\Automation>
      *
      * @see https://resend.com/docs/api-reference/automations/list-automations
@@ -67,6 +78,17 @@ class Automation extends Service
 
     /**
      * Update an existing automation.
+     *
+     * @param array{
+     *     name?: string,
+     *     status?: 'enabled'|'disabled',
+     *     steps?: array<int, array{
+     *         key: string,
+     *         type: 'trigger'|'send_email'|'delay'|'wait_for_event'|'condition'|'contact_update'|'contact_delete'|'add_to_segment',
+     *         config: array
+     *     }>,
+     *     connections?: array<int, array{from: string, to: string, type?: 'default'|'condition_met'|'condition_not_met'|'timeout'|'event_received'}>
+     * } $parameters
      *
      * @see https://resend.com/docs/api-reference/automations/update-automation
      */

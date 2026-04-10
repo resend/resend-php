@@ -24,6 +24,8 @@ class Event extends Service
     /**
      * Create a new event that can be used to trigger automations.
      *
+     * @param array{name: string, schema?: array<string, 'string'|'number'|'boolean'|'date'>|null} $parameters
+     *
      * @see https://resend.com/docs/api-reference/events/create-event
      */
     public function create(array $parameters): \Resend\Event
@@ -55,7 +57,8 @@ class Event extends Service
     /**
      * Update an existing event schema.
      *
-     * @param array{'schema': array} $parameters
+     * @param array{schema: array<string, 'string'|'number'|'boolean'|'date'>|null} $parameters
+     *
      * @see https://resend.com/docs/api-reference/events/update-event
      */
     public function update(string $identifier, array $parameters): \Resend\Event
