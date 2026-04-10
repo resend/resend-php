@@ -18,7 +18,7 @@ it('can create an automation', function () {
         'status' => 'disabled',
         'steps' => [
             [
-                'ref' => 'trigger',
+                'key' => 'trigger',
                 'type' => 'trigger',
                 'config' => ['event_name' => 'user.created'],
             ],
@@ -31,7 +31,7 @@ it('can create an automation', function () {
         'status' => 'disabled',
         'steps' => [
             [
-                'ref' => 'trigger',
+                'key' => 'trigger',
                 'type' => 'trigger',
                 'config' => ['event_name' => 'user.created'],
             ],
