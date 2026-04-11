@@ -6,7 +6,6 @@ use Resend\ApiKey;
 use Resend\Audience;
 use Resend\Automation;
 use Resend\Automations\Run as AutomationRun;
-use Resend\Automations\Runs\Step as AutomationRunStep;
 use Resend\Broadcast;
 use Resend\Collection;
 use Resend\Contact;
@@ -34,7 +33,6 @@ abstract class Service
         'api-keys' => ApiKey::class,
         'attachments' => Attachment::class,
         'audiences' => Audience::class,
-        'automation-run-steps' => AutomationRunStep::class,
         'automation-runs' => AutomationRun::class,
         'automations' => Automation::class,
         'broadcasts' => Broadcast::class,

@@ -52,6 +52,15 @@ it('can get a list of automations', function () {
         ->data->toBeArray();
 });
 
+it('can get a list of automations filtered by status', function () {
+    $client = mockClient('GET', 'automations?status=enabled', [], [], automations());
+
+    $result = $client->automations->list(['status' => 'enabled']);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+});
+
 it('can update an automation', function () {
     $client = mockClient('PATCH', 'automations/c9b16d4f-ba6c-4e2e-b044-6bf4404e57fd', [
         'status' => 'enabled',
