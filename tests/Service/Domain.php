@@ -12,6 +12,24 @@ it('can get a domain resource', function () {
         ->id->toBe('d91cd9bd-1176-453e-8fc1-35364d380206');
 });
 
+it('exposes the TrackingCAA record when present', function () {
+    $client = mockClient('GET', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206', [], [], domain());
+
+    $result = $client->domains->get('d91cd9bd-1176-453e-8fc1-35364d380206');
+
+    $caaRecords = array_values(array_filter(
+        $result->records,
+        fn (array $record) => $record['record'] === 'TrackingCAA',
+    ));
+
+    expect($caaRecords)->toHaveCount(1)
+        ->and($caaRecords[0]['record'])->toBe('TrackingCAA')
+        ->and($caaRecords[0]['type'])->toBe('CAA')
+        ->and($caaRecords[0]['value'])->toBe('0 issue "amazon.com"')
+        ->and($caaRecords[0]['ttl'])->toBe('Auto')
+        ->and($caaRecords[0]['status'])->toBe('verified');
+});
+
 it('can create a domain resource', function () {
     $client = mockClient('POST', 'domains', [
         'name' => 'resend.dev',
