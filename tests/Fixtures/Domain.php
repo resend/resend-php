@@ -50,6 +50,14 @@ function domain(): array
                 'ttl' => 'Auto',
                 'status' => 'not_started',
             ],
+            [
+                'record' => 'TrackingCAA',
+                'name' => '',
+                'type' => 'CAA',
+                'value' => '0 issue "amazon.com"',
+                'ttl' => 'Auto',
+                'status' => 'verified',
+            ],
         ],
     ];
 }
