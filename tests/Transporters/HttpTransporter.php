@@ -1,8 +1,10 @@
 <?php
 
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Client\ClientInterface;
 use Resend\Enums\Transporter\ContentType;
 use Resend\Exceptions\ErrorException;
@@ -105,6 +107,23 @@ test('request can handle client errors', function () {
             ->and($exception->getPrevious())->toBeInstanceOf(ConnectException::class);
     });
 });
+
+test('request can handle client exception json errors from the full response body', function () {
+    $payload = Payload::create('email', ['to' => 'test@resend.com']);
+    $request = new Request('POST', 'https://api.resend.com/email');
+    $body = Utils::streamFor(json_encode(['error' => 'Unauthorized']));
+
+    $body->getContents();
+
+    $response = new Response(401, ['Content-Type' => 'application/json'], $body);
+
+    $this->client
+        ->shouldReceive('sendRequest')
+        ->once()
+        ->andThrow(new ClientException('Unauthorized', $request, $response));
+
+    $this->http->request($payload);
+})->throws(ErrorException::class, 'Unauthorized');
 
 test('request can handle serialization errors', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
