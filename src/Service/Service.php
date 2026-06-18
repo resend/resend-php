@@ -10,6 +10,7 @@ use Resend\Broadcast;
 use Resend\Collection;
 use Resend\Contact;
 use Resend\ContactProperty;
+use Resend\Contacts\Import as ContactImport;
 use Resend\Contacts\Topic as ContactTopic;
 use Resend\Contracts\Transporter;
 use Resend\Domain;
@@ -36,6 +37,7 @@ abstract class Service
         'automation-runs' => AutomationRun::class,
         'automations' => Automation::class,
         'broadcasts' => Broadcast::class,
+        'contact-imports' => ContactImport::class,
         'contact-properties' => ContactProperty::class,
         'contact-topics' => ContactTopic::class,
         'contacts' => Contact::class,

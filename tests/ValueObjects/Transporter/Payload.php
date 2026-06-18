@@ -118,3 +118,156 @@ it('can convert an empty array body to a JSON object', function () {
 it('throws an error when using an empty string to get a single resource', function () {
     Payload::get('domains', '');
 })->throws(InvalidArgumentException::class, 'The domains ID must be a non-empty string.');
+
+// Multipart form-data tests
+it('creates a multipart request with file resource', function () {
+    $file = fopen('php://memory', 'r+');
+    fwrite($file, 'test content');
+    rewind($file);
+
+    $payload = Payload::upload('contacts/imports', [
+        'file' => $file,
+    ]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'));
+
+    $request = $payload->toRequest($baseUri, $headers);
+    $contentType = $request->getHeaders()['Content-Type'][0];
+
+    expect($contentType)->toContain('multipart/form-data')
+        ->and($contentType)->toContain('boundary=');
+
+    fclose($file);
+});
+
+it('creates a multipart request with array field', function () {
+    $file = fopen('php://memory', 'r+');
+    fwrite($file, 'test content');
+    rewind($file);
+
+    $payload = Payload::upload('contacts/imports', [
+        'file' => $file,
+        'column_map' => ['email' => 0, 'name' => 1],
+    ]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'));
+
+    $request = $payload->toRequest($baseUri, $headers);
+    $body = (string) $request->getBody();
+
+    expect($body)->toContain('column_map')
+        ->and($body)->toContain(json_encode(['email' => 0, 'name' => 1]));
+
+    fclose($file);
+});
+
+it('creates a multipart request with scalar fields', function () {
+    $file = fopen('php://memory', 'r+');
+    fwrite($file, 'test content');
+    rewind($file);
+
+    $payload = Payload::upload('contacts/imports', [
+        'file' => $file,
+        'name' => 'import-job',
+        'priority' => 'high',
+    ]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'));
+
+    $request = $payload->toRequest($baseUri, $headers);
+    $body = (string) $request->getBody();
+
+    expect($body)->toContain('name')
+        ->and($body)->toContain('import-job')
+        ->and($body)->toContain('priority')
+        ->and($body)->toContain('high');
+
+    fclose($file);
+});
+
+it('includes boundary in multipart content-type header', function () {
+    $file = fopen('php://memory', 'r+');
+    fwrite($file, 'test');
+    rewind($file);
+
+    $payload = Payload::upload('contacts/imports', [
+        'file' => $file,
+    ]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'));
+
+    $request = $payload->toRequest($baseUri, $headers);
+    $contentType = $request->getHeaders()['Content-Type'][0];
+    $parts = explode('; boundary=', $contentType);
+
+    expect(count($parts))->toBe(2)
+        ->and($parts[0])->toBe('multipart/form-data')
+        ->and(strlen($parts[1]))->toBeGreaterThan(0);
+
+    fclose($file);
+});
+
+it('uses correct multipart field names', function () {
+    $file = fopen('php://memory', 'r+');
+    fwrite($file, 'test content');
+    rewind($file);
+
+    $payload = Payload::upload('contacts/imports', [
+        'file' => $file,
+        'column_map' => ['email' => 0],
+    ]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'));
+
+    $request = $payload->toRequest($baseUri, $headers);
+    $body = (string) $request->getBody();
+
+    // Multipart format includes field names in content-disposition
+    expect($body)->toContain('Content-Disposition: form-data; name="file"')
+        ->and($body)->toContain('Content-Disposition: form-data; name="column_map"');
+
+    fclose($file);
+});
+
+it('preserves user agent header with multipart', function () {
+    $file = fopen('php://memory', 'r+');
+    fwrite($file, 'test');
+    rewind($file);
+
+    $payload = Payload::upload('contacts/imports', [
+        'file' => $file,
+    ]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'));
+
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect($request->getHeaders()['User-Agent'][0])->toContain('resend-php');
+
+    fclose($file);
+});
+
+it('sends multipart request to correct URI', function () {
+    $file = fopen('php://memory', 'r+');
+    fwrite($file, 'test');
+    rewind($file);
+
+    $payload = Payload::upload('contacts/imports', [
+        'file' => $file,
+    ]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'));
+
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect((string) $request->getUri())->toBe('https://api.resend.com/contacts/imports');
+
+    fclose($file);
+});

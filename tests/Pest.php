@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Psr7\MultipartStream;
 use Resend\Client;
 use Resend\Contracts\Transporter;
 use Resend\ValueObjects\ApiKey;
@@ -39,13 +40,29 @@ function mockClient(string $method, string $resource, array $parameters, array $
             }
 
             if (in_array($method, ['POST', 'PATCH', 'PUT'], true)) {
-                $expectedBody = ($parameters === [] || ! array_is_list($parameters))
-                    ? json_encode((object) $parameters, JSON_THROW_ON_ERROR)
-                    : json_encode($parameters, JSON_THROW_ON_ERROR);
+                $contentType = $request->getHeader('Content-Type')[0] ?? '';
 
-                $actualBody = (string) $request->getBody();
-                if ($actualBody !== $expectedBody) {
-                    throw new Exception("[mockClient] Body mismatch:\nExpected: {$expectedBody}\nActual:   {$actualBody}");
+                // Check if this is a multipart request
+                if (str_contains($contentType, 'multipart/form-data')) {
+                    // For multipart, just verify the body is a MultipartStream (converted to string with content)
+                    $actualBody = (string) $request->getBody();
+                    if (empty($actualBody)) {
+                        throw new Exception('[mockClient] Multipart body is empty');
+                    }
+                    // Verify boundary is present
+                    if (! str_contains($contentType, 'boundary=')) {
+                        throw new Exception('[mockClient] Multipart Content-Type missing boundary');
+                    }
+                } else {
+                    // For JSON requests, compare as JSON
+                    $expectedBody = ($parameters === [] || ! array_is_list($parameters))
+                        ? json_encode((object) $parameters, JSON_THROW_ON_ERROR)
+                        : json_encode($parameters, JSON_THROW_ON_ERROR);
+
+                    $actualBody = (string) $request->getBody();
+                    if ($actualBody !== $expectedBody) {
+                        throw new Exception("[mockClient] Body mismatch:\nExpected: {$expectedBody}\nActual:   {$actualBody}");
+                    }
                 }
             }
 
