@@ -81,7 +81,9 @@ class HttpTransporter implements Transporter
             return $callable();
         } catch (ClientExceptionInterface $clientException) {
             if ($clientException instanceof ClientException) {
-                $this->throwIfJsonError($clientException->getResponse(), $clientException->getResponse()->getBody()->getContents());
+                $response = $clientException->getResponse();
+
+                $this->throwIfJsonError($response, (string) $response->getBody());
             }
 
             throw new TransporterException($clientException);
