@@ -2,6 +2,7 @@
 
 namespace Resend\ValueObjects\Transporter;
 
+use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
@@ -86,6 +87,18 @@ final class Payload
         }
 
         return new self($contentType, $method, $uri, $parameters, $headers);
+    }
+
+    /**
+     * Create a new Transporter Payload instance.
+     */
+    public static function upload(string $resource, array $parameters): self
+    {
+        $contentType = ContentType::MULTIPART;
+        $method = Method::POST;
+        $uri = ResourceUri::create($resource);
+
+        return new self($contentType, $method, $uri, $parameters);
     }
 
     /**
@@ -184,14 +197,46 @@ final class Payload
             $mergedHeaders = $headers->merge($this->headers);
         }
 
-        $mergedHeaders = $mergedHeaders->withUserAgent('resend-php', Resend::VERSION)
-            ->withContentType($this->contentType);
+        $mergedHeaders = $mergedHeaders->withUserAgent('resend-php', Resend::VERSION);
 
         if ($this->method === Method::POST || $this->method === Method::PATCH || $this->method === Method::PUT) {
-            $body = json_encode(
-                $this->parameters === [] || ! array_is_list($this->parameters) ? (object) $this->parameters : $this->parameters,
-                JSON_THROW_ON_ERROR
-            );
+            if ($this->contentType === ContentType::MULTIPART) {
+                $fields = [];
+                foreach ($this->parameters as $name => $value) {
+                    if (is_resource($value)) {
+                        // File resource
+                        $fields[] = [
+                            'name' => $name,
+                            'contents' => $value,
+                            'filename' => $name,
+                        ];
+                    } elseif (is_array($value)) {
+                        // Serialize arrays as JSON
+                        $fields[] = [
+                            'name' => $name,
+                            'contents' => json_encode($value, JSON_THROW_ON_ERROR),
+                        ];
+                    } else {
+                        // Scalar values
+                        $fields[] = [
+                            'name' => $name,
+                            'contents' => (string) $value,
+                        ];
+                    }
+                }
+
+                $multipartStream = new MultipartStream($fields);
+                $boundary = $multipartStream->getBoundary();
+                $mergedHeaders = $mergedHeaders->withContentType($this->contentType, "; boundary={$boundary}");
+                $body = $multipartStream;
+            } else {
+                $mergedHeaders = $mergedHeaders->withContentType($this->contentType);
+
+                $body = json_encode(
+                    $this->parameters === [] || ! array_is_list($this->parameters) ? (object) $this->parameters : $this->parameters,
+                    JSON_THROW_ON_ERROR
+                );
+            }
         }
 
         return new Request($this->method->value, $uri, $mergedHeaders->toArray(), $body);
