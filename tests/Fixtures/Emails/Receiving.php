@@ -14,6 +14,7 @@ function inboundEmail(): array
         'bcc' => [],
         'cc' => [],
         'reply_to' => [],
+        'received_for' => ['forwarded@example.com'],
         'message_id' => '<example+123>',
         'attachments' => [
             [
