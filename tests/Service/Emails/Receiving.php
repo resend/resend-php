@@ -9,7 +9,8 @@ it('can get an inbound email resource', function () {
     $result = $client->emails->receiving->get('4ef9a417-02e9-4d39-ad75-9611e0fcc33c');
 
     expect($result)->toBeInstanceOf(Receiving::class)
-        ->id->toBe('4ef9a417-02e9-4d39-ad75-9611e0fcc33c');
+        ->id->toBe('4ef9a417-02e9-4d39-ad75-9611e0fcc33c')
+        ->received_for->toBe(['forwarded@example.com']);
 });
 
 it('can get a list of inbound email resources', function () {
