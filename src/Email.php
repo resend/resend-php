@@ -5,6 +5,7 @@ namespace Resend;
 /**
  * @property string $object The type of object.
  * @property string $id The unique identifier for the email.
+ * @property string $message_id The RFC 5322 Message-ID header value.
  * @property string $from The sender's email address.
  * @property array $to The email addresses of all recipients.
  * @property string $created_at Time at which the email was created.

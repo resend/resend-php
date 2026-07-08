@@ -9,7 +9,8 @@ it('can get an email resource', function () {
     $result = $client->emails->get('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
 
     expect($result)->toBeInstanceOf(Email::class)
-        ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
+        ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794')
+        ->message_id->toBe('<111-222-333@email.example.com>');
 });
 
 it('can send an email', function () {
