@@ -9,7 +9,23 @@ class Batch extends Service
     /**
      * Send a batch of emails with the given parameters.
      *
-     * @param array{'idempotency_key'?: string, 'batch_validation'?: string} $options
+     * @param array<int, array{
+     *     from: string,
+     *     to: string|array<int, string>,
+     *     subject?: string,
+     *     html?: string,
+     *     text?: string,
+     *     bcc?: string|array<int, string>,
+     *     cc?: string|array<int, string>,
+     *     reply_to?: string|array<int, string>,
+     *     headers?: array<string, string>,
+     *     topic_id?: string|null,
+     *     scheduled_at?: string,
+     *     tags?: array<int, array{name: string, value: string}>,
+     *     attachments?: array<int, array{filename?: string, content?: string, path?: string, content_type?: string, content_id?: string}>,
+     *     template?: array{id: string, variables?: array<string, string|int>}
+     * }> $parameters
+     * @param array{'idempotency_key'?: string, 'batch_validation'?: 'strict'|'permissive'} $options
      * @return \Resend\Collection<\Resend\Email>
      *
      * @see https://resend.com/docs/api-reference/emails/send-batch-emails
@@ -28,7 +44,23 @@ class Batch extends Service
     /**
      * Send a batch of emails with the given parameters.
      *
-     * @param array{'idempotency_key'?: string, 'batch_validation'?: string} $options
+     * @param array<int, array{
+     *     from: string,
+     *     to: string|array<int, string>,
+     *     subject?: string,
+     *     html?: string,
+     *     text?: string,
+     *     bcc?: string|array<int, string>,
+     *     cc?: string|array<int, string>,
+     *     reply_to?: string|array<int, string>,
+     *     headers?: array<string, string>,
+     *     topic_id?: string|null,
+     *     scheduled_at?: string,
+     *     tags?: array<int, array{name: string, value: string}>,
+     *     attachments?: array<int, array{filename?: string, content?: string, path?: string, content_type?: string, content_id?: string}>,
+     *     template?: array{id: string, variables?: array<string, string|int>}
+     * }> $parameters
+     * @param array{'idempotency_key'?: string, 'batch_validation'?: 'strict'|'permissive'} $options
      * @return \Resend\Collection<\Resend\Email>
      *
      * @see https://resend.com/docs/api-reference/emails/send-batch-emails
