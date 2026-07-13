@@ -20,9 +20,7 @@ class Batch extends Service
      *     reply_to?: string|array<int, string>,
      *     headers?: array<string, string>,
      *     topic_id?: string|null,
-     *     scheduled_at?: string,
      *     tags?: array<int, array{name: string, value: string}>,
-     *     attachments?: array<int, array{filename?: string, content?: string, path?: string, content_type?: string, content_id?: string}>,
      *     template?: array{id: string, variables?: array<string, string|int>}
      * }> $parameters
      * @param array{'idempotency_key'?: string, 'batch_validation'?: 'strict'|'permissive'} $options
@@ -55,9 +53,7 @@ class Batch extends Service
      *     reply_to?: string|array<int, string>,
      *     headers?: array<string, string>,
      *     topic_id?: string|null,
-     *     scheduled_at?: string,
      *     tags?: array<int, array{name: string, value: string}>,
-     *     attachments?: array<int, array{filename?: string, content?: string, path?: string, content_type?: string, content_id?: string}>,
      *     template?: array{id: string, variables?: array<string, string|int>}
      * }> $parameters
      * @param array{'idempotency_key'?: string, 'batch_validation'?: 'strict'|'permissive'} $options
