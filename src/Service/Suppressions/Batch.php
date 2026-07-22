@@ -35,8 +35,8 @@ class Batch extends Service
      */
     public function remove(array $parameters): \Resend\Collection
     {
-        $hasEmails = isset($parameters['emails']);
-        $hasIds = isset($parameters['ids']);
+        $hasEmails = array_key_exists('emails', $parameters);
+        $hasIds = array_key_exists('ids', $parameters);
 
         if (! ($hasEmails xor $hasIds)) {
             throw new InvalidArgumentException("Provide either 'emails' or 'ids', but not both.");
