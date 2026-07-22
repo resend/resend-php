@@ -50,7 +50,7 @@ class Suppression extends Service
     }
 
     /**
-     * List all contacts.
+     * List all suppressions.
      *
      * @param array{'origin'?: string, 'limit'?: int, 'before'?: string, 'after'?: string} $options
      * @return \Resend\Collection<\Resend\Suppression>
