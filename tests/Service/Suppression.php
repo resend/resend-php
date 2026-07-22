@@ -45,6 +45,15 @@ it('can get a list of suppressions', function () {
         ->data->toBeArray();
 });
 
+it('can get a list of suppressions filtered by origin', function () {
+    $client = mockClient('GET', 'suppressions?origin=manual', [], [], suppressions());
+
+    $result = $client->suppressions->list(['origin' => 'manual']);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+});
+
 it('can remove a suppression by id', function () {
     $client = mockClient('DELETE', 'suppressions/e169aa45-1ecf-4183-9955-b1499d5701d3', [], [], suppression());
 
