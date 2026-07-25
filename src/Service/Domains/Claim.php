@@ -2,6 +2,7 @@
 
 namespace Resend\Service\Domains;
 
+use InvalidArgumentException;
 use Resend\Service\Service;
 use Resend\ValueObjects\Transporter\Payload;
 
@@ -14,6 +15,10 @@ class Claim extends Service
      */
     public function get(string $id): \Resend\Domains\Claim
     {
+        if (trim($id) === '') {
+            throw new InvalidArgumentException('The domain ID must be a non-empty string.');
+        }
+
         $payload = Payload::get("domains/{$id}", 'claims');
 
         $result = $this->transporter->request($payload);
@@ -51,6 +56,10 @@ class Claim extends Service
      */
     public function verify(string $id): \Resend\Domains\Claim
     {
+        if (trim($id) === '') {
+            throw new InvalidArgumentException('The domain ID must be a non-empty string.');
+        }
+
         $payload = Payload::verify("domains/{$id}", 'claims');
 
         $result = $this->transporter->request($payload);
