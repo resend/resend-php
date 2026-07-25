@@ -80,3 +80,25 @@ function domains(): array
         ],
     ];
 }
+
+function domainClaim(): array
+{
+    return [
+        'object' => 'domain_claim',
+        'id' => 'dacf4072-4119-4d88-932f-6c6126d3a9d1',
+        'name' => 'example.com',
+        'status' => 'pending',
+        'domain_id' => 'd91cd9bd-1176-453e-8fc1-35364d380206',
+        'region' => 'us-east-1',
+        'record' => [
+            'type' => 'TXT',
+            'name' => 'example.com',
+            'value' => 'resend-domain-verification=3f8a1c2d4e5b6a7f8091a2b3c4d5e6f7',
+            'ttl' => 'Auto',
+        ],
+        'blocked_reason' => null,
+        'failure_reason' => null,
+        'created_at' => '2026-06-16 17:12:02.059593+00',
+        'expires_at' => '2026-06-23 17:12:02.059593+00',
+    ];
+}

@@ -14,6 +14,7 @@ use Resend\Contacts\Import as ContactImport;
 use Resend\Contacts\Topic as ContactTopic;
 use Resend\Contracts\Transporter;
 use Resend\Domain;
+use Resend\Domains\Claim as DomainClaim;
 use Resend\Email;
 use Resend\Emails\Attachment;
 use Resend\Emails\Receiving;
@@ -42,6 +43,7 @@ abstract class Service
         'contact-topics' => ContactTopic::class,
         'contacts' => Contact::class,
         'domains' => Domain::class,
+        'domain-claims' => DomainClaim::class,
         'emails' => Email::class,
         'events' => Event::class,
         'logs' => Log::class,
