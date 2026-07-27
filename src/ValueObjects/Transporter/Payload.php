@@ -33,23 +33,10 @@ final class Payload
     {
         $contentType = ContentType::JSON;
         $method = Method::GET;
-        $searchParams = [];
 
-        if (array_key_exists('limit', $options)) {
-            $searchParams['limit'] = $options['limit'];
-        }
-
-        if (array_key_exists('after', $options)) {
-            $searchParams['after'] = $options['after'];
-        }
-
-        if (array_key_exists('before', $options)) {
-            $searchParams['before'] = $options['before'];
-        }
-
-        if (array_key_exists('status', $options)) {
-            $searchParams['status'] = $options['status'];
-        }
+        // whitelist keys that are actually valid query params, remove anything else
+        $allowedParams = ['limit', 'after', 'before', 'status', 'origin'];
+        $searchParams = array_intersect_key($options, array_flip($allowedParams));
 
         $uri = ResourceUri::list(! empty($searchParams) ? $resource . '?' . http_build_query($searchParams) : $resource);
 

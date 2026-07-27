@@ -22,6 +22,7 @@ use Resend\Event;
 use Resend\Log;
 use Resend\Resource;
 use Resend\Segment;
+use Resend\Suppression;
 use Resend\Template;
 use Resend\Topic;
 use Resend\Webhook;
@@ -49,6 +50,7 @@ abstract class Service
         'logs' => Log::class,
         'receiving' => Receiving::class,
         'segments' => Segment::class,
+        'suppressions' => Suppression::class,
         'templates' => Template::class,
         'topics' => Topic::class,
         'webhooks' => Webhook::class,

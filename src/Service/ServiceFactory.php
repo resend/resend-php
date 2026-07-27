@@ -24,6 +24,7 @@ class ServiceFactory
         'events' => Event::class,
         'logs' => Log::class,
         'segments' => Segment::class,
+        'suppressions' => Suppression::class,
         'templates' => Template::class,
         'topics' => Topic::class,
         'webhooks' => Webhook::class,
