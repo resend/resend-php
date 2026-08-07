@@ -9,8 +9,8 @@ function event(): array
         'schema' => [
             'plan' => 'string',
         ],
-        'created_at' => '2025-10-01T12:00:00.000Z',
-        'updated_at' => '2025-10-01T12:00:00.000Z',
+        'created_at' => '2025-10-01 12:00:00+00',
+        'updated_at' => '2025-10-01 12:00:00+00',
     ];
 }
 
@@ -35,8 +35,8 @@ function events(): array
                 'schema' => [
                     'plan' => 'string',
                 ],
-                'created_at' => '2025-10-01T12:00:00.000Z',
-                'updated_at' => '2025-10-01T12:00:00.000Z',
+                'created_at' => '2025-10-01 12:00:00+00',
+                'updated_at' => '2025-10-01 12:00:00+00',
             ],
         ],
     ];
