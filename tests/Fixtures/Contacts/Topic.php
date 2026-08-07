@@ -7,7 +7,7 @@ function contactTopic(): array
         'name' => 'Newsletter',
         'description' => 'Weekly newsletter updates',
         'subscription' => 'opt_in',
-        'created_at' => '2023-04-07T23:13:52.669661+00:00',
+        'created_at' => '2023-04-07 23:13:52.669661+00',
     ];
 }
 
@@ -22,14 +22,14 @@ function contactTopics(): array
                 'name' => 'Newsletter',
                 'description' => 'Weekly newsletter updates',
                 'subscription' => 'opt_in',
-                'created_at' => '2023-04-07T23:13:52.669661+00:00',
+                'created_at' => '2023-04-07 23:13:52.669661+00',
             ],
             [
                 'id' => 'ac7503ac-e027-4aea-94b3-b0acd46f65f9',
                 'name' => 'Product Updates',
                 'description' => 'Product announcements and updates',
                 'subscription' => 'opt_out',
-                'created_at' => '2023-04-07T23:13:20.417116+00:00',
+                'created_at' => '2023-04-07 23:13:20.417116+00',
             ],
         ],
     ];

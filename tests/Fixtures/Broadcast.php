@@ -12,7 +12,7 @@ function broadcast(): array
         'reply_to' => null,
         'preview_text' => 'Check out our latest announcements',
         'status' => 'draft',
-        'created_at' => '2024-12-01T19:32:22.980Z',
+        'created_at' => '2024-12-01 19:32:22.98+00',
         'scheduled_at' => null,
         'sent_at' => null,
     ];
@@ -32,7 +32,7 @@ function broadcasts(): array
                 'reply_to' => null,
                 'preview_text' => 'Check out our latest announcements',
                 'status' => 'draft',
-                'created_at' => '2024-12-01T19:32:22.980Z',
+                'created_at' => '2024-12-01 19:32:22.98+00',
                 'scheduled_at' => null,
                 'sent_at' => null,
             ],

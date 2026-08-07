@@ -8,7 +8,7 @@ function contactProperty(): array
         'key' => 'company_name',
         'type' => 'string',
         'fallback_value' => 'Acme Corp',
-        'created_at' => '2023-04-08T00:11:13.110779+00:00',
+        'created_at' => '2023-04-08 00:11:13.110779+00',
     ];
 }
 
@@ -24,7 +24,7 @@ function contactProperties(): array
                 'key' => 'company_name',
                 'type' => 'string',
                 'fallback_value' => 'Acme Corp',
-                'created_at' => '2023-04-08T00:11:13.110779+00:00',
+                'created_at' => '2023-04-08 00:11:13.110779+00',
             ],
         ],
     ];
