@@ -79,6 +79,11 @@ class Broadcast extends Service
         return $this->createResource('broadcasts', $result);
     }
 
+    /**
+     * Cancel a queued or scheduled broadcast.
+     *
+     * @see https://resend.com/docs/api-reference/broadcasts/cancel-broadcast
+     */
     public function cancel(string $id): \Resend\Broadcast
     {
         $payload = Payload::cancel('broadcasts', $id);
