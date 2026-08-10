@@ -79,6 +79,15 @@ class Broadcast extends Service
         return $this->createResource('broadcasts', $result);
     }
 
+    public function cancel(string $id): \Resend\Broadcast
+    {
+        $payload = Payload::cancel('broadcasts', $id);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('broadcasts', $result);
+    }
+
     /**
      * Remove an existing broadcast.
      *

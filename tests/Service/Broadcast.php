@@ -62,6 +62,15 @@ it('can send a broadcast resource', function () {
         ->id->toBe('559ac32e-9ef5-46fb-82a1-b76b840c0f7b');
 });
 
+it('can cancel a broadcast resource', function () {
+    $client = mockClient('POST', 'broadcasts/559ac32e-9ef5-46fb-82a1-b76b840c0f7b/cancel', [], [], broadcast());
+
+    $result = $client->broadcasts->cancel('559ac32e-9ef5-46fb-82a1-b76b840c0f7b');
+
+    expect($result)->toBeInstanceOf(Broadcast::class)
+        ->id->toBe('559ac32e-9ef5-46fb-82a1-b76b840c0f7b');
+});
+
 it('can remove a broadcast resource', function () {
     $client = mockClient('DELETE', 'broadcasts/559ac32e-9ef5-46fb-82a1-b76b840c0f7b', [], [], broadcast());
 
