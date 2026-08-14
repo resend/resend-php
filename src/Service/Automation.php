@@ -116,6 +116,20 @@ class Automation extends Service
     }
 
     /**
+     * Duplicate an existing automation.
+     *
+     * @see https://resend.com/docs/api-reference/automations/duplicate-automation
+     */
+    public function duplicate(string $automationId): \Resend\Automation
+    {
+        $payload = Payload::create("automations/$automationId/duplicate", []);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('automations', $result);
+    }
+
+    /**
      * Stop a running automation.
      *
      * @see https://resend.com/docs/api-reference/automations/stop-automation
