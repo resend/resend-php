@@ -10,6 +10,9 @@ function contact(): array
         'last_name' => 'Wozniak',
         'created_at' => '2023-10-06 23:47:56.678+00',
         'unsubscribed' => false,
+        'properties' => [
+            'tier' => ['value' => 'premium', 'type' => 'string'],
+        ],
     ];
 }
 
