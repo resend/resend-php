@@ -105,4 +105,20 @@ class Email extends Service
 
         return $this->createResource('emails', $result);
     }
+
+    /**
+     * Create a shareable link for a sent or received email with the given ID.
+     *
+     * @param array{'expires_in'?: string} $parameters
+     *
+     * @see https://resend.com/docs/api-reference/emails/share-email
+     */
+    public function share(string $id, array $parameters = []): \Resend\Email
+    {
+        $payload = Payload::create("emails/{$id}/share", $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('emails', $result);
+    }
 }
