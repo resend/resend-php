@@ -121,4 +121,46 @@ class Email extends Service
 
         return $this->createResource('emails', $result);
     }
+
+    /**
+     * Retrieve email delivery and engagement metrics.
+     *
+     * @param array{
+     *     'start_date'?: string,
+     *     'end_date'?: string,
+     *     'timezone'?: string,
+     *     'granularity'?: 'hourly'|'daily'|'weekly'|'monthly',
+     *     'metrics'?: array<int, 'received'|'delivered'|'complained'|'suppressed'|'bounced'|'bounced_transient'|'bounced_permanent'|'bounced_undetermined'|'opened'|'clicked'|'unsubscribed'|'delivery_delayed'|'failed'|'sent'|'unique_opened'|'unique_clicked'|'delivery_rate'|'open_rate'|'click_rate'|'bounce_rate'|'complaint_rate'|'unsubscribe_rate'>,
+     *     'dimensions'?: array<int, 'period'|'domain'|'email'|'broadcast'>,
+     *     'domain_id'?: array<int, string>,
+     *     'email_id'?: array<int, string>,
+     *     'broadcast_id'?: array<int, string>
+     * } $options
+     *
+     * @see https://resend.com/docs/api-reference/emails/metrics
+     */
+    public function metrics(array $options = []): \Resend\Metrics
+    {
+        $queryParams = [];
+
+        foreach (['start_date', 'end_date', 'timezone', 'granularity'] as $key) {
+            if (array_key_exists($key, $options)) {
+                $queryParams[$key] = $options[$key];
+            }
+        }
+
+        foreach (['metrics', 'dimensions', 'domain_id', 'email_id', 'broadcast_id'] as $key) {
+            if (! empty($options[$key])) {
+                $queryParams[$key] = implode(',', $options[$key]);
+            }
+        }
+
+        $resource = 'emails/metrics' . ($queryParams !== [] ? '?' . http_build_query($queryParams) : '');
+
+        $payload = Payload::list($resource);
+
+        $result = $this->transporter->request($payload);
+
+        return \Resend\Metrics::from($result);
+    }
 }
