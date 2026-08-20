@@ -16,6 +16,7 @@ namespace Resend;
  * @property null|array $cc The email addresses of all carbon copy recipients.
  * @property null|array $reply_to The reply to email address.
  * @property string $last_event The last event for the email.
+ * @property null|string $url The shareable link for the email, present on the response of the share endpoint.
  */
 class Email extends Resource
 {
