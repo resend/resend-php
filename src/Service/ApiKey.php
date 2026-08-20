@@ -38,6 +38,20 @@ class ApiKey extends Service
     }
 
     /**
+     * Update an API key with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/api-keys/update-api-key
+     */
+    public function update(string $id, array $parameters): \Resend\ApiKey
+    {
+        $payload = Payload::update('api-keys', $id, $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('api-keys', $result);
+    }
+
+    /**
      * Remove an API key with the given ID.
      *
      * @see https://resend.com/docs/api-reference/api-keys/delete-api-key#path-parameters
