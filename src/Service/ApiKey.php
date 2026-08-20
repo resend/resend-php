@@ -40,11 +40,14 @@ class ApiKey extends Service
     /**
      * Update an API key with the given ID.
      *
+     * Only `name` can be changed; permission and domain access are fixed at
+     * creation time, so any other keys passed in `$parameters` are ignored.
+     *
      * @see https://resend.com/docs/api-reference/api-keys/update-api-key
      */
     public function update(string $id, array $parameters): \Resend\ApiKey
     {
-        $payload = Payload::update('api-keys', $id, $parameters);
+        $payload = Payload::update('api-keys', $id, ['name' => $parameters['name']]);
 
         $result = $this->transporter->request($payload);
 
