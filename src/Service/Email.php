@@ -2,6 +2,7 @@
 
 namespace Resend\Service;
 
+use InvalidArgumentException;
 use Resend\Contracts\Transporter;
 use Resend\Service\Emails\Attachment;
 use Resend\Service\Emails\Receiving;
@@ -141,6 +142,14 @@ class Email extends Service
      */
     public function metrics(array $options = []): \Resend\Metrics
     {
+        $dimensions = $options['dimensions'] ?? [];
+        $hasEmail = in_array('email', $dimensions, true) || ! empty($options['email_id']);
+        $hasBroadcast = in_array('broadcast', $dimensions, true) || ! empty($options['broadcast_id']);
+
+        if ($hasEmail && $hasBroadcast) {
+            throw new InvalidArgumentException('The `broadcast` dimension/`broadcast_id` filter cannot be combined with the `email` dimension/`email_id` filter.');
+        }
+
         $queryParams = [];
 
         foreach (['start_date', 'end_date', 'timezone', 'granularity'] as $key) {
