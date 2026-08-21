@@ -2,10 +2,24 @@
 
 namespace Resend\Service;
 
+use Resend\Contracts\Transporter;
+use Resend\Service\Broadcasts\ClickedLink;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Broadcast extends Service
 {
+    public ClickedLink $clickedLinks;
+
+    /**
+     * Create a new broadcast service instance with the given transport.
+     */
+    public function __construct(Transporter $transporter)
+    {
+        $this->clickedLinks = new ClickedLink($transporter);
+
+        parent::__construct($transporter);
+    }
+
     /**
      * Retrieve a single broadcast.
      *
