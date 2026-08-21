@@ -39,3 +39,38 @@ function broadcasts(): array
         ],
     ];
 }
+
+function broadcastRecipients(): array
+{
+    return [
+        'object' => 'list',
+        'has_more' => true,
+        'data' => [
+            [
+                'id' => 'b2Zmc2V0OjA',
+                'contact_id' => 'e169aa45-1ecf-4183-9955-b1499d5701d3',
+                'email' => 'carter@example.com',
+                'count' => 3,
+                'clicked_links' => [
+                    ['url' => 'https://resend.com/pricing', 'clicks' => 2],
+                ],
+            ],
+        ],
+    ];
+}
+
+function broadcastBouncedRecipients(): array
+{
+    return [
+        'object' => 'list',
+        'has_more' => false,
+        'data' => [
+            [
+                'id' => 'b2Zmc2V0OjE',
+                'contact_id' => null,
+                'email' => 'dana@example.com',
+                'bounce_type' => 'permanent',
+            ],
+        ],
+    ];
+}
