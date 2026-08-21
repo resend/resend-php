@@ -35,7 +35,7 @@ final class Payload
         $method = Method::GET;
 
         // whitelist keys that are actually valid query params, remove anything else
-        $allowedParams = ['limit', 'after', 'before', 'status', 'origin'];
+        $allowedParams = ['limit', 'after', 'before', 'status', 'origin', 'type', 'email', 'bounce_type'];
         $searchParams = array_intersect_key($options, array_flip($allowedParams));
 
         $uri = ResourceUri::list(! empty($searchParams) ? $resource . '?' . http_build_query($searchParams) : $resource);

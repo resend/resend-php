@@ -7,6 +7,7 @@ use Resend\Audience;
 use Resend\Automation;
 use Resend\Automations\Run as AutomationRun;
 use Resend\Broadcast;
+use Resend\Broadcasts\Recipient as BroadcastRecipient;
 use Resend\Collection;
 use Resend\Contact;
 use Resend\ContactProperty;
@@ -39,6 +40,7 @@ abstract class Service
         'automation-runs' => AutomationRun::class,
         'automations' => Automation::class,
         'broadcasts' => Broadcast::class,
+        'broadcast-recipients' => BroadcastRecipient::class,
         'contact-imports' => ContactImport::class,
         'contact-properties' => ContactProperty::class,
         'contact-topics' => ContactTopic::class,

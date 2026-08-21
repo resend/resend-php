@@ -52,6 +52,23 @@ class Broadcast extends Service
     }
 
     /**
+     * Retrieve the recipients of a broadcast for a given event type.
+     *
+     * @param array{'type': string, 'email'?: string, 'bounce_type'?: string, 'limit'?: int, 'before'?: string, 'after'?: string} $options
+     * @return \Resend\Collection<\Resend\Broadcasts\Recipient>
+     *
+     * @see https://resend.com/docs/api-reference/broadcasts/list-broadcast-recipients
+     */
+    public function recipients(string $id, array $options): \Resend\Collection
+    {
+        $payload = Payload::list("broadcasts/{$id}/recipients", $options);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('broadcast-recipients', $result);
+    }
+
+    /**
      * Update a broadcast to send to your audience.
      *
      * @see https://resend.com/docs/api-reference/broadcasts/update-broadcast
