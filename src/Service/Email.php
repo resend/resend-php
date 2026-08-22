@@ -153,7 +153,7 @@ class Email extends Service
         $queryParams = [];
 
         foreach (['start_date', 'end_date', 'timezone', 'granularity'] as $key) {
-            if (array_key_exists($key, $options)) {
+            if (isset($options[$key]) && $options[$key] !== '') {
                 $queryParams[$key] = $options[$key];
             }
         }

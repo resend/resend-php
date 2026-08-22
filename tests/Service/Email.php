@@ -329,14 +329,31 @@ it('passes the start_date and end_date options through', function () {
     expect($result)->toBeInstanceOf(Metrics::class);
 });
 
+it('omits empty-string start_date, end_date, timezone and granularity instead of sending them', function () {
+    $client = mockClient('GET', 'emails/metrics', [], [], metrics());
+
+    $result = $client->emails->metrics([
+        'start_date' => '',
+        'end_date' => '',
+        'timezone' => '',
+        'granularity' => '',
+    ]);
+
+    expect($result)->toBeInstanceOf(Metrics::class);
+});
+
 it('throws when combining the email and broadcast dimensions', function () {
-    $client = mockClient('GET', 'emails/metrics', [], [], metrics(), null);
+    /** @var Mockery\MockInterface|Transporter $transporter */
+    $transporter = Mockery::mock(Transporter::class);
+    $client = new Client($transporter);
 
     $client->emails->metrics(['dimensions' => ['email', 'broadcast']]);
 })->throws(InvalidArgumentException::class, 'The `broadcast` dimension/`broadcast_id` filter cannot be combined with the `email` dimension/`email_id` filter.');
 
 it('throws when combining the broadcast dimension with email_id', function () {
-    $client = mockClient('GET', 'emails/metrics', [], [], metrics(), null);
+    /** @var Mockery\MockInterface|Transporter $transporter */
+    $transporter = Mockery::mock(Transporter::class);
+    $client = new Client($transporter);
 
     $client->emails->metrics([
         'dimensions' => ['broadcast'],
@@ -345,7 +362,9 @@ it('throws when combining the broadcast dimension with email_id', function () {
 })->throws(InvalidArgumentException::class, 'The `broadcast` dimension/`broadcast_id` filter cannot be combined with the `email` dimension/`email_id` filter.');
 
 it('throws when combining the email dimension with broadcast_id', function () {
-    $client = mockClient('GET', 'emails/metrics', [], [], metrics(), null);
+    /** @var Mockery\MockInterface|Transporter $transporter */
+    $transporter = Mockery::mock(Transporter::class);
+    $client = new Client($transporter);
 
     $client->emails->metrics([
         'dimensions' => ['email'],
@@ -354,7 +373,9 @@ it('throws when combining the email dimension with broadcast_id', function () {
 })->throws(InvalidArgumentException::class, 'The `broadcast` dimension/`broadcast_id` filter cannot be combined with the `email` dimension/`email_id` filter.');
 
 it('throws when combining email_id and broadcast_id', function () {
-    $client = mockClient('GET', 'emails/metrics', [], [], metrics(), null);
+    /** @var Mockery\MockInterface|Transporter $transporter */
+    $transporter = Mockery::mock(Transporter::class);
+    $client = new Client($transporter);
 
     $client->emails->metrics([
         'email_id' => ['49a3999c-0ce1-4ea6-ab68-afcd6dc2e794'],
