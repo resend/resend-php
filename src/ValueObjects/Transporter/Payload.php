@@ -29,13 +29,13 @@ final class Payload
     /**
      * Create a new Transporter Payload instance.
      */
-    public static function list(string $resource, array $options = []): self
+    public static function list(string $resource, array $options = [], array $extraAllowedParams = []): self
     {
         $contentType = ContentType::JSON;
         $method = Method::GET;
 
         // whitelist keys that are actually valid query params, remove anything else
-        $allowedParams = ['limit', 'after', 'before', 'status', 'origin', 'type', 'email', 'bounce_type'];
+        $allowedParams = array_merge(['limit', 'after', 'before', 'status', 'origin'], $extraAllowedParams);
         $searchParams = array_intersect_key($options, array_flip($allowedParams));
 
         $uri = ResourceUri::list(! empty($searchParams) ? $resource . '?' . http_build_query($searchParams) : $resource);
