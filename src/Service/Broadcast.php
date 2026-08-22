@@ -75,7 +75,7 @@ class Broadcast extends Service
      */
     public function recipients(string $id, array $options): \Resend\Collection
     {
-        $payload = Payload::list("broadcasts/{$id}/recipients", $options);
+        $payload = Payload::list("broadcasts/{$id}/recipients", $options, ['type', 'email', 'bounce_type']);
 
         $result = $this->transporter->request($payload);
 
