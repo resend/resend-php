@@ -138,7 +138,7 @@ class Email extends Service
      *     'broadcast_id'?: array<int, string>
      * } $options
      *
-     * @see https://resend.com/docs/api-reference/emails/metrics
+     * @see https://resend.com/docs/api-reference/emails/get-metrics
      */
     public function metrics(array $options = []): \Resend\Metrics
     {
