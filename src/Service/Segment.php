@@ -52,6 +52,20 @@ class Segment extends Service
     }
 
     /**
+     * Update a segment with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/segments/update-segment
+     */
+    public function update(string $id, array $parameters): \Resend\Segment
+    {
+        $payload = Payload::update('segments', $id, $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('segments', $result);
+    }
+
+    /**
      * Remove a segment with the given ID.
      *
      * @see https://resend.com/docs/api-reference/segments/delete-segment#path-parameters
