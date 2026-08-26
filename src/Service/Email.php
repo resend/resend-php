@@ -170,6 +170,6 @@ class Email extends Service
 
         $result = $this->transporter->request($payload);
 
-        return \Resend\Metrics::from($result);
+        return $this->createResource('emails-metrics', $result, asList: false);
     }
 }
