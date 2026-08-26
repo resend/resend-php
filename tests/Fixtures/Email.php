@@ -42,6 +42,22 @@ function sharedEmail(): array
     ];
 }
 
+function metrics(array $overrides = []): array
+{
+    return array_merge([
+        'object' => 'metrics',
+        'start_date' => '2026-07-01T00:00:00.000Z',
+        'end_date' => '2026-07-08T00:00:00.000Z',
+        'metrics' => ['delivered', 'opened'],
+        'dimensions' => [],
+        'granularity' => 'daily',
+        'totals' => [
+            'delivered' => 100,
+            'opened' => 40,
+        ],
+    ], $overrides);
+}
+
 function batch(): array
 {
     return [
