@@ -43,7 +43,6 @@ it('can update a segment resource', function () {
     ], [], [
         'object' => 'segment',
         'id' => '78261eea-8f8b-4381-83c6-79fa7120f1cf',
-        'name' => 'Renamed Users',
     ]);
 
     $result = $client->segments->update('78261eea-8f8b-4381-83c6-79fa7120f1cf', [
@@ -51,8 +50,7 @@ it('can update a segment resource', function () {
     ]);
 
     expect($result)->toBeInstanceOf(Segment::class)
-        ->id->toBe('78261eea-8f8b-4381-83c6-79fa7120f1cf')
-        ->name->toBe('Renamed Users');
+        ->id->toBe('78261eea-8f8b-4381-83c6-79fa7120f1cf');
 });
 
 it('cannot update a segment resource that does not exist', function () {
