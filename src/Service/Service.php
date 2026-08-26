@@ -8,6 +8,7 @@ use Resend\Automation;
 use Resend\Automations\Run as AutomationRun;
 use Resend\Broadcast;
 use Resend\Broadcasts\ClickedLink as BroadcastClickedLink;
+use Resend\Broadcasts\Recipient as BroadcastRecipient;
 use Resend\Collection;
 use Resend\Contact;
 use Resend\ContactProperty;
@@ -42,6 +43,7 @@ abstract class Service
         'automations' => Automation::class,
         'broadcasts' => Broadcast::class,
         'broadcast-clicked-links' => BroadcastClickedLink::class,
+        'broadcast-recipients' => BroadcastRecipient::class,
         'contact-imports' => ContactImport::class,
         'contact-properties' => ContactProperty::class,
         'contact-topics' => ContactTopic::class,
