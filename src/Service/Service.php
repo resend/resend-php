@@ -29,6 +29,8 @@ use Resend\Suppression;
 use Resend\Template;
 use Resend\Topic;
 use Resend\Webhook;
+use Resend\Webhooks\Event as WebhookEvent;
+use Resend\Webhooks\EventAttempt as WebhookEventAttempt;
 
 abstract class Service
 {
@@ -59,6 +61,8 @@ abstract class Service
         'suppressions' => Suppression::class,
         'templates' => Template::class,
         'topics' => Topic::class,
+        'webhook-event-attempts' => WebhookEventAttempt::class,
+        'webhook-events' => WebhookEvent::class,
         'webhooks' => Webhook::class,
     ];
 

@@ -31,6 +31,61 @@ function webhooks()
     ];
 }
 
+function webhookEvents()
+{
+    return [
+        'object' => 'list',
+        'has_more' => false,
+        'data' => [
+            [
+                'id' => 'msg_1srOrx2ZWZBpBUvZwXKQmoEYga2',
+                'type' => 'email.sent',
+                'created_at' => '2026-08-22T15:28:00.000Z',
+                'status' => 'success',
+            ],
+        ],
+    ];
+}
+
+function webhookEvent()
+{
+    return [
+        'object' => 'webhook_event',
+        'id' => 'msg_1srOrx2ZWZBpBUvZwXKQmoEYga2',
+        'type' => 'email.sent',
+        'created_at' => '2026-08-22T15:28:00.000Z',
+        'status' => 'success',
+        'next_attempt_at' => null,
+        'payload' => [
+            'type' => 'email.sent',
+            'created_at' => '2026-08-22T15:28:00.000Z',
+            'data' => [
+                'email_id' => '571f1f42-1c2d-4b1f-8f8e-8b3b5b3b5b3b',
+                'from' => 'onboarding@resend.dev',
+                'to' => ['delivered@resend.dev'],
+                'subject' => 'Welcome',
+                'created_at' => '2026-08-22T15:27:59.000Z',
+            ],
+        ],
+    ];
+}
+
+function webhookEventAttempts()
+{
+    return [
+        'object' => 'list',
+        'has_more' => false,
+        'data' => [
+            [
+                'id' => 'atmpt_1srOrx2ZWZBpBUvZwXKQmoEYga2',
+                'http_status_code' => 200,
+                'response' => '{"ok":true}',
+                'sent_at' => '2026-08-22T15:33:12.000Z',
+            ],
+        ],
+    ];
+}
+
 function webhookRequest(?int $timestamp = null)
 {
     $payload = '{"test": 2432232315}';

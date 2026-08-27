@@ -2,11 +2,22 @@
 
 namespace Resend\Service;
 
+use Resend\Contracts\Transporter;
+use Resend\Service\Webhooks\Event;
 use Resend\ValueObjects\Transporter\Payload;
 use Resend\WebhookSignature;
 
 class Webhook extends Service
 {
+    public Event $events;
+
+    public function __construct(Transporter $transporter)
+    {
+        $this->events = new Event($transporter);
+
+        parent::__construct($transporter);
+    }
+
     /**
      * Retrieve a webhook with the given ID.
      *
