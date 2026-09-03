@@ -67,6 +67,19 @@ it('can get a webhook event with its payload and nullable next attempt', functio
         ->and($result->payload['data']['email_id'])->toBe('571f1f42-1c2d-4b1f-8f8e-8b3b5b3b5b3b');
 });
 
+it('can replay a webhook event', function () {
+    $client = mockClient('POST', 'webhooks/4dd369bc-aa82-4ff3-97de-514ae3000ee0/events/msg_1srOrx2ZWZBpBUvZwXKQmoEYga2/replay', [], [], [
+        'object' => 'webhook_event',
+        'id' => 'msg_1srOrx2ZWZBpBUvZwXKQmoEYga2',
+    ]);
+
+    $result = $client->webhooks->events->replay('4dd369bc-aa82-4ff3-97de-514ae3000ee0', 'msg_1srOrx2ZWZBpBUvZwXKQmoEYga2');
+
+    expect($result)->toBeInstanceOf(WebhookEvent::class)
+        ->object->toBe('webhook_event')
+        ->id->toBe('msg_1srOrx2ZWZBpBUvZwXKQmoEYga2');
+});
+
 it('can get webhook event attempts with after-only pagination', function () {
     $client = mockClient('GET', 'webhooks/4dd369bc-aa82-4ff3-97de-514ae3000ee0/events/msg_1srOrx2ZWZBpBUvZwXKQmoEYga2/attempts?limit=10&after=atmpt_cursor', [], [], webhookEventAttempts());
 

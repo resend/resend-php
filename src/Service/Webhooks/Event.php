@@ -48,4 +48,18 @@ class Event extends Service
 
         return $this->createResource('webhook-events', $result);
     }
+
+    /**
+     * Replay a single event delivered to a webhook.
+     *
+     * @see https://resend.com/docs/api-reference/webhooks/replay-event
+     */
+    public function replay(string $webhookId, string $eventId): \Resend\Webhooks\Event
+    {
+        $payload = Payload::withAction("webhooks/{$webhookId}/events", $eventId, 'replay');
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('webhook-events', $result);
+    }
 }
