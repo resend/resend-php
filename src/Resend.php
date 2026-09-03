@@ -12,7 +12,7 @@ class Resend
     /**
      * The current SDK version.
      */
-    public const VERSION = '1.12.0';
+    public const VERSION = '1.13.0';
 
     /**
      * Creates a new Resend Client with the given API key.
