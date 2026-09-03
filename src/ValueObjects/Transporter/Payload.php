@@ -117,11 +117,7 @@ final class Payload
      */
     public static function verify(string $resource, string $id): self
     {
-        $contentType = ContentType::JSON;
-        $method = Method::POST;
-        $uri = ResourceUri::withAction($resource, $id, 'verify');
-
-        return new self($contentType, $method, $uri);
+        return self::withAction($resource, $id, 'verify');
     }
 
     /**
@@ -129,11 +125,7 @@ final class Payload
      */
     public static function cancel(string $resource, string $id): self
     {
-        $contentType = ContentType::JSON;
-        $method = Method::POST;
-        $uri = ResourceUri::withAction($resource, $id, 'cancel');
-
-        return new self($contentType, $method, $uri);
+        return self::withAction($resource, $id, 'cancel');
     }
 
     /**
@@ -141,11 +133,7 @@ final class Payload
      */
     public static function publish(string $resource, string $id): self
     {
-        $contentType = ContentType::JSON;
-        $method = Method::POST;
-        $uri = ResourceUri::withAction($resource, $id, 'publish');
-
-        return new self($contentType, $method, $uri);
+        return self::withAction($resource, $id, 'publish');
     }
 
     /**
@@ -153,9 +141,17 @@ final class Payload
      */
     public static function duplicate(string $resource, string $id): self
     {
+        return self::withAction($resource, $id, 'duplicate');
+    }
+
+    /**
+     * Create a new Transporter Payload instance with the given action.
+     */
+    public static function withAction(string $resource, string $id, string $action): self
+    {
         $contentType = ContentType::JSON;
         $method = Method::POST;
-        $uri = ResourceUri::withAction($resource, $id, 'duplicate');
+        $uri = ResourceUri::withAction($resource, $id, $action);
 
         return new self($contentType, $method, $uri);
     }
