@@ -120,6 +120,21 @@ it('can remove a webhook resource', function () {
         ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
 });
 
+it('can rotate a webhook signing secret', function () {
+    $client = mockClient('POST', 'webhooks/4dd369bc-aa82-4ff3-97de-514ae3000ee0/signing-secret/rotate', [], [], [
+        'object' => 'webhook',
+        'id' => '4dd369bc-aa82-4ff3-97de-514ae3000ee0',
+        'signing_secret' => 'whsec_yyyyyyyyyy',
+    ]);
+
+    $result = $client->webhooks->rotateSigningSecret('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+
+    expect($result)->toBeInstanceOf(Webhook::class)
+        ->object->toBe('webhook')
+        ->id->toBe('4dd369bc-aa82-4ff3-97de-514ae3000ee0')
+        ->signing_secret->toBe('whsec_yyyyyyyyyy');
+});
+
 it('can verify webhook requests', function () {
     $webhook = webhookRequest(time());
 
