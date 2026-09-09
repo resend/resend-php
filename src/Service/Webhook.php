@@ -92,6 +92,20 @@ class Webhook extends Service
     }
 
     /**
+     * Rotate the signing secret of a webhook with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/webhooks/rotate-signing-secret
+     */
+    public function rotateSigningSecret(string $id): \Resend\Webhook
+    {
+        $payload = Payload::withAction('webhooks', $id, 'signing-secret/rotate');
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('webhooks', $result);
+    }
+
+    /**
      * Determine if the incoming webhook request is valid.
      */
     public function verify(string $payload, array $headers, string $secret, ?int $tolerance = 300): bool
