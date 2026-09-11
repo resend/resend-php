@@ -125,6 +125,20 @@ class Broadcast extends Service
     }
 
     /**
+     * Duplicate a broadcast with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/broadcasts/duplicate-broadcast
+     */
+    public function duplicate(string $id): \Resend\Broadcast
+    {
+        $payload = Payload::duplicate('broadcasts', $id);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('broadcasts', $result);
+    }
+
+    /**
      * Remove an existing broadcast.
      *
      * @see https://resend.com/docs/api-reference/broadcasts/delete-broadcast
