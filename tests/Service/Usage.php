@@ -18,7 +18,7 @@ it('can get account usage', function () {
                 'resets_at' => '2026-07-17T00:00:00.000Z',
             ],
             'monthly' => [
-                'used' => 5422,
+                'used' => 5442,
                 'limit' => 10000,
                 'sent' => 1000,
                 'received' => 4442,

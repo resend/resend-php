@@ -9,7 +9,7 @@ class Usage extends Service
     /**
      * Retrieve the caller's account-level usage and quota data.
      *
-     * @see https://resend.com/docs/api-reference/usage/get-usage
+     * @see https://resend.com/docs/api-reference/usage/retrieve-usage
      */
     public function get(): \Resend\Usage
     {
