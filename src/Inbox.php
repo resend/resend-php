@@ -3,7 +3,7 @@
 namespace Resend;
 
 /**
- * @property string $object The type of object.
+ * @property null|string $object The type of object. Absent on list items.
  * @property string $id The unique identifier for the inbox.
  * @property null|string $name Internal name for the inbox. Recipients do not see it.
  * @property string $email_address The address of the inbox.

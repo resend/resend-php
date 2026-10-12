@@ -17,7 +17,7 @@ use Resend\Resource;
  * @property null|string $snippet A short preview of the body, present on list items.
  * @property null|string $thread_id The Thread ID when the draft is a reply. `null` otherwise.
  * @property null|string $reply_to_email_id The Email ID the draft replies to. `null` otherwise.
- * @property null|string $email_id The ID of the outbound email queued when the draft was sent. `null` until the draft is sent.
+ * @property null|string $email_id The ID of the outbound email queued when the draft was sent. `null` until the draft is sent. Absent on list items.
  * @property null|string $created_at Time at which the draft was created. Absent on list items.
  * @property string $updated_at Time at which the draft was last saved.
  * @property null|bool $deleted Whether the draft was deleted, present on the response of the remove endpoint.
