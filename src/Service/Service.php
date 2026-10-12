@@ -24,6 +24,8 @@ use Resend\Event;
 use Resend\Inbox;
 use Resend\Inboxes\Agent as InboxAgent;
 use Resend\Inboxes\Label as InboxLabel;
+use Resend\Inboxes\Thread as InboxThread;
+use Resend\Inboxes\Threads\Email as InboxThreadEmail;
 use Resend\Log;
 use Resend\Metrics;
 use Resend\Resource;
@@ -61,6 +63,8 @@ abstract class Service
         'events' => Event::class,
         'inbox-agents' => InboxAgent::class,
         'inbox-labels' => InboxLabel::class,
+        'inbox-thread-emails' => InboxThreadEmail::class,
+        'inbox-threads' => InboxThread::class,
         'inboxes' => Inbox::class,
         'logs' => Log::class,
         'receiving' => Receiving::class,
