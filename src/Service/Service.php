@@ -21,6 +21,7 @@ use Resend\Email;
 use Resend\Emails\Attachment;
 use Resend\Emails\Receiving;
 use Resend\Event;
+use Resend\Inbox;
 use Resend\Log;
 use Resend\Metrics;
 use Resend\Resource;
@@ -56,6 +57,7 @@ abstract class Service
         'emails' => Email::class,
         'emails-metrics' => Metrics::class,
         'events' => Event::class,
+        'inboxes' => Inbox::class,
         'logs' => Log::class,
         'receiving' => Receiving::class,
         'segments' => Segment::class,

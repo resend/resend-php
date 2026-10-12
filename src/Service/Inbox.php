@@ -1,0 +1,92 @@
+<?php
+
+namespace Resend\Service;
+
+use Resend\ValueObjects\Transporter\Payload;
+
+class Inbox extends Service
+{
+    /**
+     * Create an inbox that sends and receives email at an address on one of your domains.
+     *
+     * The response carries only `object` and `id`. A team that has reached
+     * the inbox limit of its plan returns a 403 validation_error.
+     *
+     * @param array{email_address: string, name?: string, from_name?: string, forwarding?: bool} $parameters
+     *
+     * @see https://resend.com/docs/api-reference/inboxes/create-inbox
+     */
+    public function create(array $parameters): \Resend\Inbox
+    {
+        $payload = Payload::create('inboxes', $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('inboxes', $result);
+    }
+
+    /**
+     * List the inboxes of the team, newest first.
+     *
+     * The list items carry fewer fields than a single inbox.
+     *
+     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
+     * @return \Resend\Collection<\Resend\Inbox>
+     *
+     * @see https://resend.com/docs/api-reference/inboxes/list-inboxes
+     */
+    public function list(array $options = []): \Resend\Collection
+    {
+        $payload = Payload::list('inboxes', $options);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('inboxes', $result);
+    }
+
+    /**
+     * Retrieve a single inbox by ID or email address.
+     *
+     * @see https://resend.com/docs/api-reference/inboxes/get-inbox
+     */
+    public function get(string $idOrEmail): \Resend\Inbox
+    {
+        $payload = Payload::get('inboxes', rawurlencode($idOrEmail));
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('inboxes', $result);
+    }
+
+    /**
+     * Update the internal name of an inbox or the name recipients see when mail is sent from it.
+     *
+     * At least one of `name` or `from_name` is required.
+     *
+     * @param array{name?: string, from_name?: string} $parameters
+     *
+     * @see https://resend.com/docs/api-reference/inboxes/update-inbox
+     */
+    public function update(string $id, array $parameters): \Resend\Inbox
+    {
+        $payload = Payload::update('inboxes', $id, $parameters);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('inboxes', $result);
+    }
+
+    /**
+     * Remove an inbox with the given ID.
+     *
+     * @see https://resend.com/docs/api-reference/inboxes/delete-inbox
+     */
+    public function remove(string $id): \Resend\Inbox
+    {
+        $payload = Payload::delete('inboxes', $id);
+
+        $result = $this->transporter->request($payload);
+
+        return $this->createResource('inboxes', $result);
+    }
+}

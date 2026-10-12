@@ -19,6 +19,7 @@ use Resend\Service\ServiceFactory;
  * @property Service\Domain $domains
  * @property Service\Email $emails
  * @property Service\Event $events
+ * @property Service\Inbox $inboxes
  * @property Service\Log $logs
  * @property Service\Segment $segments
  * @property Service\Suppression $suppressions
