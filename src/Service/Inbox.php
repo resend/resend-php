@@ -2,10 +2,24 @@
 
 namespace Resend\Service;
 
+use Resend\Contracts\Transporter;
+use Resend\Service\Inboxes\Agent;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Inbox extends Service
 {
+    public Agent $agent;
+
+    /**
+     * Create a new inbox service instance with the given transport.
+     */
+    public function __construct(Transporter $transporter)
+    {
+        $this->agent = new Agent($transporter);
+
+        parent::__construct($transporter);
+    }
+
     /**
      * Create an inbox that sends and receives email at an address on one of your domains.
      *
