@@ -23,6 +23,7 @@ use Resend\Emails\Receiving;
 use Resend\Event;
 use Resend\Inbox;
 use Resend\Inboxes\Agent as InboxAgent;
+use Resend\Inboxes\Label as InboxLabel;
 use Resend\Log;
 use Resend\Metrics;
 use Resend\Resource;
@@ -59,6 +60,7 @@ abstract class Service
         'emails-metrics' => Metrics::class,
         'events' => Event::class,
         'inbox-agents' => InboxAgent::class,
+        'inbox-labels' => InboxLabel::class,
         'inboxes' => Inbox::class,
         'logs' => Log::class,
         'receiving' => Receiving::class,

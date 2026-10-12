@@ -4,11 +4,14 @@ namespace Resend\Service;
 
 use Resend\Contracts\Transporter;
 use Resend\Service\Inboxes\Agent;
+use Resend\Service\Inboxes\Label;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Inbox extends Service
 {
     public Agent $agent;
+
+    public Label $labels;
 
     /**
      * Create a new inbox service instance with the given transport.
@@ -16,6 +19,7 @@ class Inbox extends Service
     public function __construct(Transporter $transporter)
     {
         $this->agent = new Agent($transporter);
+        $this->labels = new Label($transporter);
 
         parent::__construct($transporter);
     }
