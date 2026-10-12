@@ -2,6 +2,11 @@
 
 use Resend\Collection;
 use Resend\Inbox;
+use Resend\Service\Inboxes\Agent;
+use Resend\Service\Inboxes\Draft;
+use Resend\Service\Inboxes\Label;
+use Resend\Service\Inboxes\Thread;
+use Resend\Service\Inboxes\Threads\Email;
 
 it('can create an inbox resource', function () {
     $client = mockClient('POST', 'inboxes', [
@@ -98,4 +103,14 @@ it('can remove an inbox resource', function () {
 
     expect($result)->toBeInstanceOf(Inbox::class)
         ->deleted->toBeTrue();
+});
+
+it('exposes the nested inbox services', function () {
+    $client = Resend::client('foo');
+
+    expect($client->inboxes->agent)->toBeInstanceOf(Agent::class)
+        ->and($client->inboxes->drafts)->toBeInstanceOf(Draft::class)
+        ->and($client->inboxes->labels)->toBeInstanceOf(Label::class)
+        ->and($client->inboxes->threads)->toBeInstanceOf(Thread::class)
+        ->and($client->inboxes->threads->emails)->toBeInstanceOf(Email::class);
 });

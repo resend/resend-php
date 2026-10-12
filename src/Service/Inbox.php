@@ -4,6 +4,7 @@ namespace Resend\Service;
 
 use Resend\Contracts\Transporter;
 use Resend\Service\Inboxes\Agent;
+use Resend\Service\Inboxes\Draft;
 use Resend\Service\Inboxes\Label;
 use Resend\Service\Inboxes\Thread;
 use Resend\ValueObjects\Transporter\Payload;
@@ -11,6 +12,8 @@ use Resend\ValueObjects\Transporter\Payload;
 class Inbox extends Service
 {
     public Agent $agent;
+
+    public Draft $drafts;
 
     public Label $labels;
 
@@ -22,6 +25,7 @@ class Inbox extends Service
     public function __construct(Transporter $transporter)
     {
         $this->agent = new Agent($transporter);
+        $this->drafts = new Draft($transporter);
         $this->labels = new Label($transporter);
         $this->threads = new Thread($transporter);
 

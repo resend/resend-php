@@ -23,6 +23,7 @@ use Resend\Emails\Receiving;
 use Resend\Event;
 use Resend\Inbox;
 use Resend\Inboxes\Agent as InboxAgent;
+use Resend\Inboxes\Draft as InboxDraft;
 use Resend\Inboxes\Label as InboxLabel;
 use Resend\Inboxes\Thread as InboxThread;
 use Resend\Inboxes\Threads\Email as InboxThreadEmail;
@@ -62,6 +63,7 @@ abstract class Service
         'emails-metrics' => Metrics::class,
         'events' => Event::class,
         'inbox-agents' => InboxAgent::class,
+        'inbox-drafts' => InboxDraft::class,
         'inbox-labels' => InboxLabel::class,
         'inbox-thread-emails' => InboxThreadEmail::class,
         'inbox-threads' => InboxThread::class,
