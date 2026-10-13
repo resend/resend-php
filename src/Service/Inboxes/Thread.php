@@ -110,14 +110,14 @@ class Thread extends Service
     /**
      * Mark a thread read or unread, move it to a folder, or add and remove labels.
      *
-     * A label ID cannot be both added and removed in the same request. Moving
-     * a thread out of `trash` restores it and clears its deletion deadline.
-     * `label_id` is deprecated: use `add_label_ids` instead.
+     * At least one of `read`, `folder`, `add_label_ids`, or `remove_label_ids`
+     * is required. A label ID cannot be both added and removed in the same
+     * request. Removing a label from a thread keeps the label itself. Moving a
+     * thread out of `trash` restores it and clears its deletion deadline.
      *
      * @param array{
      *     'read'?: bool,
      *     'folder'?: 'inbox'|'archive'|'spam'|'trash',
-     *     'label_id'?: string,
      *     'add_label_ids'?: array<int, string>,
      *     'remove_label_ids'?: array<int, string>
      * } $parameters
