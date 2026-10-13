@@ -73,3 +73,33 @@ it('can forward an email of a thread', function () {
     expect($result)->toBeInstanceOf(Email::class)
         ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
 });
+
+it('can reply to an email of a thread with an idempotency key', function () {
+    $client = mockClient('POST', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/threads/0f1e2d3c-4b5a-4968-8776-5a4b3c2d1e0f/emails/7a8b9c0d-1e2f-4a3b-8c4d-5e6f7a8b9c0d/reply', [
+        'text' => 'Thanks, we are on it.',
+    ], ['Idempotency-Key' => 'reply-key'], [
+        'id' => '49a3999c-0ce1-4ea6-ab68-afcd6dc2e794',
+    ]);
+
+    $result = $client->inboxes->threads->emails->reply('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', '0f1e2d3c-4b5a-4968-8776-5a4b3c2d1e0f', '7a8b9c0d-1e2f-4a3b-8c4d-5e6f7a8b9c0d', [
+        'text' => 'Thanks, we are on it.',
+    ], ['idempotency_key' => 'reply-key']);
+
+    expect($result)->toBeInstanceOf(Email::class)
+        ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
+});
+
+it('can forward an email of a thread with an idempotency key', function () {
+    $client = mockClient('POST', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/threads/0f1e2d3c-4b5a-4968-8776-5a4b3c2d1e0f/emails/7a8b9c0d-1e2f-4a3b-8c4d-5e6f7a8b9c0d/forward', [
+        'to' => ['billing@acme.com'],
+    ], ['Idempotency-Key' => 'forward-key'], [
+        'id' => '49a3999c-0ce1-4ea6-ab68-afcd6dc2e794',
+    ]);
+
+    $result = $client->inboxes->threads->emails->forward('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', '0f1e2d3c-4b5a-4968-8776-5a4b3c2d1e0f', '7a8b9c0d-1e2f-4a3b-8c4d-5e6f7a8b9c0d', [
+        'to' => ['billing@acme.com'],
+    ], ['idempotency_key' => 'forward-key']);
+
+    expect($result)->toBeInstanceOf(Email::class)
+        ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
+});

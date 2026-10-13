@@ -39,6 +39,11 @@ class Draft extends Service
      * `content`, `filename` and `content_type`. The files on a draft can total
      * at most 25 MB. The response carries only `object` and `id`.
      *
+     * Pass `idempotency_key` in `$options` to send the request only once. A
+     * retry with the same key within 24 hours returns the first response.
+     * Reusing the key with a different body, or while the first request is
+     * still running, returns a 409.
+     *
      * @param array{
      *     'to'?: string|array<int, string>|null,
      *     'cc'?: string|array<int, string>|null,
@@ -50,12 +55,13 @@ class Draft extends Service
      *     'reply_to_email_id'?: string,
      *     'attachments'?: array<int, array{content: string, filename: string, content_type: string}>
      * } $parameters
+     * @param array{'idempotency_key'?: string} $options
      *
      * @see https://resend.com/docs/api-reference/inboxes/create-draft
      */
-    public function create(string $inboxId, array $parameters): \Resend\Inboxes\Draft
+    public function create(string $inboxId, array $parameters, array $options = []): \Resend\Inboxes\Draft
     {
-        $payload = Payload::create("inboxes/{$inboxId}/drafts", $parameters);
+        $payload = Payload::create("inboxes/{$inboxId}/drafts", $parameters, $options);
 
         $result = $this->transporter->request($payload);
 
@@ -127,11 +133,18 @@ class Draft extends Service
      * `subject`, and `html` or `text`, or the request returns a 422. The
      * response carries only the `id` of the sent email.
      *
+     * Pass `idempotency_key` in `$options` to send the request only once. A
+     * retry with the same key within 24 hours returns the first response.
+     * Reusing the key with a different body, or while the first request is
+     * still running, returns a 409.
+     *
+     * @param array{'idempotency_key'?: string} $options
+     *
      * @see https://resend.com/docs/api-reference/inboxes/send-draft
      */
-    public function send(string $inboxId, string $draftId): \Resend\Email
+    public function send(string $inboxId, string $draftId, array $options = []): \Resend\Email
     {
-        $payload = Payload::withAction("inboxes/{$inboxId}/drafts", $draftId, 'send');
+        $payload = Payload::create("inboxes/{$inboxId}/drafts/{$draftId}/send", [], $options);
 
         $result = $this->transporter->request($payload);
 

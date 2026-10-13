@@ -130,3 +130,30 @@ it('can send a draft resource', function () {
     expect($result)->toBeInstanceOf(Email::class)
         ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
 });
+
+it('can create a draft resource with an idempotency key', function () {
+    $client = mockClient('POST', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/drafts', [
+        'to' => ['ada@example.org'],
+    ], ['Idempotency-Key' => 'draft-key'], [
+        'object' => 'inbox_draft',
+        'id' => 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a',
+    ]);
+
+    $result = $client->inboxes->drafts->create('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', [
+        'to' => ['ada@example.org'],
+    ], ['idempotency_key' => 'draft-key']);
+
+    expect($result)->toBeInstanceOf(Draft::class)
+        ->id->toBe('d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a');
+});
+
+it('can send a draft resource with an idempotency key', function () {
+    $client = mockClient('POST', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/drafts/d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a/send', [], ['Idempotency-Key' => 'send-key'], [
+        'id' => '49a3999c-0ce1-4ea6-ab68-afcd6dc2e794',
+    ]);
+
+    $result = $client->inboxes->drafts->send('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a', ['idempotency_key' => 'send-key']);
+
+    expect($result)->toBeInstanceOf(Email::class)
+        ->id->toBe('49a3999c-0ce1-4ea6-ab68-afcd6dc2e794');
+});

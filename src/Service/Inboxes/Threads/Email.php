@@ -49,6 +49,11 @@ class Email extends Service
      * to also copy the other recipients of the message. The response carries
      * only the `id` of the sent email.
      *
+     * Pass `idempotency_key` in `$options` to send the request only once. A
+     * retry with the same key within 24 hours returns the first response.
+     * Reusing the key with a different body, or while the first request is
+     * still running, returns a 409.
+     *
      * @param array{
      *     'html'?: string,
      *     'text'?: string,
@@ -58,12 +63,13 @@ class Email extends Service
      *     'reply_all'?: bool,
      *     'attachments'?: array<int, array{content?: string, path?: string, filename?: string, content_type?: string, content_id?: string}>
      * } $parameters
+     * @param array{'idempotency_key'?: string} $options
      *
      * @see https://resend.com/docs/api-reference/inboxes/reply-thread-email
      */
-    public function reply(string $inboxId, string $threadId, string $emailId, array $parameters): \Resend\Email
+    public function reply(string $inboxId, string $threadId, string $emailId, array $parameters, array $options = []): \Resend\Email
     {
-        $payload = Payload::create("inboxes/{$inboxId}/threads/{$threadId}/emails/{$emailId}/reply", $parameters);
+        $payload = Payload::create("inboxes/{$inboxId}/threads/{$threadId}/emails/{$emailId}/reply", $parameters, $options);
 
         $result = $this->transporter->request($payload);
 
@@ -78,6 +84,11 @@ class Email extends Service
      * sent from a URL (`path`) cannot be forwarded, and the request returns a
      * 422. The response carries only the `id` of the sent email.
      *
+     * Pass `idempotency_key` in `$options` to send the request only once. A
+     * retry with the same key within 24 hours returns the first response.
+     * Reusing the key with a different body, or while the first request is
+     * still running, returns a 409.
+     *
      * @param array{
      *     to: string|array<int, string>,
      *     'cc'?: string|array<int, string>,
@@ -87,12 +98,13 @@ class Email extends Service
      *     'subject'?: string,
      *     'attachments'?: array<int, array{content?: string, path?: string, filename?: string, content_type?: string, content_id?: string}>
      * } $parameters
+     * @param array{'idempotency_key'?: string} $options
      *
      * @see https://resend.com/docs/api-reference/inboxes/forward-thread-email
      */
-    public function forward(string $inboxId, string $threadId, string $emailId, array $parameters): \Resend\Email
+    public function forward(string $inboxId, string $threadId, string $emailId, array $parameters, array $options = []): \Resend\Email
     {
-        $payload = Payload::create("inboxes/{$inboxId}/threads/{$threadId}/emails/{$emailId}/forward", $parameters);
+        $payload = Payload::create("inboxes/{$inboxId}/threads/{$threadId}/emails/{$emailId}/forward", $parameters, $options);
 
         $result = $this->transporter->request($payload);
 
