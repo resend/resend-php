@@ -49,6 +49,10 @@ class Email extends Service
      * to also copy the other recipients of the message. The response carries
      * only the `id` of the sent email.
      *
+     * `headers` adds custom headers. The `In-Reply-To`, `References` and
+     * `Reply-To` headers are set by Resend and cannot be set here. Sending one
+     * of them, in any letter case, returns a 422.
+     *
      * Pass `idempotency_key` in `$options` to send the request only once. A
      * retry with the same key within 24 hours returns the first response.
      * Reusing the key with a different body, or while the first request is
@@ -61,7 +65,8 @@ class Email extends Service
      *     'cc'?: string|array<int, string>,
      *     'bcc'?: string|array<int, string>,
      *     'reply_all'?: bool,
-     *     'attachments'?: array<int, array{content?: string, path?: string, filename?: string, content_type?: string, content_id?: string}>
+     *     'attachments'?: array<int, array{content?: string, path?: string, filename?: string, content_type?: string, content_id?: string}>,
+     *     'headers'?: array<string, string>
      * } $parameters
      * @param array{'idempotency_key'?: string} $options
      *
@@ -84,6 +89,10 @@ class Email extends Service
      * sent from a URL (`path`) cannot be forwarded, and the request returns a
      * 422. The response carries only the `id` of the sent email.
      *
+     * `headers` adds custom headers. The `In-Reply-To`, `References` and
+     * `Reply-To` headers are set by Resend and cannot be set here. Sending one
+     * of them, in any letter case, returns a 422.
+     *
      * Pass `idempotency_key` in `$options` to send the request only once. A
      * retry with the same key within 24 hours returns the first response.
      * Reusing the key with a different body, or while the first request is
@@ -96,7 +105,8 @@ class Email extends Service
      *     'html'?: string,
      *     'text'?: string,
      *     'subject'?: string,
-     *     'attachments'?: array<int, array{content?: string, path?: string, filename?: string, content_type?: string, content_id?: string}>
+     *     'attachments'?: array<int, array{content?: string, path?: string, filename?: string, content_type?: string, content_id?: string}>,
+     *     'headers'?: array<string, string>
      * } $parameters
      * @param array{'idempotency_key'?: string} $options
      *

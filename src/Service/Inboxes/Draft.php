@@ -133,18 +133,23 @@ class Draft extends Service
      * `subject`, and `html` or `text`, or the request returns a 422. The
      * response carries only the `id` of the sent email.
      *
+     * `headers` adds custom headers. The `In-Reply-To`, `References` and
+     * `Reply-To` headers are set by Resend and cannot be set here. Sending one
+     * of them, in any letter case, returns a 422.
+     *
      * Pass `idempotency_key` in `$options` to send the request only once. A
      * retry with the same key within 24 hours returns the first response.
      * Reusing the key with a different body, or while the first request is
      * still running, returns a 409.
      *
+     * @param array{'headers'?: array<string, string>} $parameters
      * @param array{'idempotency_key'?: string} $options
      *
      * @see https://resend.com/docs/api-reference/inboxes/send-draft
      */
-    public function send(string $inboxId, string $draftId, array $options = []): \Resend\Email
+    public function send(string $inboxId, string $draftId, array $parameters = [], array $options = []): \Resend\Email
     {
-        $payload = Payload::create("inboxes/{$inboxId}/drafts/{$draftId}/send", [], $options);
+        $payload = Payload::create("inboxes/{$inboxId}/drafts/{$draftId}/send", $parameters, $options);
 
         $result = $this->transporter->request($payload);
 
