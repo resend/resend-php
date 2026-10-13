@@ -46,17 +46,22 @@ class Email extends Service
      * Reply to a thread email from the inbox address right away, with no stored draft.
      *
      * The `to` recipients come from the message you reply to. Set `reply_all`
-     * to also copy the other recipients of the message. The response carries
-     * only the `id` of the sent email.
+     * to also copy the other recipients of the message. An empty file, a
+     * blocked file type, or an attachment `path` that is not an `http` or
+     * `https` URL returns a 422. The response carries only the `id` of the
+     * sent email.
      *
      * `headers` adds custom headers. The `In-Reply-To`, `References` and
      * `Reply-To` headers are set by Resend and cannot be set here. Sending one
-     * of them, in any letter case, returns a 422.
+     * of them, in any letter case, returns a 422. Header names cannot be
+     * empty, and names and values cannot contain line breaks or null
+     * characters.
      *
      * Pass `idempotency_key` in `$options` to send the request only once. A
-     * retry with the same key within 24 hours returns the first response.
-     * Reusing the key with a different body, or while the first request is
-     * still running, returns a 409.
+     * retry with the same key within 24 hours returns the first successful
+     * response. A failed request is not stored, so you can retry it with the
+     * same key. Reusing the key with a different body, or while the first
+     * request is still running, returns a 409.
      *
      * @param array{
      *     'html'?: string,
@@ -85,18 +90,23 @@ class Email extends Service
      * Forward a thread email from the inbox address right away, with no stored draft.
      *
      * The attachments of the original message are sent with the forward,
-     * together with any `attachments` you add. An original attachment that was
+     * together with any `attachments` you add. An empty file, a blocked file
+     * type, or a `path` that is not an `http` or `https` URL returns a 422.
+     * An original attachment that was
      * sent from a URL (`path`) cannot be forwarded, and the request returns a
      * 422. The response carries only the `id` of the sent email.
      *
      * `headers` adds custom headers. The `In-Reply-To`, `References` and
      * `Reply-To` headers are set by Resend and cannot be set here. Sending one
-     * of them, in any letter case, returns a 422.
+     * of them, in any letter case, returns a 422. Header names cannot be
+     * empty, and names and values cannot contain line breaks or null
+     * characters.
      *
      * Pass `idempotency_key` in `$options` to send the request only once. A
-     * retry with the same key within 24 hours returns the first response.
-     * Reusing the key with a different body, or while the first request is
-     * still running, returns a 409.
+     * retry with the same key within 24 hours returns the first successful
+     * response. A failed request is not stored, so you can retry it with the
+     * same key. Reusing the key with a different body, or while the first
+     * request is still running, returns a 409.
      *
      * @param array{
      *     to: string|array<int, string>,

@@ -40,9 +40,10 @@ class Draft extends Service
      * at most 25 MB. The response carries only `object` and `id`.
      *
      * Pass `idempotency_key` in `$options` to send the request only once. A
-     * retry with the same key within 24 hours returns the first response.
-     * Reusing the key with a different body, or while the first request is
-     * still running, returns a 409.
+     * retry with the same key within 24 hours returns the first successful
+     * response. A failed request is not stored, so you can retry it with the
+     * same key. Reusing the key with a different body, or while the first
+     * request is still running, returns a 409.
      *
      * @param array{
      *     'to'?: string|array<int, string>|null,
@@ -87,8 +88,8 @@ class Draft extends Service
      *
      * Omitted fields are left unchanged. Setting `text` or `html` replaces the
      * whole body, so the body part you omit becomes `null`. Sending
-     * `attachments` replaces every attachment on the draft. Send `[]` to
-     * remove them all.
+     * `attachments` replaces every attachment on the draft. Send `[]` or
+     * `null` to remove them all.
      *
      * @param array{
      *     'to'?: string|array<int, string>|null,
@@ -97,7 +98,7 @@ class Draft extends Service
      *     'subject'?: string|null,
      *     'html'?: string|null,
      *     'text'?: string|null,
-     *     'attachments'?: array<int, array{content: string, filename: string, content_type: string}>
+     *     'attachments'?: array<int, array{content: string, filename: string, content_type: string}>|null
      * } $parameters
      *
      * @see https://resend.com/docs/api-reference/inboxes/update-draft
@@ -135,12 +136,15 @@ class Draft extends Service
      *
      * `headers` adds custom headers. The `In-Reply-To`, `References` and
      * `Reply-To` headers are set by Resend and cannot be set here. Sending one
-     * of them, in any letter case, returns a 422.
+     * of them, in any letter case, returns a 422. Header names cannot be
+     * empty, and names and values cannot contain line breaks or null
+     * characters.
      *
      * Pass `idempotency_key` in `$options` to send the request only once. A
-     * retry with the same key within 24 hours returns the first response.
-     * Reusing the key with a different body, or while the first request is
-     * still running, returns a 409.
+     * retry with the same key within 24 hours returns the first successful
+     * response. A failed request is not stored, so you can retry it with the
+     * same key. Reusing the key with a different body, or while the first
+     * request is still running, returns a 409.
      *
      * @param array{'headers'?: array<string, string>} $parameters
      * @param array{'idempotency_key'?: string} $options
