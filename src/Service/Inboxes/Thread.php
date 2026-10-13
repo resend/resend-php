@@ -113,7 +113,10 @@ class Thread extends Service
      * At least one of `read`, `folder`, `add_label_ids`, or `remove_label_ids`
      * is required. A label ID cannot be both added and removed in the same
      * request. Removing a label from a thread keeps the label itself. Moving a
-     * thread out of `trash` restores it and clears its deletion deadline.
+     * thread out of `trash` restores it and clears its deletion deadline. The
+     * changes apply in this order: `read`, `folder`, added labels, removed
+     * labels. They are not atomic, so a 404 for a label leaves the earlier
+     * changes applied.
      *
      * @param array{
      *     'read'?: bool,

@@ -74,8 +74,9 @@ class Email extends Service
      * Forward a thread email from the inbox address right away, with no stored draft.
      *
      * The attachments of the original message are sent with the forward,
-     * together with any `attachments` you add. The response carries only the
-     * `id` of the sent email.
+     * together with any `attachments` you add. An original attachment that was
+     * sent from a URL (`path`) cannot be forwarded, and the request returns a
+     * 422. The response carries only the `id` of the sent email.
      *
      * @param array{
      *     to: string|array<int, string>,
