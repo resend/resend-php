@@ -15,7 +15,8 @@ it('can get a list of draft resources for an inbox', function () {
         ->data->toHaveCount(1)
         ->and($result->data[0])->toBeInstanceOf(Draft::class)
         ->snippet->toBe('Thanks for signing up.')
-        ->to->toBeNull();
+        ->to->toBeNull()
+        ->attachments->toBe([]);
 });
 
 it('can create a draft resource that starts a new thread', function () {
@@ -23,6 +24,13 @@ it('can create a draft resource that starts a new thread', function () {
         'to' => ['ada@example.org'],
         'subject' => 'Welcome to Acme',
         'text' => 'Thanks for signing up.',
+        'attachments' => [
+            [
+                'content' => 'aGVsbG8=',
+                'filename' => 'notes.txt',
+                'content_type' => 'text/plain',
+            ],
+        ],
     ], [], [
         'object' => 'inbox_draft',
         'id' => 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a',
@@ -32,6 +40,13 @@ it('can create a draft resource that starts a new thread', function () {
         'to' => ['ada@example.org'],
         'subject' => 'Welcome to Acme',
         'text' => 'Thanks for signing up.',
+        'attachments' => [
+            [
+                'content' => 'aGVsbG8=',
+                'filename' => 'notes.txt',
+                'content_type' => 'text/plain',
+            ],
+        ],
     ]);
 
     expect($result)->toBeInstanceOf(Draft::class)
@@ -65,22 +80,31 @@ it('can get a draft resource', function () {
 
     expect($result)->toBeInstanceOf(Draft::class)
         ->type->toBe('standalone')
-        ->email_id->toBeNull();
+        ->email_id->toBeNull()
+        ->and($result->attachments[0])->toBe([
+            'id' => '5c1e8f2a-9b3d-4e6f-a7c8-0d1e2f3a4b5c',
+            'filename' => 'notes.txt',
+            'content_type' => 'text/plain',
+            'size' => 5,
+        ]);
 });
 
-it('can update a draft resource', function () {
+it('can update a draft resource and clear its attachments', function () {
     $client = mockClient('PATCH', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/drafts/d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a', [
         'subject' => 'Welcome aboard',
         'cc' => null,
-    ], [], inboxDraft(['subject' => 'Welcome aboard']));
+        'attachments' => [],
+    ], [], inboxDraft(['subject' => 'Welcome aboard', 'attachments' => []]));
 
     $result = $client->inboxes->drafts->update('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a', [
         'subject' => 'Welcome aboard',
         'cc' => null,
+        'attachments' => [],
     ]);
 
     expect($result)->toBeInstanceOf(Draft::class)
-        ->subject->toBe('Welcome aboard');
+        ->subject->toBe('Welcome aboard')
+        ->attachments->toBe([]);
 });
 
 it('can remove a draft resource', function () {

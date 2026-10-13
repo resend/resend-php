@@ -32,8 +32,9 @@ class Draft extends Service
      * Omit `thread_id` and `reply_to_email_id` for a draft that starts a new
      * thread. Pass both together for a reply draft in an existing thread. Only
      * one unsent reply draft can target an email, so a second request for the
-     * same email returns the ID of the existing draft. The response carries
-     * only `object` and `id`.
+     * same email returns the ID of the existing draft. Each attachment needs
+     * `content`, `filename` and `content_type`. A draft can carry up to 10
+     * files and 25 MB in total. The response carries only `object` and `id`.
      *
      * @param array{
      *     'to'?: string|array<int, string>|null,
@@ -43,7 +44,8 @@ class Draft extends Service
      *     'html'?: string|null,
      *     'text'?: string|null,
      *     'thread_id'?: string,
-     *     'reply_to_email_id'?: string
+     *     'reply_to_email_id'?: string,
+     *     'attachments'?: array<int, array{content: string, filename: string, content_type: string}>
      * } $parameters
      *
      * @see https://resend.com/docs/api-reference/inboxes/create-draft
@@ -75,7 +77,9 @@ class Draft extends Service
      * Update the content of an unsent draft.
      *
      * Omitted fields are left unchanged. Setting `text` or `html` replaces the
-     * whole body, so the body part you omit becomes `null`.
+     * whole body, so the body part you omit becomes `null`. Sending
+     * `attachments` replaces every attachment on the draft. Send `[]` to
+     * remove them all.
      *
      * @param array{
      *     'to'?: string|array<int, string>|null,
@@ -83,7 +87,8 @@ class Draft extends Service
      *     'bcc'?: string|array<int, string>|null,
      *     'subject'?: string|null,
      *     'html'?: string|null,
-     *     'text'?: string|null
+     *     'text'?: string|null,
+     *     'attachments'?: array<int, array{content: string, filename: string, content_type: string}>
      * } $parameters
      *
      * @see https://resend.com/docs/api-reference/inboxes/update-draft

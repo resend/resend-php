@@ -18,6 +18,7 @@ use Resend\Resource;
  * @property null|string $thread_id The Thread ID when the draft is a reply. `null` otherwise.
  * @property null|string $reply_to_email_id The Email ID the draft replies to. `null` otherwise.
  * @property null|string $email_id The ID of the outbound email queued when the draft was sent. `null` until the draft is sent. Absent on list items.
+ * @property array<int, array{id: string, filename: string, content_type: string, size: int}> $attachments The files stored on the draft.
  * @property null|string $created_at Time at which the draft was created. Absent on list items.
  * @property string $updated_at Time at which the draft was last saved.
  * @property null|bool $deleted Whether the draft was deleted, present on the response of the remove endpoint.

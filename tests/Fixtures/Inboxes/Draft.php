@@ -15,6 +15,14 @@ function inboxDraft(array $overrides = []): array
         'thread_id' => null,
         'reply_to_email_id' => null,
         'email_id' => null,
+        'attachments' => [
+            [
+                'id' => '5c1e8f2a-9b3d-4e6f-a7c8-0d1e2f3a4b5c',
+                'filename' => 'notes.txt',
+                'content_type' => 'text/plain',
+                'size' => 5,
+            ],
+        ],
         'created_at' => '2026-09-14T10:22:31.000Z',
         'updated_at' => '2026-09-14T10:22:31.000Z',
     ], $overrides);
@@ -36,6 +44,7 @@ function inboxDrafts(): array
                 'snippet' => 'Thanks for signing up.',
                 'thread_id' => null,
                 'reply_to_email_id' => null,
+                'attachments' => [],
                 'updated_at' => '2026-09-14T10:22:31.000Z',
             ],
         ],
