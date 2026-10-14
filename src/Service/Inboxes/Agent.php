@@ -30,6 +30,12 @@ class Agent extends Service
      * The agent is created when the inbox has none. Omitted fields keep their
      * current value. `enabled_actions` replaces the whole set.
      *
+     * `tone` takes one of the presets `concise_professional`, `concise_casual`,
+     * `expanded_professional`, or `expanded_casual`, or custom text such as
+     * `friendly and concise`. Custom text is max 64 characters. Leading and
+     * trailing whitespace is trimmed, and the trimmed value must not be empty.
+     * Send null to clear the tone.
+     *
      * @param array{
      *     'instructions'?: string|null,
      *     'tone'?: string|null,
