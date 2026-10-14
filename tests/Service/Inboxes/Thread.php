@@ -13,7 +13,7 @@ it('can get a list of thread resources for an inbox', function () {
         ->data->toHaveCount(1)
         ->and($result->data[0])->toBeInstanceOf(Thread::class)
         ->folder->toBe('inbox')
-        ->message_count->toBe(2);
+        ->email_count->toBe(2);
 });
 
 it('sends thread list filters as comma-separated values and literal booleans', function () {
@@ -59,7 +59,7 @@ it('can get a thread resource', function () {
     expect($result)->toBeInstanceOf(Thread::class)
         ->object->toBe('inbox_thread')
         ->read->toBeFalse()
-        ->message_count->toBeNull();
+        ->email_count->toBeNull();
 });
 
 it('can update a thread resource', function () {

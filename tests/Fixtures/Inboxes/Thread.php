@@ -16,7 +16,7 @@ function inboxThreadListItem(): array
                 'color' => '#3B82F6',
             ],
         ],
-        'message_count' => 2,
+        'email_count' => 2,
         'has_attachment' => false,
         'has_draft' => false,
         'read' => false,

@@ -13,7 +13,7 @@ use Resend\Resource;
  * @property null|array<int, string> $cc The CC recipients of the most recent email. Absent on a single thread.
  * @property null|array<int, string> $bcc The BCC recipients of the most recent email. Absent on a single thread.
  * @property array<int, array{id: string, name: string, color: string}> $labels The labels attached to the thread.
- * @property null|int $message_count The number of emails in the thread. Absent on a single thread.
+ * @property null|int $email_count The number of emails in the thread. Absent on a single thread.
  * @property null|bool $has_attachment Whether the most recent email in the thread has an attachment. Absent on a single thread.
  * @property null|bool $has_draft Whether the thread has an unsent draft. Absent on a single thread.
  * @property bool $read True only when every email in the thread is read.
