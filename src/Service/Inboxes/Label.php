@@ -2,6 +2,7 @@
 
 namespace Resend\Service\Inboxes;
 
+use Resend\Service\Inbox;
 use Resend\Service\Service;
 use Resend\ValueObjects\Transporter\Payload;
 
@@ -16,7 +17,7 @@ class Label extends Service
      */
     public function list(string $inboxId): \Resend\Collection
     {
-        $payload = Payload::list("inboxes/{$inboxId}/labels");
+        $payload = Payload::list(Inbox::path($inboxId) . '/labels');
 
         $result = $this->transporter->request($payload);
 
@@ -36,7 +37,7 @@ class Label extends Service
      */
     public function create(string $inboxId, array $parameters): \Resend\Inboxes\Label
     {
-        $payload = Payload::create("inboxes/{$inboxId}/labels", $parameters);
+        $payload = Payload::create(Inbox::path($inboxId) . '/labels', $parameters);
 
         $result = $this->transporter->request($payload);
 
@@ -52,7 +53,7 @@ class Label extends Service
      */
     public function update(string $inboxId, string $labelId, array $parameters): \Resend\Inboxes\Label
     {
-        $payload = Payload::update("inboxes/{$inboxId}/labels", $labelId, $parameters);
+        $payload = Payload::update(Inbox::path($inboxId) . '/labels', $labelId, $parameters);
 
         $result = $this->transporter->request($payload);
 
@@ -66,7 +67,7 @@ class Label extends Service
      */
     public function remove(string $inboxId, string $labelId): \Resend\Inboxes\Label
     {
-        $payload = Payload::delete("inboxes/{$inboxId}/labels", $labelId);
+        $payload = Payload::delete(Inbox::path($inboxId) . '/labels', $labelId);
 
         $result = $this->transporter->request($payload);
 

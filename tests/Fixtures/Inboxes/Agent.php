@@ -5,7 +5,7 @@ function inboxAgent(): array
     return [
         'object' => 'inbox_agent',
         'instructions' => 'Answer billing questions and escalate refunds.',
-        'tone' => 'friendly and concise',
-        'enabled_actions' => ['draft_reply', 'add_labels'],
+        'tone' => 'concise_casual',
+        'actions' => ['draft_reply', 'archive', 'move_to_trash'],
     ];
 }

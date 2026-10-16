@@ -2,6 +2,7 @@
 
 namespace Resend\Service\Inboxes;
 
+use Resend\Service\Inbox;
 use Resend\Service\Service;
 use Resend\ValueObjects\Transporter\Payload;
 
@@ -19,7 +20,7 @@ class Draft extends Service
      */
     public function list(string $inboxId, array $options = []): \Resend\Collection
     {
-        $payload = Payload::list("inboxes/{$inboxId}/drafts", $options);
+        $payload = Payload::list(Inbox::path($inboxId) . '/drafts', $options);
 
         $result = $this->transporter->request($payload);
 
@@ -62,7 +63,7 @@ class Draft extends Service
      */
     public function create(string $inboxId, array $parameters, array $options = []): \Resend\Inboxes\Draft
     {
-        $payload = Payload::create("inboxes/{$inboxId}/drafts", $parameters, $options);
+        $payload = Payload::create(Inbox::path($inboxId) . '/drafts', $parameters, $options);
 
         $result = $this->transporter->request($payload);
 
@@ -76,7 +77,7 @@ class Draft extends Service
      */
     public function get(string $inboxId, string $draftId): \Resend\Inboxes\Draft
     {
-        $payload = Payload::get("inboxes/{$inboxId}/drafts", $draftId);
+        $payload = Payload::get(Inbox::path($inboxId) . '/drafts', $draftId);
 
         $result = $this->transporter->request($payload);
 
@@ -89,7 +90,7 @@ class Draft extends Service
      * Omitted fields are left unchanged. Setting `text` or `html` replaces the
      * whole body, so the body part you omit becomes `null`. Sending
      * `attachments` replaces every attachment on the draft. Send `[]` or
-     * `null` to remove them all.
+     * `null` to remove them all. The response carries only `object` and `id`.
      *
      * @param array{
      *     'to'?: string|array<int, string>|null,
@@ -105,7 +106,7 @@ class Draft extends Service
      */
     public function update(string $inboxId, string $draftId, array $parameters): \Resend\Inboxes\Draft
     {
-        $payload = Payload::update("inboxes/{$inboxId}/drafts", $draftId, $parameters);
+        $payload = Payload::update(Inbox::path($inboxId) . '/drafts', $draftId, $parameters);
 
         $result = $this->transporter->request($payload);
 
@@ -119,7 +120,7 @@ class Draft extends Service
      */
     public function remove(string $inboxId, string $draftId): \Resend\Inboxes\Draft
     {
-        $payload = Payload::delete("inboxes/{$inboxId}/drafts", $draftId);
+        $payload = Payload::delete(Inbox::path($inboxId) . '/drafts', $draftId);
 
         $result = $this->transporter->request($payload);
 
@@ -153,7 +154,7 @@ class Draft extends Service
      */
     public function send(string $inboxId, string $draftId, array $parameters = [], array $options = []): \Resend\Email
     {
-        $payload = Payload::create("inboxes/{$inboxId}/drafts/{$draftId}/send", $parameters, $options);
+        $payload = Payload::create(Inbox::path($inboxId) . "/drafts/{$draftId}/send", $parameters, $options);
 
         $result = $this->transporter->request($payload);
 

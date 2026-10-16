@@ -94,7 +94,10 @@ it('can update a draft resource and clear its attachments', function () {
         'subject' => 'Welcome aboard',
         'cc' => null,
         'attachments' => [],
-    ], [], inboxDraft(['subject' => 'Welcome aboard', 'attachments' => []]));
+    ], [], [
+        'object' => 'inbox_draft',
+        'id' => 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a',
+    ]);
 
     $result = $client->inboxes->drafts->update('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a', [
         'subject' => 'Welcome aboard',
@@ -103,8 +106,10 @@ it('can update a draft resource and clear its attachments', function () {
     ]);
 
     expect($result)->toBeInstanceOf(Draft::class)
-        ->subject->toBe('Welcome aboard')
-        ->attachments->toBe([]);
+        ->toArray()->toBe([
+            'object' => 'inbox_draft',
+            'id' => 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a',
+        ]);
 });
 
 it('can remove a draft resource', function () {

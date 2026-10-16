@@ -48,7 +48,7 @@ it('can search the threads of an inbox', function () {
     expect($result)->toBeInstanceOf(Collection::class)
         ->and($result->data[0])->toBeInstanceOf(Thread::class)
         ->matched_email_id->toBe('7a8b9c0d-1e2f-4a3b-8c4d-5e6f7a8b9c0d')
-        ->highlights->toBe(['subject' => ['Question about my **invoice**']]);
+        ->highlights->toBeNull();
 });
 
 it('can get a thread resource', function () {
@@ -66,8 +66,6 @@ it('can update a thread resource', function () {
     $client = mockClient('PATCH', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/threads/0f1e2d3c-4b5a-4968-8776-5a4b3c2d1e0f', [
         'read' => true,
         'folder' => 'archive',
-        'add_label_ids' => ['7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34'],
-        'remove_label_ids' => ['2b6d0f4e-8a1c-4e3b-9d57-1c0e8a6f4b21'],
     ], [], inboxThread([
         'folder' => 'archive',
         'read' => true,
@@ -83,8 +81,6 @@ it('can update a thread resource', function () {
     $result = $client->inboxes->threads->update('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', '0f1e2d3c-4b5a-4968-8776-5a4b3c2d1e0f', [
         'read' => true,
         'folder' => 'archive',
-        'add_label_ids' => ['7f9c1d2e-4a6b-4c3d-8e15-9b0a7c6d5e34'],
-        'remove_label_ids' => ['2b6d0f4e-8a1c-4e3b-9d57-1c0e8a6f4b21'],
     ]);
 
     expect($result)->toBeInstanceOf(Thread::class)
@@ -104,4 +100,12 @@ it('can remove a thread resource', function () {
 
     expect($result)->toBeInstanceOf(Thread::class)
         ->deleted->toBeTrue();
+});
+
+it('can list the threads of an inbox by its email address', function () {
+    $client = mockClient('GET', 'inboxes/support%40acme.com/threads', [], [], inboxThreads());
+
+    $result = $client->inboxes->threads->list('support@acme.com');
+
+    expect($result)->toBeInstanceOf(Collection::class);
 });

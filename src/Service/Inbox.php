@@ -87,15 +87,16 @@ class Inbox extends Service
     /**
      * Update the internal name of an inbox or the name recipients see when mail is sent from it.
      *
-     * At least one of `name` or `from_name` is required.
+     * At least one of `name` or `from_name` is required. The inbox can be
+     * given by ID or email address.
      *
      * @param array{name?: string, from_name?: string} $parameters
      *
      * @see https://resend.com/docs/api-reference/inboxes/update-inbox
      */
-    public function update(string $id, array $parameters): \Resend\Inbox
+    public function update(string $idOrEmail, array $parameters): \Resend\Inbox
     {
-        $payload = Payload::update('inboxes', $id, $parameters);
+        $payload = Payload::update('inboxes', rawurlencode($idOrEmail), $parameters);
 
         $result = $this->transporter->request($payload);
 
@@ -103,16 +104,25 @@ class Inbox extends Service
     }
 
     /**
-     * Remove an inbox with the given ID.
+     * Remove an inbox by ID or email address.
      *
      * @see https://resend.com/docs/api-reference/inboxes/delete-inbox
      */
-    public function remove(string $id): \Resend\Inbox
+    public function remove(string $idOrEmail): \Resend\Inbox
     {
-        $payload = Payload::delete('inboxes', $id);
+        $payload = Payload::delete('inboxes', rawurlencode($idOrEmail));
 
         $result = $this->transporter->request($payload);
 
         return $this->createResource('inboxes', $result);
+    }
+
+    /**
+     * The path of an inbox. The API takes the inbox ID or the inbox email
+     * address, and an address must be percent-encoded to fit in the path.
+     */
+    public static function path(string $idOrEmail): string
+    {
+        return 'inboxes/' . rawurlencode($idOrEmail);
     }
 }

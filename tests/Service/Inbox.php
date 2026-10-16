@@ -7,6 +7,7 @@ use Resend\Service\Inboxes\Draft;
 use Resend\Service\Inboxes\Label;
 use Resend\Service\Inboxes\Thread;
 use Resend\Service\Inboxes\Threads\Email;
+use Resend\Service\Inboxes\Threads\Label as ThreadLabel;
 
 it('can create an inbox resource', function () {
     $client = mockClient('POST', 'inboxes', [
@@ -92,6 +93,29 @@ it('can update an inbox resource', function () {
         ->id->toBe('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c');
 });
 
+it('can update an inbox by its email address', function () {
+    $client = mockClient('PATCH', 'inboxes/support%40acme.com', ['name' => 'Support'], [], [
+        'object' => 'inbox',
+        'id' => 'b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c',
+    ]);
+
+    $result = $client->inboxes->update('support@acme.com', ['name' => 'Support']);
+
+    expect($result)->toBeInstanceOf(Inbox::class);
+});
+
+it('can remove an inbox by its email address', function () {
+    $client = mockClient('DELETE', 'inboxes/support%40acme.com', [], [], [
+        'object' => 'inbox',
+        'id' => 'b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c',
+        'deleted' => true,
+    ]);
+
+    $result = $client->inboxes->remove('support@acme.com');
+
+    expect($result)->toBeInstanceOf(Inbox::class);
+});
+
 it('can remove an inbox resource', function () {
     $client = mockClient('DELETE', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', [], [], [
         'object' => 'inbox',
@@ -112,5 +136,6 @@ it('exposes the nested inbox services', function () {
         ->and($client->inboxes->drafts)->toBeInstanceOf(Draft::class)
         ->and($client->inboxes->labels)->toBeInstanceOf(Label::class)
         ->and($client->inboxes->threads)->toBeInstanceOf(Thread::class)
-        ->and($client->inboxes->threads->emails)->toBeInstanceOf(Email::class);
+        ->and($client->inboxes->threads->emails)->toBeInstanceOf(Email::class)
+        ->and($client->inboxes->threads->labels)->toBeInstanceOf(ThreadLabel::class);
 });

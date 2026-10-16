@@ -3,7 +3,9 @@
 namespace Resend\Service\Inboxes;
 
 use Resend\Contracts\Transporter;
+use Resend\Service\Inbox;
 use Resend\Service\Inboxes\Threads\Email;
+use Resend\Service\Inboxes\Threads\Label;
 use Resend\Service\Service;
 use Resend\ValueObjects\Transporter\Payload;
 
@@ -11,12 +13,15 @@ class Thread extends Service
 {
     public Email $emails;
 
+    public Label $labels;
+
     /**
      * Create a new inbox thread service instance with the given transport.
      */
     public function __construct(Transporter $transporter)
     {
         $this->emails = new Email($transporter);
+        $this->labels = new Label($transporter);
 
         parent::__construct($transporter);
     }
@@ -42,7 +47,7 @@ class Thread extends Service
     public function list(string $inboxId, array $options = []): \Resend\Collection
     {
         $payload = Payload::list(
-            "inboxes/{$inboxId}/threads",
+            Inbox::path($inboxId) . '/threads',
             $this->toQuery($options),
             ['folders', 'labels', 'read']
         );
@@ -83,7 +88,7 @@ class Thread extends Service
     public function search(string $inboxId, array $options = []): \Resend\Collection
     {
         $payload = Payload::list(
-            "inboxes/{$inboxId}/threads/search",
+            Inbox::path($inboxId) . '/threads/search',
             $this->toQuery($options),
             ['query', 'from', 'to', 'cc', 'bcc', 'has_attachment', 'start_date', 'end_date', 'folders', 'labels', 'read']
         );
@@ -100,7 +105,7 @@ class Thread extends Service
      */
     public function get(string $inboxId, string $threadId): \Resend\Inboxes\Thread
     {
-        $payload = Payload::get("inboxes/{$inboxId}/threads", $threadId);
+        $payload = Payload::get(Inbox::path($inboxId) . '/threads', $threadId);
 
         $result = $this->transporter->request($payload);
 
@@ -108,28 +113,23 @@ class Thread extends Service
     }
 
     /**
-     * Mark a thread read or unread, move it to a folder, or add and remove labels.
+     * Mark a thread read or unread, or move it to a folder.
      *
-     * At least one of `read`, `folder`, `add_label_ids`, or `remove_label_ids`
-     * is required. A label ID cannot be both added and removed in the same
-     * request. Removing a label from a thread keeps the label itself. Moving a
-     * thread out of `trash` restores it and clears its deletion deadline. The
-     * changes apply in this order: `read`, `folder`, added labels, removed
-     * labels. They are not atomic, so a 404 for a label leaves the earlier
-     * changes applied.
+     * At least one of `read` or `folder` is required. To change the labels of
+     * a thread, use `$resend->inboxes->threads->labels`. Moving a thread out
+     * of `trash` restores it and clears its deletion deadline. The changes
+     * apply in this order: `read`, then `folder`. They are not atomic.
      *
      * @param array{
      *     'read'?: bool,
-     *     'folder'?: 'inbox'|'archive'|'spam'|'trash',
-     *     'add_label_ids'?: array<int, string>,
-     *     'remove_label_ids'?: array<int, string>
+     *     'folder'?: 'inbox'|'archive'|'spam'|'trash'
      * } $parameters
      *
      * @see https://resend.com/docs/api-reference/inboxes/update-thread
      */
     public function update(string $inboxId, string $threadId, array $parameters): \Resend\Inboxes\Thread
     {
-        $payload = Payload::update("inboxes/{$inboxId}/threads", $threadId, $parameters);
+        $payload = Payload::update(Inbox::path($inboxId) . '/threads', $threadId, $parameters);
 
         $result = $this->transporter->request($payload);
 
@@ -146,7 +146,7 @@ class Thread extends Service
      */
     public function remove(string $inboxId, string $threadId): \Resend\Inboxes\Thread
     {
-        $payload = Payload::delete("inboxes/{$inboxId}/threads", $threadId);
+        $payload = Payload::delete(Inbox::path($inboxId) . '/threads', $threadId);
 
         $result = $this->transporter->request($payload);
 

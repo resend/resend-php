@@ -28,6 +28,18 @@ it('has a body when making a POST request', function () {
     ]));
 });
 
+it('sends a PUT request with a body', function () {
+    $payload = Payload::replace('inboxes/abc/threads/def/labels', ['labels' => []]);
+
+    $baseUri = BaseUri::from('api.resend.com');
+    $headers = Headers::withAuthorization(ApiKey::from('foo'))->withContentType(ContentType::JSON);
+    $request = $payload->toRequest($baseUri, $headers);
+
+    expect($request->getMethod())->toBe('PUT')
+        ->and((string) $request->getUri())->toBe('https://api.resend.com/inboxes/abc/threads/def/labels')
+        ->and($request->getBody()->getContents())->toBe('{"labels":[]}');
+});
+
 it('does not have a body when making a GET request', function () {
     $payload = Payload::list('api-keys');
 

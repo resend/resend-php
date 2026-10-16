@@ -13,7 +13,8 @@ namespace Resend;
  * @property int $unread The number of unread threads in the Inbox folder.
  * @property null|int $drafts The number of unsent drafts. Absent on list items.
  * @property null|string $last_received Time of the newest received email in the Inbox folder. `null` when the folder has no received email.
- * @property null|string $created_at Time at which the inbox was created. Absent on list items.
+ * @property string $created_at Time at which the inbox was created.
+ * @property string $updated_at Time at which the inbox was last updated.
  * @property null|bool $deleted Whether the inbox was deleted, present on the response of the remove endpoint.
  */
 class Inbox extends Resource

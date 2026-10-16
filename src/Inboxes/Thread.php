@@ -19,8 +19,7 @@ use Resend\Resource;
  * @property bool $read True only when every email in the thread is read.
  * @property null|string $received_at Time at which the thread was last active. Absent on a single thread.
  * @property 'inbox'|'archive'|'spam'|'sent'|'trash' $folder The folder the thread is in.
- * @property null|string $matched_email_id The email in the thread that matched the search, present on search results.
- * @property null|array<string, array<int, string>> $highlights Where `query` matched the email in `matched_email_id`, present on search results.
+ * @property null|string $matched_email_id The ID of the email in the thread that matched the search, present on search results. Use it as the email ID with the get, reply and forward thread email methods.
  * @property null|bool $deleted True when the call moved the thread to `trash`, present on the response of the remove endpoint.
  */
 class Thread extends Resource

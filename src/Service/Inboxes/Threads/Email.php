@@ -2,6 +2,7 @@
 
 namespace Resend\Service\Inboxes\Threads;
 
+use Resend\Service\Inbox;
 use Resend\Service\Service;
 use Resend\ValueObjects\Transporter\Payload;
 
@@ -21,7 +22,7 @@ class Email extends Service
      */
     public function list(string $inboxId, string $threadId, array $options = []): \Resend\Collection
     {
-        $payload = Payload::list("inboxes/{$inboxId}/threads/{$threadId}/emails", $options);
+        $payload = Payload::list(Inbox::path($inboxId) . "/threads/{$threadId}/emails", $options);
 
         $result = $this->transporter->request($payload);
 
@@ -35,7 +36,7 @@ class Email extends Service
      */
     public function get(string $inboxId, string $threadId, string $emailId): \Resend\Inboxes\Threads\Email
     {
-        $payload = Payload::get("inboxes/{$inboxId}/threads/{$threadId}/emails", $emailId);
+        $payload = Payload::get(Inbox::path($inboxId) . "/threads/{$threadId}/emails", $emailId);
 
         $result = $this->transporter->request($payload);
 
@@ -79,7 +80,7 @@ class Email extends Service
      */
     public function reply(string $inboxId, string $threadId, string $emailId, array $parameters, array $options = []): \Resend\Email
     {
-        $payload = Payload::create("inboxes/{$inboxId}/threads/{$threadId}/emails/{$emailId}/reply", $parameters, $options);
+        $payload = Payload::create(Inbox::path($inboxId) . "/threads/{$threadId}/emails/{$emailId}/reply", $parameters, $options);
 
         $result = $this->transporter->request($payload);
 
@@ -124,7 +125,7 @@ class Email extends Service
      */
     public function forward(string $inboxId, string $threadId, string $emailId, array $parameters, array $options = []): \Resend\Email
     {
-        $payload = Payload::create("inboxes/{$inboxId}/threads/{$threadId}/emails/{$emailId}/forward", $parameters, $options);
+        $payload = Payload::create(Inbox::path($inboxId) . "/threads/{$threadId}/emails/{$emailId}/forward", $parameters, $options);
 
         $result = $this->transporter->request($payload);
 

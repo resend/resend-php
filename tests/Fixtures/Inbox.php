@@ -14,6 +14,7 @@ function inbox(): array
         'drafts' => 1,
         'last_received' => '2026-09-14T10:22:31.000Z',
         'created_at' => '2026-09-01T08:00:00.000Z',
+        'updated_at' => '2026-09-02T08:00:00.000Z',
     ];
 }
 
@@ -30,6 +31,8 @@ function inboxes(): array
                 'from_name' => null,
                 'unread' => 3,
                 'last_received' => null,
+                'created_at' => '2026-09-01T08:00:00.000Z',
+                'updated_at' => '2026-09-02T08:00:00.000Z',
             ],
         ],
     ];

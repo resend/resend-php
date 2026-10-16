@@ -42,9 +42,6 @@ function inboxThreadSearchResults(): array
         'data' => [
             array_merge(inboxThreadListItem(), [
                 'matched_email_id' => '7a8b9c0d-1e2f-4a3b-8c4d-5e6f7a8b9c0d',
-                'highlights' => [
-                    'subject' => ['Question about my **invoice**'],
-                ],
             ]),
         ],
     ];
