@@ -77,6 +77,18 @@ final class Payload
     }
 
     /**
+     * Create a new Transporter Payload instance that replaces the given resource.
+     */
+    public static function replace(string $resource, array $parameters): self
+    {
+        $contentType = ContentType::JSON;
+        $method = Method::PUT;
+        $uri = ResourceUri::create($resource);
+
+        return new self($contentType, $method, $uri, $parameters);
+    }
+
+    /**
      * Create a new Transporter Payload instance.
      */
     public static function upload(string $resource, array $parameters): self
