@@ -15,13 +15,25 @@ class Topic extends Service
      *
      * @see https://resend.com/docs/api-reference/contacts/get-contact-topics
      */
-    public function get(string $contactId): \Resend\Collection
+    public function list(string $contactId, array $options = []): \Resend\Collection
     {
-        $payload = Payload::list("contacts/$contactId/topics");
+        $payload = Payload::list("contacts/$contactId/topics", $options);
 
         $result = $this->transporter->request($payload);
 
         return $this->createResource('contact-topics', $result);
+    }
+
+    /**
+     * Retrieve a list of topics subscriptions for a contact.
+     *
+     * @return \Resend\Collection<\Resend\Contacts\Topic>
+     *
+     * @see https://resend.com/docs/api-reference/contacts/get-contact-topics
+     */
+    public function get(string $contactId): \Resend\Collection
+    {
+        return $this->list($contactId);
     }
 
     /**
