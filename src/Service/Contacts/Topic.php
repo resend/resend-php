@@ -15,9 +15,9 @@ class Topic extends Service
      *
      * @see https://resend.com/docs/api-reference/contacts/get-contact-topics
      */
-    public function get(string $contactId): \Resend\Collection
+    public function get(string $contactId, array $options = []): \Resend\Collection
     {
-        $payload = Payload::list("contacts/$contactId/topics");
+        $payload = Payload::list("contacts/$contactId/topics", $options);
 
         $result = $this->transporter->request($payload);
 

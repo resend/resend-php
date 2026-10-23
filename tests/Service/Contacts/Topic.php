@@ -26,6 +26,34 @@ it('can get a list of topic resources for a contact by email', function () {
     expect($result->data[0])->toBeInstanceOf(Topic::class);
 });
 
+it('can get a paginated list of topic resources for a contact', function () {
+    $client = mockClient('GET', 'contacts/e169aa45-1ecf-4183-9955-b1499d5701d3/topics?limit=2&after=b6d24b8e-af0b-4c3c-be0c-359bbd97381e', [], [], contactTopics());
+
+    $result = $client->contacts->topics->get('e169aa45-1ecf-4183-9955-b1499d5701d3', [
+        'limit' => 2,
+        'after' => 'b6d24b8e-af0b-4c3c-be0c-359bbd97381e',
+    ]);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+
+    expect($result->data[0])->toBeInstanceOf(Topic::class);
+});
+
+it('can get the previous page of topic resources for a contact by email', function () {
+    $client = mockClient('GET', 'contacts/steve.wozniak@gmail.com/topics?limit=2&before=ac7503ac-e027-4aea-94b3-b0acd46f65f9', [], [], contactTopics());
+
+    $result = $client->contacts->topics->get('steve.wozniak@gmail.com', [
+        'limit' => 2,
+        'before' => 'ac7503ac-e027-4aea-94b3-b0acd46f65f9',
+    ]);
+
+    expect($result)->toBeInstanceOf(Collection::class)
+        ->data->toBeArray();
+
+    expect($result->data[0])->toBeInstanceOf(Topic::class);
+});
+
 it('can update topic resources for a contact by ID', function () {
     $client = mockClient('PATCH', 'contacts/e169aa45-1ecf-4183-9955-b1499d5701d3/topics', [
         [
