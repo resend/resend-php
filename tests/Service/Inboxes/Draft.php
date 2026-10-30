@@ -58,7 +58,7 @@ it('can create a draft resource with a path attachment', function () {
         'subject' => 'Your invoice',
         'attachments' => [
             [
-                'path' => 'https://resend.com/static/sample/invoice.pdf',
+                'path' => 'https://example.com/invoice.pdf',
                 'filename' => 'invoice.pdf',
             ],
         ],
@@ -71,7 +71,7 @@ it('can create a draft resource with a path attachment', function () {
         'subject' => 'Your invoice',
         'attachments' => [
             [
-                'path' => 'https://resend.com/static/sample/invoice.pdf',
+                'path' => 'https://example.com/invoice.pdf',
                 'filename' => 'invoice.pdf',
             ],
         ],
@@ -144,7 +144,7 @@ it('can update a draft resource with a path attachment', function () {
     $client = mockClient('PATCH', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/drafts/d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a', [
         'attachments' => [
             [
-                'path' => 'https://resend.com/static/sample/invoice.pdf',
+                'path' => 'https://example.com/invoice.pdf',
                 'filename' => 'invoice.pdf',
                 'content_type' => 'application/pdf',
             ],
@@ -157,7 +157,7 @@ it('can update a draft resource with a path attachment', function () {
     $result = $client->inboxes->drafts->update('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a', [
         'attachments' => [
             [
-                'path' => 'https://resend.com/static/sample/invoice.pdf',
+                'path' => 'https://example.com/invoice.pdf',
                 'filename' => 'invoice.pdf',
                 'content_type' => 'application/pdf',
             ],
