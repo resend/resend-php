@@ -53,6 +53,34 @@ it('can create a draft resource that starts a new thread', function () {
         ->id->toBe('d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a');
 });
 
+it('can create a draft resource with a path attachment', function () {
+    $client = mockClient('POST', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/drafts', [
+        'subject' => 'Your invoice',
+        'attachments' => [
+            [
+                'path' => 'https://resend.com/static/sample/invoice.pdf',
+                'filename' => 'invoice.pdf',
+            ],
+        ],
+    ], [], [
+        'object' => 'inbox_draft',
+        'id' => 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a',
+    ]);
+
+    $result = $client->inboxes->drafts->create('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', [
+        'subject' => 'Your invoice',
+        'attachments' => [
+            [
+                'path' => 'https://resend.com/static/sample/invoice.pdf',
+                'filename' => 'invoice.pdf',
+            ],
+        ],
+    ]);
+
+    expect($result)->toBeInstanceOf(Draft::class)
+        ->id->toBe('d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a');
+});
+
 it('can create a reply draft resource in an existing thread', function () {
     $client = mockClient('POST', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/drafts', [
         'text' => 'Following up on your invoice.',
@@ -110,6 +138,34 @@ it('can update a draft resource and clear its attachments', function () {
             'object' => 'inbox_draft',
             'id' => 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a',
         ]);
+});
+
+it('can update a draft resource with a path attachment', function () {
+    $client = mockClient('PATCH', 'inboxes/b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c/drafts/d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a', [
+        'attachments' => [
+            [
+                'path' => 'https://resend.com/static/sample/invoice.pdf',
+                'filename' => 'invoice.pdf',
+                'content_type' => 'application/pdf',
+            ],
+        ],
+    ], [], [
+        'object' => 'inbox_draft',
+        'id' => 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a',
+    ]);
+
+    $result = $client->inboxes->drafts->update('b4f2c6a1-3d5e-4f7a-9b8c-1d2e3f4a5b6c', 'd1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a', [
+        'attachments' => [
+            [
+                'path' => 'https://resend.com/static/sample/invoice.pdf',
+                'filename' => 'invoice.pdf',
+                'content_type' => 'application/pdf',
+            ],
+        ],
+    ]);
+
+    expect($result)->toBeInstanceOf(Draft::class)
+        ->id->toBe('d1e2f3a4-b5c6-4d7e-8f9a-0b1c2d3e4f5a');
 });
 
 it('can remove a draft resource', function () {
