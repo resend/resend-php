@@ -4,11 +4,14 @@ namespace Resend\Service;
 
 use Resend\Contracts\Transporter;
 use Resend\Service\Domains\Claim;
+use Resend\Service\Domains\Forge;
 use Resend\ValueObjects\Transporter\Payload;
 
 class Domain extends Service
 {
     public Claim $claims;
+
+    public Forge $forge;
 
     /**
      * Create a new domain service instance with the given transport.
@@ -16,6 +19,7 @@ class Domain extends Service
     public function __construct(Transporter $transporter)
     {
         $this->claims = new Claim($transporter);
+        $this->forge = new Forge($transporter);
 
         parent::__construct($transporter);
     }
@@ -68,6 +72,9 @@ class Domain extends Service
     /**
      * Update a domain with the given ID.
      *
+     * Pass `forge_return_path` to move the Forge return path; this does
+     * not start a verification.
+     *
      * @see https://resend.com/docs/api-reference/domains/update-domain
      */
     public function update(string $id, array $parameters): \Resend\Domain
@@ -96,11 +103,18 @@ class Domain extends Service
     /**
      * Verify a domain with the given ID.
      *
+     * Pass `['scope' => ['forge']]` to re-check only the Forge record;
+     * without a scope, the whole domain is verified as before.
+     *
+     * @param array{scope?: string[]} $parameters
+     *
      * @see https://resend.com/docs/api-reference/domains/verify-domain#path-parameters
      */
-    public function verify(string $id): \Resend\Domain
+    public function verify(string $id, array $parameters = []): \Resend\Domain
     {
-        $payload = Payload::verify('domains', $id);
+        $payload = $parameters === []
+            ? Payload::verify('domains', $id)
+            : Payload::create("domains/{$id}/verify", $parameters);
 
         $result = $this->transporter->request($payload);
 
