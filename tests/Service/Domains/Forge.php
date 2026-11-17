@@ -6,18 +6,18 @@ use Resend\Domain;
 
 it('can enable Forge for a domain', function () {
     $client = mockClient('POST', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206/forge', [
-        'return_path' => 'send',
+        'custom_return_path' => 'send',
     ], [], domain());
 
     $result = $client->domains->forge->enable('d91cd9bd-1176-453e-8fc1-35364d380206', [
-        'return_path' => 'send',
+        'custom_return_path' => 'send',
     ]);
 
     expect($result)->toBeInstanceOf(Domain::class)
         ->id->toBe('d91cd9bd-1176-453e-8fc1-35364d380206');
 });
 
-it('can enable Forge without a return path', function () {
+it('can enable Forge without a custom return path', function () {
     $client = mockClient('POST', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206/forge', [], [], domain());
 
     $result = $client->domains->forge->enable('d91cd9bd-1176-453e-8fc1-35364d380206');

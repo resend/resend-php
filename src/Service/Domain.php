@@ -72,9 +72,6 @@ class Domain extends Service
     /**
      * Update a domain with the given ID.
      *
-     * Pass `forge_return_path` to move the Forge return path; this does
-     * not start a verification.
-     *
      * @see https://resend.com/docs/api-reference/domains/update-domain
      */
     public function update(string $id, array $parameters): \Resend\Domain

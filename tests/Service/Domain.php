@@ -52,18 +52,6 @@ it('can get a list of domain resources', function () {
         ->data->toBeArray();
 });
 
-it('can update the Forge return path of a domain resource', function () {
-    $client = mockClient('PATCH', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206', [
-        'forge_return_path' => 'outbound',
-    ], [], domain());
-
-    $result = $client->domains->update('d91cd9bd-1176-453e-8fc1-35364d380206', [
-        'forge_return_path' => 'outbound',
-    ]);
-
-    expect($result)->toBeInstanceOf(Domain::class);
-});
-
 it('can update a domain resource', function () {
     $client = mockClient('PATCH', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206', [
         'open_tracking' => false,
