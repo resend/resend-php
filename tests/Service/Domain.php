@@ -85,3 +85,19 @@ it('can verify a domain resource', function () {
     expect($result)->toBeInstanceOf(Domain::class)
         ->id->toBe('d91cd9bd-1176-453e-8fc1-35364d380206');
 });
+
+it('can verify a domain resource scoped to the Forge record', function () {
+    $client = mockClient('POST', 'domains/d91cd9bd-1176-453e-8fc1-35364d380206/verify', [
+        'scope' => ['forge'],
+    ], [], [
+        'object' => 'domain',
+        'id' => 'd91cd9bd-1176-453e-8fc1-35364d380206',
+    ]);
+
+    $result = $client->domains->verify('d91cd9bd-1176-453e-8fc1-35364d380206', [
+        'scope' => ['forge'],
+    ]);
+
+    expect($result)->toBeInstanceOf(Domain::class)
+        ->id->toBe('d91cd9bd-1176-453e-8fc1-35364d380206');
+});
