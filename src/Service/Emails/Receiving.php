@@ -38,14 +38,26 @@ class Receiving extends Service
     /**
      * List all inbound emails.
      *
-     * @param array{'limit'?: int, 'before'?: string, 'after'?: string} $options
+     * `to` matches the envelope recipient exactly (case-sensitive) and returns
+     * emails received by any of up to 20 addresses. `start_date` and `end_date`
+     * take an ISO 8601 date or datetime, read as UTC without an offset. Both
+     * are inclusive, and a bare `end_date` covers that whole day.
+     *
+     * @param array{
+     *     'to'?: array<int, string>,
+     *     'start_date'?: string,
+     *     'end_date'?: string,
+     *     'limit'?: int,
+     *     'before'?: string,
+     *     'after'?: string
+     * } $options
      * @return \Resend\Collection<\Resend\Emails\Receiving>
      *
      * @see https://resend.com/docs/api-reference/emails/list-inbound-emails
      */
     public function list(array $options = []): \Resend\Collection
     {
-        $payload = Payload::list('emails/receiving', $options);
+        $payload = Payload::list('emails/receiving', $this->toQuery($options), ['to', 'start_date', 'end_date']);
 
         $result = $this->transporter->request($payload);
 
