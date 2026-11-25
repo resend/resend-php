@@ -114,4 +114,20 @@ abstract class Service
             return $class::from($attributes);
         }
     }
+
+    /**
+     * Send list values as comma-separated strings and booleans as `true` or `false`.
+     */
+    protected function toQuery(array $options): array
+    {
+        foreach ($options as $key => $value) {
+            if (is_array($value)) {
+                $options[$key] = implode(',', $value);
+            } elseif (is_bool($value)) {
+                $options[$key] = $value ? 'true' : 'false';
+            }
+        }
+
+        return $options;
+    }
 }
