@@ -107,10 +107,7 @@ class HttpTransporter implements Transporter
         try {
             $response = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
 
-            if (
-                isset($response['error']) ||
-                (isset($response['name']) && $this->isResendError($response['name']))
-            ) {
+            if (isset($response['error']) || isset($response['name'])) {
                 $error = $response['error'] ?? $response;
 
                 if (! is_array($error)) {
@@ -122,37 +119,5 @@ class HttpTransporter implements Transporter
         } catch (JsonException $jsonException) {
             throw new UnserializableResponse($jsonException, $contents);
         }
-    }
-
-    /**
-     * Determine if the given error name is a Resend error.
-     */
-    protected function isResendError(string $errorName): bool
-    {
-        $errors = [
-            'application_error',
-            'concurrent_idempotent_requests',
-            'daily_quota_exceeded',
-            'internal_server_error',
-            'invalid_access',
-            'invalid_api_key',
-            'invalid_attachment',
-            'invalid_from_address',
-            'invalid_idempotency_key',
-            'invalid_idempotent_request',
-            'invalid_parameter',
-            'invalid_region',
-            'method_not_allowed',
-            'missing_api_key',
-            'missing_required_field',
-            'monthly_quota_exceeded',
-            'not_found',
-            'rate_limit_exceeded',
-            'restricted_api_key',
-            'security_error',
-            'validation_error',
-        ];
-
-        return in_array($errorName, $errors);
     }
 }

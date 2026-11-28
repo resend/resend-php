@@ -174,6 +174,27 @@ test('request can throw resend errors', function () {
     });
 });
 
+test('request can throw resend errors with an unlisted name', function () {
+    $payload = Payload::create('email', ['to' => 'test@resend.com']);
+    $response = new Response(403, ['content-type' => 'application/json'], json_encode([
+        'statusCode' => 403,
+        'name' => 'suspended_api_key',
+        'message' => 'This API key is suspended.',
+    ]));
+
+    $this->client
+        ->shouldReceive('sendRequest')
+        ->once()
+        ->andReturn($response);
+
+    expect(fn () => $this->http->request($payload))->toThrow(function (ErrorException $exception) {
+        expect($exception->getMessage())->toBe('This API key is suspended.')
+            ->and($exception->getErrorMessage())->toBe('This API key is suspended.')
+            ->and($exception->getErrorCode())->toBe(403)
+            ->and($exception->getErrorType())->toBe('suspended_api_key');
+    });
+});
+
 test('request can throw json error', function () {
     $payload = Payload::create('email', ['to' => 'test@resend.com']);
     $response = new Response(422, ['content-type' => 'application/json'], 'err');
